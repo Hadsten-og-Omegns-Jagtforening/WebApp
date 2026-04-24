@@ -27,7 +27,7 @@ export type IconName =
   | 'chevron-up'
   | 'search'
 
-interface IconProps {
+export interface IconProps {
   name: IconName
   size?: number
   stroke?: number
@@ -246,6 +246,9 @@ export default function Icon({ name, size = 22, stroke = 1.75, className = '' }:
         </svg>
       )
     default:
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(`Icon: unknown icon name "${name}"`)
+      }
       return null
   }
 }

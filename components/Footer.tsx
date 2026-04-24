@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
@@ -6,10 +7,12 @@ export default function Footer() {
       <div className="container">
         <div className="grid">
           <div>
-            <img
+            <Image
               src="/assets/logo-hoj.png"
               alt="Hadsten & Omegns Jagtforening"
-              style={{ width: 96, height: 96, marginBottom: 18, display: 'block' }}
+              width={96}
+              height={96}
+              style={{ marginBottom: 18, display: 'block' }}
             />
             <p
               style={{

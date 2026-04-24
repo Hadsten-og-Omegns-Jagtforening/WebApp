@@ -2,13 +2,19 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import Icon from './Icon'
 
-const items = [
+type NavLeaf = { id: string; label: string; href: string }
+type NavGroup = { id: string; label: string; href: string; children: (NavLeaf & { meta?: string })[] }
+type NavItem = NavLeaf | NavGroup
+
+const items: NavItem[] = [
   { id: 'home', label: 'Forside', href: '/' },
   {
     id: 'activities',
     label: 'Aktiviteter',
+    href: '/jagt',
     children: [
       { id: 'jagt', label: 'Jagt', href: '/jagt', meta: 'Bukkejagt · Hjort · Efterårsjagt' },
       { id: 'jagtprove', label: 'Hjælp til jagtprøven', href: '/jagtprove', meta: 'Dumpet? Vi hjælper dig videre' },
@@ -18,6 +24,7 @@ const items = [
   {
     id: 'praktisk',
     label: 'Praktisk info',
+    href: '/kalender',
     children: [
       { id: 'kalender', label: 'Kalender', href: '/kalender' },
       { id: 'tider', label: 'Åbningstider og skydetider', href: '/aabningstider' },
@@ -28,6 +35,7 @@ const items = [
   {
     id: 'omhoj',
     label: 'Om HOJ',
+    href: '/bliv-medlem',
     children: [
       { id: 'medlem', label: 'Bliv medlem', href: '/bliv-medlem' },
       { id: 'find', label: 'Find os', href: '/find-os' },
@@ -40,10 +48,10 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="nav">
+    <header className={`nav${menuOpen ? ' nav--open' : ''}`}>
       <div className="container nav-inner">
         <Link className="logo" href="/">
-          <img src="/assets/logo-hoj.png" alt="Hadsten & Omegns Jagtforening" />
+          <Image src="/assets/logo-hoj.png" alt="Hadsten & Omegns Jagtforening" width={44} height={44} priority />
           <div className="words">
             <span className="mark">Hadsten &amp; Omegns</span>
             <span className="sub">Jagtforening · stiftet 1968</span>
@@ -69,7 +77,7 @@ export default function Nav() {
                   </div>
                 </>
               ) : (
-                <Link href={(it as { href: string }).href}>{it.label}</Link>
+                <Link href={it.href}>{it.label}</Link>
               )}
             </li>
           ))}
@@ -82,7 +90,7 @@ export default function Nav() {
 
         <button
           className="nav-hamburger"
-          aria-label="Åbn menu"
+          aria-label={menuOpen ? 'Luk menu' : 'Åbn menu'}
           onClick={() => setMenuOpen((o) => !o)}
         >
           <Icon name={menuOpen ? 'x' : 'menu'} size={24} />
