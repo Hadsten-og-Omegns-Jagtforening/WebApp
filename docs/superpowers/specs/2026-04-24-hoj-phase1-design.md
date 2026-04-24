@@ -250,6 +250,44 @@ middleware.ts                # Next.js middleware — protects /admin/*
 
 ---
 
+## Security
+
+### XSS — Rich text sanitisation
+TipTap outputs HTML. Before any body is written to the database it is sanitised server-side (inside the Server Action) using **DOMPurify** with a strict allowlist. Only these tags are permitted: `p, strong, em, u, h2, h3, ul, ol, li, a, blockquote`. All attributes except `href` on `<a>` are stripped. `href` values are validated to start with `https://` or `/` — no `javascript:` URIs. Raw HTML is never trusted on read; Supabase stores only the sanitised version.
+
+### SQL injection
+Not possible — all Supabase queries use the JS client's parameterised query builder. No raw SQL is constructed from user input.
+
+### Authentication
+- **Password requirements** (configured in Supabase Auth dashboard):
+  - Minimum 12 characters
+  - At least one uppercase letter, one number, one special character
+  - Breached-password check enabled (HaveIBeenPwned integration, built into Supabase)
+- **Session** — Supabase issues a signed JWT stored in an `httpOnly` cookie. The Next.js middleware refreshes it on every request.
+- **Login rate limiting** — Supabase Auth enforces built-in brute-force protection (5 failed attempts triggers a lockout). No custom implementation needed.
+- **Password reset** — uses Supabase's built-in email flow; no custom reset logic.
+
+### Route protection
+Next.js middleware checks for a valid Supabase session on every `/admin/*` request. No session → redirect to `/admin`. This runs at the edge before any page is rendered — there is no client-side-only guard.
+
+### Image upload validation
+Before uploading to Supabase Storage the Server Action checks:
+- MIME type is `image/jpeg` or `image/png` (checked from file bytes, not just extension)
+- File size ≤ 5 MB
+- Filename is replaced with a server-generated UUID — the original filename is never stored or exposed
+
+### Content Security Policy
+A `Content-Security-Policy` header is set via `next.config.ts`:
+- `default-src 'self'`
+- `img-src 'self' https://<supabase-project>.supabase.co data:`
+- `script-src 'self'` (no inline scripts)
+- `style-src 'self' 'unsafe-inline'` (required for CSS custom properties)
+
+### Row-level security (recap)
+Supabase RLS is enabled on the `news` table. Anon role can only `SELECT` published posts. Authenticated role (admin) has full access. The service role key (used only in Server Actions) bypasses RLS intentionally and is never exposed to the browser.
+
+---
+
 ## Deployment
 
 1. **Supabase project** — create via dashboard, run migration SQL, create `news-images` bucket, create admin user via Auth dashboard
