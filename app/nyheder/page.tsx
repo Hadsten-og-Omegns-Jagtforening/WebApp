@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import NewsCard from '@/components/NewsCard'
 import type { NewsPost } from '@/lib/database.types'
@@ -8,7 +9,8 @@ type Props = { searchParams: Promise<{ page?: string }> }
 
 export default async function NyhederPage({ searchParams }: Props) {
   const { page: pageParam } = await searchParams
-  const page = Math.max(1, parseInt(pageParam ?? '1', 10))
+  const raw = parseInt(pageParam ?? '1', 10)
+  const page = Number.isFinite(raw) && raw > 0 ? raw : 1
   const from = (page - 1) * PER_PAGE
   const to = from + PER_PAGE - 1
 
@@ -27,20 +29,20 @@ export default async function NyhederPage({ searchParams }: Props) {
       <div className="container">
         <h1>Nyheder</h1>
         <div className="grid-3">
-          {(posts as NewsPost[] ?? []).map(post => (
+          {((posts as NewsPost[]) ?? []).map(post => (
             <NewsCard key={post.id} post={post} />
           ))}
         </div>
         {totalPages > 1 && (
           <div className="pagination">
             {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-              <a
+              <Link
                 key={p}
                 href={`/nyheder?page=${p}`}
                 className={`page-btn${p === page ? ' active' : ''}`}
               >
                 {p}
-              </a>
+              </Link>
             ))}
           </div>
         )}

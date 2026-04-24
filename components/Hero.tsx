@@ -9,6 +9,7 @@ export default function Hero() {
         <img src="/assets/placeholder-hero.svg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
       </div>
       <div className="hero-shade" />
+      {/* TODO: replace with dynamic open/closed status in Phase 2 */}
       <div className="hero-status"><span className="dot" />Banen åben · ons 17–20</div>
       <div className="container hero-inner">
         <div className="hero-badge">Siden 1968 · Hadsten</div>

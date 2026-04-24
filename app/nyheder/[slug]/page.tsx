@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { sanitizeBody } from '@/lib/sanitize'
 import type { NewsPost, ResultRow } from '@/lib/database.types'
 import type { Metadata } from 'next'
 
@@ -61,11 +62,18 @@ export default async function NewsArticlePage({ params }: Props) {
             />
           )}
           {/* Body is sanitised HTML — safe to render */}
-          <div dangerouslySetInnerHTML={{ __html: article.body }} />
+          <div dangerouslySetInnerHTML={{ __html: sanitizeBody(article.body) }} />
           {article.has_results && article.results && (
             <details className="results" open>
               <summary>Resultater</summary>
               <table>
+                <thead>
+                  <tr>
+                    <th>Placering</th>
+                    <th>Navn</th>
+                    <th style={{ textAlign: 'right' }}>Score</th>
+                  </tr>
+                </thead>
                 <tbody>
                   {(article.results as ResultRow[]).map((r, i) => (
                     <tr key={i}>
