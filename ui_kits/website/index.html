@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>HOJ — Website UI kit</title>
+<link rel="stylesheet" href="kit.css"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="Icon.jsx"></script>
+<script type="text/babel" src="Nav.jsx"></script>
+<script type="text/babel" src="Footer.jsx"></script>
+<script type="text/babel" src="Home.jsx"></script>
+<script type="text/babel" src="News.jsx"></script>
+<script type="text/babel" src="Booking.jsx"></script>
+<script type="text/babel" src="Calendar.jsx"></script>
+<script type="text/babel" src="Activities.jsx"></script>
+<script type="text/babel" src="Membership.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+function App() {
+  const [page, setPage] = useState(() => localStorage.getItem("hoj-page") || "home");
+  const [articleId, setArticleId] = useState(null);
+  useEffect(() => { localStorage.setItem("hoj-page", page); }, [page]);
+
+  const go = (p) => { setPage(p); setArticleId(null); window.scrollTo({top:0}); };
+  const openArticle = (id) => { setArticleId(id); setPage("article"); window.scrollTo({top:0}); };
+
+  let screen;
+  switch (page) {
+    case "home":
+      screen = <div data-screen-label="01 Forside">
+        <Hero onNavigate={go}/>
+        <QuickNav onNavigate={go}/>
+        <NewsFeed onOpen={openArticle}/>
+      </div>;
+      break;
+    case "book":
+      screen = <div data-screen-label="02 Book skydebanen"><Booking onDone={() => go("home")}/></div>;
+      break;
+    case "kalender":
+      screen = <div data-screen-label="03 Kalender"><Calendar/></div>;
+      break;
+    case "premie":
+      screen = <div data-screen-label="04 Præmieskydninger"><ActivitiesHub onNavigate={go}/></div>;
+      break;
+    case "premie-detail":
+      screen = <div data-screen-label="05 Præmie — detail"><PrizeDetail onBack={() => go("premie")}/></div>;
+      break;
+    case "medlem":
+      screen = <div data-screen-label="06 Bliv medlem"><Membership onNavigate={go}/></div>;
+      break;
+    case "article":
+      screen = <div data-screen-label="07 Nyhedsartikel"><NewsArticle id={articleId} onBack={() => go("home")}/></div>;
+      break;
+    default:
+      // all other menu ids -> simple stub page, still within kit
+      screen = (
+        <div data-screen-label={`08 ${page}`} className="section">
+          <div className="container" style={{maxWidth: 720}}>
+            <span className="eyebrow" style={{color:"var(--accent)"}}>Under opbygning</span>
+            <h1 style={{fontFamily:"var(--font-display)",fontWeight:500,fontSize:56,letterSpacing:"-0.02em",margin:"8px 0 16px"}}>
+              {({jagt:"Jagt",jagtprove:"Hjælp til jagtprøven",tider:"Åbningstider og skydetider",bestyrelsen:"Bestyrelsen",find:"Find os",arkiv:"Arkiv",praktisk:"Praktisk info",activities:"Aktiviteter",omhoj:"Om HOJ"})[page] || page}
+            </h1>
+            <p style={{fontSize:18,color:"var(--fg2)",maxWidth:"56ch"}}>
+              Denne underside bygges op som en redigerbar tekstside — samme opsætning som en nyhed, med overskrift, billede i fast format og brødtekst.
+            </p>
+            <button className="btn primary" onClick={() => go("home")}>← Tilbage til forsiden</button>
+          </div>
+        </div>
+      );
+  }
+
+  const navCurrent = ({
+    home:"home", book:"praktisk", kalender:"praktisk", tider:"praktisk", bestyrelsen:"praktisk",
+    premie:"activities","premie-detail":"activities", jagt:"activities", jagtprove:"activities",
+    medlem:"omhoj", find:"omhoj", arkiv:"omhoj", article:"home",
+  })[page] || "home";
+
+  return (
+    <>
+      <Nav current={navCurrent} onNavigate={go}/>
+      {screen}
+      <Footer onNavigate={go}/>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>

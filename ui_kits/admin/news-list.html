@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="da"><head>
+<meta charset="utf-8">
+<title>HOJ Admin · Nyheder</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="adm-shell">
+
+  <aside class="adm-side">
+    <a class="brand" href="news-list.html" style="text-decoration:none;">
+      <img src="../../assets/logo-hoj.png" alt="HOJ">
+      <div class="w">
+        <div class="mark">HOJ Admin</div>
+        <div class="sub">Redaktion</div>
+      </div>
+    </a>
+    <nav>
+      <div class="section-label">Indhold</div>
+      <a class="active">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+        Nyheder <span class="count">24</span>
+      </a>
+      <a>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="1.5"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+        Kalender
+      </a>
+      <a>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v4a6 6 0 0 1-12 0V4Z"/><path d="M12 14v4m-3 2h6"/></svg>
+        Præmieskydninger
+      </a>
+      <div class="section-label">Forening</div>
+      <a>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/></svg>
+        Medlemmer
+      </a>
+      <a>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1Z"/></svg>
+        Indstillinger
+      </a>
+    </nav>
+    <div class="who">
+      <div class="avatar">MA</div>
+      <div>
+        <div class="n">Magnus Asmussen</div>
+        <div class="r">Formand</div>
+      </div>
+      <a class="out" title="Log ud" href="login.html">↪</a>
+    </div>
+  </aside>
+
+  <main class="adm-main">
+    <div class="adm-topbar">
+      <div>
+        <div class="adm-crumbs">
+          <a>Dashboard</a><span class="sep">/</span>Nyheder
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px;flex-wrap:wrap;">
+      <div>
+        <h1 class="adm-h1">Nyheder</h1>
+        <p class="adm-sub">24 indlæg · sidst opdateret i dag 14:02</p>
+      </div>
+      <a href="news-edit.html" class="btn primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Ny nyhed
+      </a>
+    </div>
+
+    <div class="adm-toolbar">
+      <div class="adm-search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        <input type="text" placeholder="Søg i nyheder…">
+      </div>
+      <select class="adm-select">
+        <option>Alle kategorier</option>
+        <option>Nyhed</option>
+        <option>Jagt</option>
+        <option>Præmieskydning</option>
+        <option>Klubaften</option>
+        <option>Praktisk info</option>
+      </select>
+      <select class="adm-select">
+        <option>Alle statusser</option>
+        <option>Publiceret</option>
+        <option>Kladde</option>
+      </select>
+      <select class="adm-select">
+        <option>Nyeste først</option>
+        <option>Ældste først</option>
+        <option>Alfabetisk</option>
+      </select>
+    </div>
+
+    <div class="adm-card">
+      <table class="adm-table">
+        <thead>
+          <tr>
+            <th style="width:120px;">Kategori</th>
+            <th>Titel</th>
+            <th style="width:130px;">Dato</th>
+            <th style="width:120px;">Status</th>
+            <th style="width:120px;text-align:right;">Handlinger</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="cat cat-praemie"><span class="dot"></span>Præmie</span></td>
+            <td class="title-cell">
+              <div class="t">HOJ Cup — runde 2: sådan blev det afgjort</div>
+              <div class="te">En tæt duel i silende regn endte med Jens på toppen efter omskydning…</div>
+            </td>
+            <td class="date-cell">24. apr 2026</td>
+            <td><span class="adm-status"><span class="s-dot"></span>Publiceret</span></td>
+            <td class="actions-cell">
+              <button class="icon-btn" title="Rediger" onclick="location.href='news-edit.html'">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg>
+              </button>
+              <button class="icon-btn danger" title="Slet">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="cat cat-jagt"><span class="dot"></span>Jagt</span></td>
+            <td class="title-cell">
+              <div class="t">Bukkejagt 2026 — lodtrækning er åben</div>
+              <div class="te">Alle aktive medlemmer kan tilmelde sig indtil 1. maj. Fire stykker i år.</div>
+            </td>
+            <td class="date-cell">22. apr 2026</td>
+            <td><span class="adm-status"><span class="s-dot"></span>Publiceret</span></td>
+            <td class="actions-cell">
+              <button class="icon-btn" title="Rediger" onclick="location.href='news-edit.html'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+              <button class="icon-btn danger" title="Slet"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="cat cat-prakt"><span class="dot"></span>Praktisk</span></td>
+            <td class="title-cell">
+              <div class="t draft">Ny banevagtplan — foråret (kladde)</div>
+              <div class="te">Udkast — afventer godkendelse fra kasserer inden udsendelse.</div>
+            </td>
+            <td class="date-cell">20. apr 2026</td>
+            <td><span class="adm-status draft"><span class="s-dot"></span>Kladde</span></td>
+            <td class="actions-cell">
+              <button class="icon-btn" title="Rediger" onclick="location.href='news-edit.html'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+              <button class="icon-btn danger" title="Slet"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="cat cat-klub"><span class="dot"></span>Klub</span></td>
+            <td class="title-cell">
+              <div class="t">Foredrag: Hjortejagt i Østjylland — 20. maj</div>
+              <div class="te">Ole Kristensen deler sine bedste tips fra 30 års jagt. Gratis for medlemmer.</div>
+            </td>
+            <td class="date-cell">18. apr 2026</td>
+            <td><span class="adm-status"><span class="s-dot"></span>Publiceret</span></td>
+            <td class="actions-cell">
+              <button class="icon-btn" title="Rediger" onclick="location.href='news-edit.html'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+              <button class="icon-btn danger" title="Slet"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="cat cat-nyhed"><span class="dot"></span>Nyhed</span></td>
+            <td class="title-cell">
+              <div class="t">Klubhuset får nyt tag i juni</div>
+              <div class="te">Håndværkere er booket 3.–14. juni. Banen holdes åben som sædvanligt.</div>
+            </td>
+            <td class="date-cell">14. apr 2026</td>
+            <td><span class="adm-status"><span class="s-dot"></span>Publiceret</span></td>
+            <td class="actions-cell">
+              <button class="icon-btn" title="Rediger" onclick="location.href='news-edit.html'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+              <button class="icon-btn danger" title="Slet"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="cat cat-praemie"><span class="dot"></span>Præmie</span></td>
+            <td class="title-cell">
+              <div class="t">Fastelavnsskydning 2026 — resultater</div>
+              <div class="te">82 deltagere, perfekt februarvejr. Tak til alle som hjalp til i klubhuset.</div>
+            </td>
+            <td class="date-cell">16. feb 2026</td>
+            <td><span class="adm-status"><span class="s-dot"></span>Publiceret</span></td>
+            <td class="actions-cell">
+              <button class="icon-btn" title="Rediger" onclick="location.href='news-edit.html'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+              <button class="icon-btn danger" title="Slet"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="adm-tablefoot">
+        <div>Viser 1–6 af 24</div>
+        <div class="adm-pager">
+          <button>‹</button>
+          <button class="active">1</button>
+          <button>2</button>
+          <button>3</button>
+          <button>4</button>
+          <button>›</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</body></html>

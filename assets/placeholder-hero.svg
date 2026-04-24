@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E8D9B8"></stop>
+      <stop offset="0.55" stop-color="#B89160"></stop>
+      <stop offset="1" stop-color="#3D4F41"></stop>
+    </linearGradient>
+    <linearGradient id="shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1E2A22" stop-opacity="0"></stop>
+      <stop offset="1" stop-color="#1E2A22" stop-opacity="0.55"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"></rect>
+  
+  <path d="M0 620 Q 200 560 420 600 T 820 580 T 1220 610 T 1600 590 V900 H0 Z" fill="#2C3B30" opacity="0.9"></path>
+  <path d="M0 700 Q 260 640 540 690 T 1080 680 T 1600 700 V900 H0 Z" fill="#1E2A22"></path>
+  
+  <g fill="#151E18">
+    <polygon points="120,720 135,660 150,720"></polygon>
+    <polygon points="180,740 200,650 220,740"></polygon>
+    <polygon points="240,735 255,680 270,735"></polygon>
+    <polygon points="1380,735 1400,655 1420,735"></polygon>
+    <polygon points="1450,745 1465,685 1480,745"></polygon>
+  </g>
+  
+  <g fill="#151E18" transform="translate(720,560)">
+    <path d="M50 90 C 50 70, 60 65, 72 68 L 80 50 L 92 56 L 95 40 L 105 46 L 110 30 L 118 50 L 130 46 L 128 62 L 140 60 L 136 74 C 150 78, 152 92, 148 100 L 152 138 L 142 138 L 138 104 L 90 104 L 85 138 L 75 138 L 72 100 C 58 100, 50 96, 50 90 Z"></path>
+  </g>
+  <rect width="1600" height="900" fill="url(#shade)"></rect>
+  
+  <rect width="1600" height="900" fill="#F4EFE4" opacity="0.03"></rect>
+  <text x="800" y="500" text-anchor="middle" font-family="Fraunces, serif" font-size="24" fill="#F4EFE4" opacity="0.4">placeholder — upload real photography</text>
+</svg>
