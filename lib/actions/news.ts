@@ -34,10 +34,12 @@ export async function createPost(formData: FormData) {
     results: formData.get('results')
       ? JSON.parse(formData.get('results') as string)
       : null,
-    status: 'draft',
+    status: formData.get('publish') === 'true' ? 'published' : 'draft',
     highlighted: formData.get('highlighted') === 'true',
     allow_comments: false,
-    published_at: null,
+    published_at: formData.get('publish') === 'true'
+      ? ((formData.get('published_at') as string) || new Date().toISOString())
+      : null,
     created_by: userId,
   }
 
