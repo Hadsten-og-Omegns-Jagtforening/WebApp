@@ -73,7 +73,7 @@ export default async function AdminNyhederPage() {
                   <Link href={`/admin/nyheder/${post.id}`} title="Rediger" className="btn ghost icon-only">
                     <Icon name="pencil" size={15} />
                   </Link>
-                  <form action={deletePost.bind(null, post.id)} style={{ display: 'inline' }}>
+                  <form action={async () => { 'use server'; await deletePost(post.id) }} style={{ display: 'inline' }}>
                     <button type="submit" title="Slet" className="btn danger icon-only">
                       <Icon name="trash" size={15} />
                     </button>
