@@ -20,10 +20,12 @@ function formatDate(iso: string) {
 
 export default async function AdminNyhederPage() {
   const db = createAdminClient()
-  const { data: posts, count } = await db
+  const { data: posts, count, error } = await db
     .from('news')
     .select('*', { count: 'exact' })
     .order('created_at', { ascending: false })
+
+  if (error) throw new Error(`Database error: ${error.message}`)
 
   return (
     <div className="adm-content">
@@ -73,7 +75,7 @@ export default async function AdminNyhederPage() {
                   <Link href={`/admin/nyheder/${post.id}`} title="Rediger" className="btn ghost icon-only">
                     <Icon name="pencil" size={15} />
                   </Link>
-                  <form action={async () => { 'use server'; await deletePost(post.id) }} style={{ display: 'inline' }}>
+                  <form action={deletePost.bind(null, post.id) as unknown as (formData: FormData) => Promise<void>} style={{ display: 'inline' }}>
                     <button type="submit" title="Slet" className="btn danger icon-only">
                       <Icon name="trash" size={15} />
                     </button>

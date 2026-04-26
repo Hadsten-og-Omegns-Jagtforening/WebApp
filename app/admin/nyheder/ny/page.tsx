@@ -1,7 +1,7 @@
 import NewsForm from '@/components/admin/NewsForm'
 import { createPost } from '@/lib/actions/news'
 
-export default function NyNyhedPage() {
+export default async function NyNyhedPage() {
   return (
     <div className="adm-content">
       <div className="adm-page-head">

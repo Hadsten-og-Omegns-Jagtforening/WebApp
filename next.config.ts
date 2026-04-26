@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               `img-src 'self' https://${supabaseHost} data:`,
-              "script-src 'self'",
+              "script-src 'self' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline'",
               "font-src 'self' https://fonts.gstatic.com",
               "connect-src 'self' https://*.supabase.co",

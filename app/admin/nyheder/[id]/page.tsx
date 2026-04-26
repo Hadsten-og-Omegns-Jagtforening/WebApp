@@ -9,8 +9,8 @@ type Props = { params: Promise<{ id: string }> }
 export default async function EditNyhedPage({ params }: Props) {
   const { id } = await params
   const db = createAdminClient()
-  const { data } = await db.from('news').select('*').eq('id', id).single()
-
+  const { data, error } = await db.from('news').select('*').eq('id', id).single()
+  if (error && error.code !== 'PGRST116') throw new Error(`Database error: ${error.message}`)
   if (!data) notFound()
   const post = data as NewsPost
 

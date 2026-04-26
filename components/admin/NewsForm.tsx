@@ -139,12 +139,6 @@ export default function NewsForm({ post, onSaveDraft, onPublish, onDelete }: Pro
           <div className="panel">
             <h3 className="panel-heading">Hovedbillede</h3>
             <ImageUploader initialUrl={imageUrl} onUpload={setImageUrl} />
-            {imageUrl && (
-              <div className="fld" style={{ marginTop: 8 }}>
-                <label>Alt-tekst</label>
-                <input name="alt_text" type="text" placeholder="Beskriv billedet for skærmlæsere" />
-              </div>
-            )}
           </div>
           <div className="panel">
             <h3 className="panel-heading">Indstillinger</h3>

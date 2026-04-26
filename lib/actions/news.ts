@@ -8,6 +8,15 @@ import { sanitizeBody } from '@/lib/sanitize'
 import { generateSlug } from '@/lib/slug'
 import type { NewsCategory, NewsPostInsert } from '@/lib/database.types'
 
+function safeParseResults(value: FormDataEntryValue | null) {
+  if (!value) return null
+  try {
+    return JSON.parse(value as string)
+  } catch {
+    return null
+  }
+}
+
 async function getAuthenticatedUserId(): Promise<string> {
   const supabase = await createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
@@ -31,9 +40,7 @@ export async function createPost(formData: FormData) {
     body,
     image_url: (formData.get('image_url') as string) || null,
     has_results: formData.get('has_results') === 'true',
-    results: formData.get('results')
-      ? JSON.parse(formData.get('results') as string)
-      : null,
+    results: safeParseResults(formData.get('results')),
     status: formData.get('publish') === 'true' ? 'published' : 'draft',
     highlighted: formData.get('highlighted') === 'true',
     allow_comments: false,
@@ -60,15 +67,12 @@ export async function updatePost(id: string, formData: FormData) {
 
   const { error } = await db.from('news').update({
     title,
-    slug: generateSlug(title),
     category: formData.get('category') as NewsCategory,
     teaser: formData.get('teaser') as string,
     body,
     image_url: (formData.get('image_url') as string) || null,
     has_results: formData.get('has_results') === 'true',
-    results: formData.get('results')
-      ? JSON.parse(formData.get('results') as string)
-      : null,
+    results: safeParseResults(formData.get('results')),
     highlighted: formData.get('highlighted') === 'true',
   }).eq('id', id)
 
@@ -106,15 +110,12 @@ export async function saveDraft(id: string, formData: FormData) {
 
   const { error } = await db.from('news').update({
     title,
-    slug: generateSlug(title),
     category: formData.get('category') as NewsCategory,
     teaser: formData.get('teaser') as string,
     body,
     image_url: (formData.get('image_url') as string) || null,
     has_results: formData.get('has_results') === 'true',
-    results: formData.get('results')
-      ? JSON.parse(formData.get('results') as string)
-      : null,
+    results: safeParseResults(formData.get('results')),
     highlighted: formData.get('highlighted') === 'true',
     status: 'draft',
   }).eq('id', id)

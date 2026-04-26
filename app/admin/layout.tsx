@@ -8,7 +8,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const initials = user?.email?.slice(0, 2).toUpperCase() ?? 'AD'
+  // Login page: no sidebar
+  if (!user) {
+    return <>{children}</>
+  }
+
+  const initials = user.email?.slice(0, 2).toUpperCase() ?? 'AD'
 
   return (
     <div className="adm-shell">
