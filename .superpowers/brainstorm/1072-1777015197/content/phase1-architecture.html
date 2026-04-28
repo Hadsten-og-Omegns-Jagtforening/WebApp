@@ -1,0 +1,85 @@
+<h2>Phase 1 — Architecture Overview</h2>
+<p class="subtitle">Next.js App Router + Supabase. Public pages are server-rendered (SEO). Admin is protected by middleware.</p>
+
+<div class="section">
+  <h3>Public Routes</h3>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px">
+    <div style="background:#f8f8f4;border:1px solid #ddd;border-radius:6px;padding:16px">
+      <div class="label">Route</div>
+      <code style="font-size:13px;font-weight:600">/</code>
+      <p style="margin:8px 0 0;font-size:13px;color:#555">Homepage — hero, quick-nav tiles, news feed (latest 6)</p>
+    </div>
+    <div style="background:#f8f8f4;border:1px solid #ddd;border-radius:6px;padding:16px">
+      <div class="label">Route</div>
+      <code style="font-size:13px;font-weight:600">/nyheder</code>
+      <p style="margin:8px 0 0;font-size:13px;color:#555">News listing — all posts, paginated</p>
+    </div>
+    <div style="background:#f8f8f4;border:1px solid #ddd;border-radius:6px;padding:16px">
+      <div class="label">Route</div>
+      <code style="font-size:13px;font-weight:600">/nyheder/[slug]</code>
+      <p style="margin:8px 0 0;font-size:13px;color:#555">News article — full post, image, optional results table</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Admin Routes (login required)</h3>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px">
+    <div style="background:#fff8f0;border:1px solid #f0c080;border-radius:6px;padding:16px">
+      <div class="label">Route</div>
+      <code style="font-size:13px;font-weight:600">/admin</code>
+      <p style="margin:8px 0 0;font-size:13px;color:#555">Login form (email + password)</p>
+    </div>
+    <div style="background:#fff8f0;border:1px solid #f0c080;border-radius:6px;padding:16px">
+      <div class="label">Route</div>
+      <code style="font-size:13px;font-weight:600">/admin/nyheder</code>
+      <p style="margin:8px 0 0;font-size:13px;color:#555">List all posts — edit / delete</p>
+    </div>
+    <div style="background:#fff8f0;border:1px solid #f0c080;border-radius:6px;padding:16px">
+      <div class="label">Route</div>
+      <code style="font-size:13px;font-weight:600">/admin/nyheder/ny</code>
+      <p style="margin:8px 0 0;font-size:13px;color:#555">Create new post</p>
+    </div>
+    <div style="background:#fff8f0;border:1px solid #f0c080;border-radius:6px;padding:16px">
+      <div class="label">Route</div>
+      <code style="font-size:13px;font-weight:600">/admin/nyheder/[id]</code>
+      <p style="margin:8px 0 0;font-size:13px;color:#555">Edit existing post</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Data Flow</h3>
+  <div style="display:flex;gap:0;align-items:stretch;margin-top:12px;border:1px solid #ddd;border-radius:8px;overflow:hidden">
+    <div style="flex:1;padding:16px;background:#f0f4f0;text-align:center">
+      <div style="font-weight:700;margin-bottom:6px">Supabase</div>
+      <div style="font-size:12px;color:#555">PostgreSQL DB<br>Auth (email/pw)<br>Storage (images)</div>
+    </div>
+    <div style="display:flex;align-items:center;padding:0 8px;font-size:20px;color:#aaa">→</div>
+    <div style="flex:1;padding:16px;background:#f0f0f8;text-align:center">
+      <div style="font-weight:700;margin-bottom:6px">Next.js Server</div>
+      <div style="font-size:12px;color:#555">Server Components<br>fetch news server-side<br>Middleware guards /admin</div>
+    </div>
+    <div style="display:flex;align-items:center;padding:0 8px;font-size:20px;color:#aaa">→</div>
+    <div style="flex:1;padding:16px;background:#f8f4f0;text-align:center">
+      <div style="font-weight:700;margin-bottom:6px">Browser</div>
+      <div style="font-size:12px;color:#555">Rendered HTML<br>Client components<br>(forms, interactions)</div>
+    </div>
+    <div style="display:flex;align-items:center;padding:0 8px;font-size:20px;color:#aaa">→</div>
+    <div style="flex:1;padding:16px;background:#f4f8f0;text-align:center">
+      <div style="font-weight:700;margin-bottom:6px">Vercel</div>
+      <div style="font-size:12px;color:#555">Hosting + deploys<br>from git push<br>Edge network</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Key Principles</h3>
+  <ul style="margin:8px 0 0;padding-left:20px;line-height:1.8;color:#444">
+    <li>Public news pages are <strong>server-rendered</strong> — Google indexes them fully</li>
+    <li><strong>Next.js middleware</strong> redirects unauthenticated requests away from <code>/admin/*</code></li>
+    <li>Existing <strong>CSS design system</strong> (colors_and_type.css + kit.css) migrates as-is</li>
+    <li>Existing JSX <strong>components</strong> (Nav, Footer, cards) migrate to TypeScript React</li>
+    <li>TypeScript throughout — catches bugs early, good for long-term maintenance</li>
+  </ul>
+</div>
