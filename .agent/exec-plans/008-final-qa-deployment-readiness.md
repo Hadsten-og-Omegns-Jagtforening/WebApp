@@ -89,17 +89,17 @@ npm.cmd run start
 
 ## Milestone 2: Manual Responsive And Accessibility QA
 
-- [ ] Start the app with `npm.cmd run dev`.
-- [ ] Check desktop and mobile layouts for `/`, `/nyheder`, each implemented public page, and `/admin`.
-- [ ] Check keyboard access for nav dropdowns, mobile menu, login form, admin forms, buttons, links, and dialogs.
-- [ ] Check visible focus states.
-- [ ] Check heading order on major public pages.
-- [ ] Check image alt text and decorative-image handling.
-- [ ] Check text contrast against `docs/DESIGN_SYSTEM.md`.
-- [ ] Record pass/fail findings in `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] Fix only small direct QA blockers.
-- [ ] Run `npm.cmd test`, `npm.cmd run lint`, and `npm.cmd run build`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Start the app with `npm.cmd run dev`.
+- [x] Check desktop and mobile layouts for `/`, `/nyheder`, each implemented public page, and `/admin`.
+- [x] Check keyboard access for nav dropdowns, mobile menu, login form, admin forms, buttons, links, and dialogs.
+- [x] Check visible focus states.
+- [x] Check heading order on major public pages.
+- [x] Check image alt text and decorative-image handling.
+- [x] Check text contrast against `docs/DESIGN_SYSTEM.md`.
+- [x] Record pass/fail findings in `docs/IMPLEMENTATION_STATUS.md`.
+- [x] Fix only small direct QA blockers.
+- [x] Run `npm.cmd test`, `npm.cmd run lint`, and `npm.cmd run build`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Exit criteria:** Manual QA results are documented and any remaining issues are explicit.
 
@@ -107,15 +107,15 @@ npm.cmd run start
 
 ## Milestone 3: Supabase And Deployment Readiness
 
-- [ ] Verify required environment variables are documented: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`.
-- [ ] Verify Supabase migration setup is documented.
-- [ ] Verify storage bucket setup is documented if image upload is enabled.
-- [ ] Verify admin user provisioning is documented.
-- [ ] Verify `next.config.ts` allows required image hosts and security headers.
-- [ ] Verify deployment instructions for Vercel or the selected host are accurate.
-- [ ] Update `docs/README.md`, `docs/TESTING.md`, or `docs/IMPLEMENTATION_STATUS.md` if deployment instructions are stale.
-- [ ] Run `npm.cmd run build`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Verify required environment variables are documented: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`.
+- [x] Verify Supabase migration setup is documented.
+- [x] Verify storage bucket setup is documented if image upload is enabled.
+- [x] Verify admin user provisioning is documented.
+- [x] Verify `next.config.ts` allows required image hosts and security headers.
+- [x] Verify deployment instructions for Vercel or the selected host are accurate.
+- [x] Update `docs/README.md`, `docs/TESTING.md`, or `docs/IMPLEMENTATION_STATUS.md` if deployment instructions are stale.
+- [x] Run `npm.cmd run build`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Exit criteria:** A deployer can provision Supabase, set env vars, build the app, and understand any remaining limitations.
 
@@ -123,13 +123,13 @@ npm.cmd run start
 
 ## Milestone 4: Final Readiness Record
 
-- [ ] Summarize implemented routes and deferred routes in `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] Summarize validation results with dates and commands.
-- [ ] Summarize known production blockers, if any.
-- [ ] Summarize manual QA status.
-- [ ] Confirm no unrelated files were changed.
-- [ ] Run final `git status --short --branch`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Summarize implemented routes and deferred routes in `docs/IMPLEMENTATION_STATUS.md`.
+- [x] Summarize validation results with dates and commands.
+- [x] Summarize known production blockers, if any.
+- [x] Summarize manual QA status.
+- [x] Confirm no unrelated files were changed.
+- [x] Run final `git status --short --branch`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Exit criteria:** The project is ready for deployment review or has a short, concrete blocker list.
 

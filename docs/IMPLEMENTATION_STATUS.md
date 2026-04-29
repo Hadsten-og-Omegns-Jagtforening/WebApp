@@ -16,6 +16,63 @@ This must ALWAYS match the actual code.
 
 ## Current State
 
+### Hosting decision addendum - 2026-04-29
+
+- Added `docs/HOSTING_DECISION.md` as a scoped architecture decision memo comparing:
+  - Simply-only
+  - Simply for domain/DNS/email plus Vercel/Supabase for the app
+  - Full migration to Vercel/Supabase
+- The document is documentation-only. No app code, deployment config, Supabase/auth code, or infrastructure settings were changed.
+- Working assumption documented: keep Simply for domain/DNS/email, use Vercel Hobby and Supabase Free as initial targets, and preserve portability.
+- Recommendation documented: Option 2 is the best fit for the current Next.js/Supabase codebase, with a later upgrade path to Vercel Pro and Supabase Pro for stronger production footing.
+
+### Deployment readiness - 2026-04-29
+
+- Added `docs/DEPLOYMENT.md` with a deployment playbook for the recommended launch model:
+  - Simply for domain/DNS/email
+  - Vercel Hobby for the app
+  - Supabase Free for backend/auth/storage
+- Documented required env vars, Supabase migration order, storage bucket expectations, admin-user provisioning, DNS/mail separation, free-tier monitoring, upgrade triggers, and lightweight content/storage policy.
+- Documented an important auth limitation: the current admin flow is password-only. Magic-link and reset-password completion flows are not implemented.
+- Documented an important storage limitation: uploaded news images are not automatically cleaned up from Supabase Storage when posts are deleted or images are replaced.
+- Resolved a production-start blocker by changing the repository build script from `next build --turbopack` to standard `next build`. The explicit Turbopack build path passed `build` but crashed under `next start` with `TypeError: routesManifest.dataRoutes is not iterable`. Standard `next build` now passes both build validation and local production smoke.
+
+### Simply-only feasibility - 2026-04-29
+
+- Added `.agent/exec-plans/009-simply-only-feasibility.md`.
+- Updated `docs/HOSTING_DECISION.md` with a revised feasibility note for the changed customer profile.
+- Verified that Simply-only is **not** a deployment-mode toggle for the current repository. It would require a rewrite of auth, news CRUD, image storage, and database integration.
+- Verified that the public brochure-style pages could be reproduced on Simply, but the current live-news/admin implementation is not realistically deployable there as static export.
+- Documented a revised strategic conclusion:
+  - current Vercel/Supabase deployment remains the lowest-risk launch path
+  - a future Simply-only rebuild is now a realistic option under the customer's simplified long-term needs
+  - recommended Simply-only backend if pursued later: PHP + MySQL
+
+### Simply-only final security/design gate - 2026-04-30
+
+- Updated `.agent/exec-plans/009-simply-only-feasibility.md` with the final security-by-design and design-quality gate.
+- Updated `docs/HOSTING_DECISION.md` with an explicit final recommendation.
+- Final conclusion: a Simply-only PHP + MySQL rewrite is technically feasible and can preserve the public visual design closely, but it is **not responsibly greenlit** for this customer profile because the organization has no named security, monitoring, backup, or incident-response owner.
+- Final recommendation recorded: **C. Do not greenlight; stay with Vercel/Supabase.**
+- Conditional note recorded: a Simply-only rewrite should only be reconsidered if the customer explicitly accepts ongoing custom-security and backup/restore ownership.
+
+### Production launch preparation - 2026-04-30
+
+- Added `.agent/exec-plans/010-production-launch-preparation.md`.
+- Added `docs/LAUNCH_CHECKLIST.md`.
+- Updated `docs/DEPLOYMENT.md` to point to the launch checklist and to require explicit DNS-state capture before production DNS changes.
+- Updated `docs/HOSTING_DECISION.md` to record that Simply-only rewrite work is paused unless the customer explicitly accepts the rewrite/security tradeoff.
+- Launch-prep documentation now covers:
+  - Vercel project setup
+  - GitHub/Vercel production expectations
+  - production env vars
+  - Supabase migration and auth/storage setup
+  - Simply DNS/mail preservation
+  - security-by-design launch verification
+  - customer handover
+  - post-deploy smoke tests
+  - rollback expectations
+
 ### Route inventory - 2026-04-29
 
 | Route | Status | Source |
@@ -105,6 +162,8 @@ This must ALWAYS match the actual code.
 | lint | PASS | `npm.cmd run lint` passes after the explicitly allowed mechanical `Link` fix in `components/admin/NewsForm.tsx`. |
 | build | PASS | `npm.cmd run build` passes when run outside the sandbox. In the default sandbox it fails with Windows `spawn EPERM`. |
 | test | PASS | `npm.cmd test` passes after the explicitly approved Vitest exclude update for generated/agent/worktree folders. In the default sandbox it can fail with Windows `spawn EPERM`; the same command passes elevated. |
+| e2e | PASS | `npm.cmd run test:e2e` passes when run outside the sandbox. |
+| start smoke | PASS | `npm.cmd run start -- -p 3007` boots the rebuilt app after final validation; `/` and `/admin` return 200. |
 
 ### Validation notes - 2026-04-28
 
@@ -151,6 +210,21 @@ This must ALWAYS match the actual code.
 - Plan 008 milestone 1 fixed the Playwright homepage selector in `tests/e2e/homepage.spec.ts` by replacing the ambiguous `page.locator('h2')` assertion with `getByRole('heading', { name: 'Seneste nyheder' })`, which matches the intended user-visible heading without changing UI behavior.
 - Plan 008 milestone 1 validation passed: `npm.cmd run typecheck`, `npm.cmd run lint`, elevated `npm.cmd test`, elevated `npm.cmd run build`, and elevated `npm.cmd run test:e2e` all pass.
 - Plan 008 milestone 1 validation note: a transient `PageNotFoundError: /_document` appeared only when `npm.cmd run build` was run in parallel with the Playwright suite. Re-running `npm.cmd run build` sequentially passed, so this was classified as validation-process interference rather than an app bug.
+- Hosting decision addendum validation: for this documentation-only change, `npm.cmd run typecheck`, `npm.cmd run lint`, elevated `npm.cmd test`, and elevated `npm.cmd run build` were re-run per repository policy.
+- Plan 008 milestone 2 manual/browser QA used a local dev server at `http://localhost:3005` with the current `.env.local` and Playwright browser inspection. Verified: all implemented public routes and `/admin` return 200; homepage mobile width at 390px no longer overflows (`scrollWidth` 390); heading order on the reviewed public pages is coherent (`h1` followed by section `h2`s); homepage logo alt text is present and the placeholder hero image remains decorative with empty alt text; keyboard focus can reach the mobile menu CTA and the desktop nav dropdown triggers expose `aria-expanded`.
+- Plan 008 milestone 2 QA note: the authenticated admin list/edit screens still require real login credentials for full browser review. Unauthenticated browser QA confirms the login screen renders and the route protection pattern remains in place.
+- Plan 008 milestone 2 QA note: because browser review ran against live content state in the current Supabase project, `/` and `/nyheder` can still appear sparse when there are no published posts. This is content/data dependent, not a route or deployment failure.
+- Plan 008 milestone 3 deployment review verified the current recommended architecture is technically compatible with Vercel-hosted Next.js plus Supabase-backed content/auth/storage, while keeping DNS/mail at Simply.
+- Plan 008 milestone 3 deployment review found one direct blocker in the old build script: `next build --turbopack` produced a build that crashed at `next start` with `TypeError: routesManifest.dataRoutes is not iterable`. The repository now uses standard `next build`, which passes production smoke.
+- Plan 008 milestone 3 deployment note: Vercel Hobby remains an accepted initial target under the current working assumption, but the repository docs now treat it as a soft-launch / low-traffic posture with explicit monitoring and upgrade triggers rather than as a guaranteed long-term production tier.
+- Plan 008 milestone 3 deployment note: Supabase Free is compatible with the current implementation for a soft launch, but docs now explicitly call out paused-project risk, storage growth, and manual cleanup of orphaned images as items to monitor.
+- Plan 008 milestone 4 final readiness record completed: deployment steps, env vars, DNS/mail separation, storage policy, free-tier monitoring, and upgrade triggers are now documented in `docs/DEPLOYMENT.md`.
+- Plan 008 final validation rerun order matters: after `npm.cmd run test:e2e` starts a dev server, `npm.cmd run build` must be rerun before final `npm.cmd run start` smoke because dev artifacts can replace the production `.next` output. The final recorded start smoke passed after rebuilding.
+- Simply-only feasibility assessment concluded that the current app is not a realistic static-export target because it depends on middleware, cookies-based Supabase SSR auth, Server Actions, live Supabase news queries, and Supabase Storage uploads.
+- Simply-only feasibility assessment concluded that a classic-hosting rewrite is technically feasible for the customer's simplified needs, but complexity remains high because all backend concerns would move into the app layer.
+- Final security/design gate concluded that technical feasibility is not enough to responsibly approve a Simply-only rewrite for this organization because long-term maintenance and recovery responsibilities would remain largely unmanaged.
+- Final security/design gate validation: `npm.cmd run typecheck` and `npm.cmd run lint` passed directly; `npm.cmd test` and `npm.cmd run build` passed when rerun elevated after the known Windows `spawn EPERM` sandbox issue.
+- Plan 010 launch-prep validation: `npm.cmd run typecheck` and `npm.cmd run lint` passed directly; `npm.cmd test` and `npm.cmd run build` passed when rerun elevated after the known Windows `spawn EPERM` sandbox issue. `npm.cmd run test:e2e` was not rerun because this plan changed documentation only and did not alter routes or UI behavior.
 
 ---
 
@@ -161,10 +235,11 @@ This must ALWAYS match the actual code.
 | General | Build passes | satisfied | `npm.cmd run build` passes when run with elevated permission; default sandbox can fail with `spawn EPERM`. |
 | General | Lint passes | satisfied | `npm.cmd run lint` passes. |
 | General | Typecheck passes | satisfied | `npm.cmd run typecheck` passes. |
+| General | End-to-end QA passes | satisfied | `npm.cmd run test:e2e` passes when run with elevated permission. |
 | UI | Matches approved design | not evaluated | Plan 004 is non-visual. Visual comparison belongs to plan 005. |
 | UI | No layout drift | not evaluated | Plan 004 is non-visual. |
-| UI | Responsive | not evaluated | Requires visual/browser QA in a later plan. |
-| UI | Accessible | not evaluated | Requires visual/browser/accessibility QA in a later plan. |
+| UI | Responsive | satisfied for implemented public routes reviewed in plan 008 | Browser QA at desktop and 390px confirmed reviewed public routes render without the previously documented mobile overflow. |
+| UI | Accessible | partial / reviewed for core flows | Browser QA confirmed basic keyboard access to nav controls, mobile menu, and login form, plus coherent heading order and image alt handling on reviewed public pages. Full authenticated admin accessibility review still depends on live credentials. |
 | Content | Danish language | partial / not fully evaluated | Existing routes use Danish copy, but full content review is outside plan 004. |
 | Content | Uses `du` | partial / not fully evaluated | Existing homepage copy uses informal Danish, but full content review is outside plan 004. |
 | Content | Clear and practical tone | partial / not fully evaluated | Requires content review beyond validation/docs alignment. |
@@ -276,6 +351,9 @@ Admin visual and UX mismatches:
 ## Known Issues
 
 - In the default sandbox, `npm.cmd run build` can fail with Windows `spawn EPERM`; the same command passes when run with elevated permission.
+- In the default sandbox, `npm.cmd test`, `npm.cmd run build`, and local dev/start smoke can require elevated execution because of the known Windows `spawn EPERM` environment issue.
+- The current admin auth implementation does not support Supabase magic-link or reset-password completion flows. Admin access currently depends on a manually provisioned email/password account.
+- Deleting a news post does not automatically delete its uploaded image object from the Supabase `news-images` bucket. Storage cleanup is currently manual.
 
 ---
 

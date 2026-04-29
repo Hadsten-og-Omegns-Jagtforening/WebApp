@@ -16,10 +16,19 @@ Focus:
 
 Run in Windows:
 
+```powershell
 npm.cmd run typecheck
 npm.cmd run lint
 npm.cmd test
 npm.cmd run build
+```
+
+For final QA / deployment-readiness milestones also run:
+
+```powershell
+npm.cmd run test:e2e
+npm.cmd run start
+```
 
 ---
 
@@ -45,6 +54,12 @@ All commands must:
 ### Test
 - Vitest unit/component regression suite passes
 
+### End-to-end
+- Playwright smoke/regression suite passes when the active milestone requires browser QA
+
+### Production smoke
+- `npm.cmd run start` should boot the built app without runtime startup errors when deployment readiness is under review
+
 ---
 
 ## Known Limitations
@@ -53,8 +68,8 @@ All commands must:
 - Environment issues (Windows, permissions) may occur
 
 If something fails:
-→ document it in IMPLEMENTATION_STATUS.md  
-→ do NOT guess a fix
+- document it in `IMPLEMENTATION_STATUS.md`
+- do not guess a fix
 
 ---
 
