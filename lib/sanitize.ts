@@ -18,7 +18,8 @@ export function sanitizeBody(html: string): string {
   return clean.replace(
     /href="([^"]+)"/g,
     (match, url: string) => {
-      if (url.startsWith('https://') || url.startsWith('/')) return match
+      const isRelativePath = url.startsWith('/') && !url.startsWith('//')
+      if (url.startsWith('https://') || isRelativePath) return match
       return ''
     }
   )

@@ -73,18 +73,18 @@ npm.cmd run test:e2e
 
 ## Milestone 1: Admin/Auth/Supabase Audit
 
-- [ ] Read `docs/IMPLEMENTATION_STATUS.md`, `docs/ACCEPTANCE_CRITERIA.md`, `docs/TESTING.md`, and `.agent/REVIEW_LOOP.md`.
-- [ ] Inspect `middleware.ts` for route protection behavior.
-- [ ] Inspect `lib/actions/auth.ts` for login/logout behavior and error handling.
-- [ ] Inspect `lib/actions/news.ts` for create/update/delete/publish behavior.
-- [ ] Inspect `lib/sanitize.ts` for rich text allowlist behavior.
-- [ ] Inspect `components/admin/ImageUploader.tsx` for upload validation and service-key exposure risks.
-- [ ] Inspect `supabase/migrations/0001_news_table.sql` for RLS and schema alignment.
-- [ ] Document verified issues in `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] Run `npm.cmd test`.
-- [ ] Run `npm.cmd run lint`.
-- [ ] Run `npm.cmd run build`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Read `docs/IMPLEMENTATION_STATUS.md`, `docs/ACCEPTANCE_CRITERIA.md`, `docs/TESTING.md`, and `.agent/REVIEW_LOOP.md`.
+- [x] Inspect `middleware.ts` for route protection behavior.
+- [x] Inspect `lib/actions/auth.ts` for login/logout behavior and error handling.
+- [x] Inspect `lib/actions/news.ts` for create/update/delete/publish behavior.
+- [x] Inspect `lib/sanitize.ts` for rich text allowlist behavior.
+- [x] Inspect `components/admin/ImageUploader.tsx` for upload validation and service-key exposure risks.
+- [x] Inspect `supabase/migrations/0001_news_table.sql` for RLS and schema alignment.
+- [x] Document verified issues in `docs/IMPLEMENTATION_STATUS.md`.
+- [x] Run `npm.cmd test`.
+- [x] Run `npm.cmd run lint`.
+- [x] Run `npm.cmd run build`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Exit criteria:** No hardening change is made until the issue is documented and linked to a file/test.
 
@@ -92,14 +92,14 @@ npm.cmd run test:e2e
 
 ## Milestone 2: Security And Data Integrity Fixes
 
-- [ ] For each verified issue, write or update a unit/component/E2E test that fails before the fix.
-- [ ] Fix only the targeted issue in the smallest relevant file.
-- [ ] Re-run the focused test.
-- [ ] Re-run `npm.cmd test`.
-- [ ] Re-run `npm.cmd run lint`.
-- [ ] Re-run `npm.cmd run build`.
-- [ ] Update `docs/IMPLEMENTATION_STATUS.md` with the fix and validation result.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] For each verified issue, write or update a unit/component/E2E test that fails before the fix.
+- [x] Fix only the targeted issue in the smallest relevant file.
+- [x] Re-run the focused test.
+- [x] Re-run `npm.cmd test`.
+- [x] Re-run `npm.cmd run lint`.
+- [x] Re-run `npm.cmd run build`.
+- [x] Update `docs/IMPLEMENTATION_STATUS.md` with the fix and validation result.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Candidate issues to verify before fixing:**
 - Duplicate title/slug behavior.
@@ -115,18 +115,18 @@ npm.cmd run test:e2e
 
 ## Milestone 3: Admin UX Reliability
 
-- [ ] Verify admin list empty, loading, error, and populated states.
-- [ ] Verify create/edit form validation for required title, teaser, category, and body.
-- [ ] Verify result rows can be added, edited, removed, saved, and rendered publicly if enabled.
-- [ ] Verify delete requires confirmation and redirects safely.
-- [ ] Add or update tests for any verified broken behavior.
-- [ ] Make only targeted fixes.
-- [ ] Run `npm.cmd test`.
-- [ ] Run `npm.cmd run lint`.
-- [ ] Run `npm.cmd run build`.
+- [x] Verify admin list empty, loading, error, and populated states.
+- [x] Verify create/edit form validation for required title, teaser, category, and body.
+- [x] Verify result rows can be added, edited, removed, saved, and rendered publicly if enabled.
+- [x] Verify delete requires confirmation and redirects safely.
+- [x] Add or update tests for any verified broken behavior.
+- [x] Make only targeted fixes.
+- [x] Run `npm.cmd test`.
+- [x] Run `npm.cmd run lint`.
+- [x] Run `npm.cmd run build`.
 - [ ] Run `npm.cmd run test:e2e`.
-- [ ] Update `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Update `docs/IMPLEMENTATION_STATUS.md`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Exit criteria:** Admin flows are stable enough for final QA, or remaining blockers are documented with exact reproduction steps.
 

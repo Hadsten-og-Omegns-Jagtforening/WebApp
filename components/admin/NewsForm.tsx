@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import Link from 'next/link'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
@@ -176,7 +177,7 @@ export default function NewsForm({ post, onSaveDraft, onPublish, onDelete }: Pro
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           {error && <span style={{ color: 'var(--danger)', alignSelf: 'center', fontSize: 13 }}>{error}</span>}
-          <a href="/admin/nyheder" className="btn ghost">Annullér</a>
+          <Link href="/admin/nyheder" className="btn ghost">Annullér</Link>
           <button type="submit" className="btn secondary" disabled={isPending}>Gem som kladde</button>
           {onDelete && (
             <button type="button" className="btn danger" onClick={async () => {

@@ -63,17 +63,19 @@ npm.cmd run test:e2e
 
 ## Milestone 1: Public UI Comparison
 
-- [ ] Read `docs/DESIGN_SYSTEM.md`, `docs/SITE_MAP.md`, `docs/ACCEPTANCE_CRITERIA.md`, and `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] Start the app with `npm.cmd run dev`.
-- [ ] Capture desktop and mobile screenshots for `/`.
-- [ ] Capture desktop and mobile screenshots for `/nyheder`.
-- [ ] Capture desktop and mobile screenshots for one `/nyheder/[slug]` state if test data exists; otherwise document the blocker.
-- [ ] Compare against `ui_kits/website/Home.jsx`, `ui_kits/website/News.jsx`, `ui_kits/website/kit.css`, and `ui_kits/website/index.html`.
-- [ ] Record concrete mismatches in `docs/IMPLEMENTATION_STATUS.md` under a UI comparison section.
-- [ ] Run `npm.cmd test`.
-- [ ] Run `npm.cmd run lint`.
-- [ ] Run `npm.cmd run build`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Read `docs/DESIGN_SYSTEM.md`, `docs/SITE_MAP.md`, `docs/ACCEPTANCE_CRITERIA.md`, and `docs/IMPLEMENTATION_STATUS.md`.
+- [x] Start the app with `npm.cmd run dev`.
+- [x] Capture desktop and mobile screenshots for `/`.
+- [x] Capture desktop and mobile screenshots for `/nyheder`.
+- [x] Capture desktop and mobile screenshots for one `/nyheder/[slug]` state if test data exists; otherwise document the blocker.
+- [x] Compare against `ui_kits/website/Home.jsx`, `ui_kits/website/News.jsx`, `ui_kits/website/kit.css`, and `ui_kits/website/index.html`.
+- [x] Record concrete mismatches in `docs/IMPLEMENTATION_STATUS.md` under a UI comparison section.
+- [x] Run `npm.cmd test`.
+- [x] Run `npm.cmd run lint`.
+- [x] Run `npm.cmd run build`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
+
+Validation note: `npm.cmd test` initially failed because Vitest collected tests inside `.claude/worktrees/clever-galileo-7fee33`, causing invalid hook call errors from a second React tree. With explicit user approval, `vitest.config.ts` was mechanically updated to exclude `.claude`, `.claire`, `.superpowers`, and `.agent`. After that fix, `typecheck`, `lint`, elevated `build`, and elevated `test` passed. Non-elevated `build` and `test` can fail with the known Windows `spawn EPERM` environment issue.
 
 **Exit criteria:** Public UI gaps are documented without making app changes.
 
@@ -81,14 +83,16 @@ npm.cmd run test:e2e
 
 ## Milestone 2: Navigation And Footer Comparison
 
-- [ ] Compare `components/Nav.tsx` behavior and links against `ui_kits/website/Nav.jsx` and `docs/SITE_MAP.md`.
-- [ ] Compare `components/Footer.tsx` links, content, and visual structure against `ui_kits/website/Footer.jsx`.
-- [ ] Record route mismatches separately from visual mismatches.
-- [ ] Record accessibility concerns such as hover-only dropdowns, missing button semantics, focus visibility, or mobile menu issues.
-- [ ] Run `npm.cmd test`.
-- [ ] Run `npm.cmd run lint`.
-- [ ] Run `npm.cmd run build`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Compare `components/Nav.tsx` behavior and links against `ui_kits/website/Nav.jsx` and `docs/SITE_MAP.md`.
+- [x] Compare `components/Footer.tsx` links, content, and visual structure against `ui_kits/website/Footer.jsx`.
+- [x] Record route mismatches separately from visual mismatches.
+- [x] Record accessibility concerns such as hover-only dropdowns, missing button semantics, focus visibility, or mobile menu issues.
+- [x] Run `npm.cmd test`.
+- [x] Run `npm.cmd run lint`.
+- [x] Run `npm.cmd run build`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
+
+Validation note: milestone 2 validation passed with `npm.cmd run typecheck`, `npm.cmd run lint`, elevated `npm.cmd test`, and elevated `npm.cmd run build`. Visual/UX Critical and Major findings are documented only because UI fixes are outside plan 005 scope.
 
 **Exit criteria:** Navigation/footer work is categorized for either route completion or targeted UI fixes.
 
@@ -96,15 +100,17 @@ npm.cmd run test:e2e
 
 ## Milestone 3: Admin UI Comparison
 
-- [ ] Capture desktop and mobile screenshots for `/admin`.
-- [ ] If authenticated access is available, capture `/admin/nyheder`, `/admin/nyheder/ny`, and `/admin/nyheder/[id]`; otherwise document auth/test-data blocker.
-- [ ] Compare against `ui_kits/admin/login.html`, `ui_kits/admin/news-list.html`, `ui_kits/admin/news-edit.html`, and `ui_kits/admin/admin.css`.
-- [ ] Record only concrete admin UI mismatches in `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] Do not change admin code in this plan.
-- [ ] Run `npm.cmd test`.
-- [ ] Run `npm.cmd run lint`.
-- [ ] Run `npm.cmd run build`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Capture desktop and mobile screenshots for `/admin`.
+- [x] If authenticated access is available, capture `/admin/nyheder`, `/admin/nyheder/ny`, and `/admin/nyheder/[id]`; otherwise document auth/test-data blocker.
+- [x] Compare against `ui_kits/admin/login.html`, `ui_kits/admin/news-list.html`, `ui_kits/admin/news-edit.html`, and `ui_kits/admin/admin.css`.
+- [x] Record only concrete admin UI mismatches in `docs/IMPLEMENTATION_STATUS.md`.
+- [x] Do not change admin code in this plan.
+- [x] Run `npm.cmd test`.
+- [x] Run `npm.cmd run lint`.
+- [x] Run `npm.cmd run build`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
+
+Validation note: milestone 3 validation passed with `npm.cmd run typecheck`, `npm.cmd run lint`, elevated `npm.cmd test`, and elevated `npm.cmd run build`. Authenticated admin pages were documented as blocked by missing authenticated access/test data.
 
 **Exit criteria:** Admin visual and UX gaps are documented for the admin hardening plan or a future targeted visual-fix plan.
 

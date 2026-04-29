@@ -70,14 +70,14 @@ npm.cmd run test:e2e -- public-pages
 
 ## Milestone 1: Confirm Public Route Scope
 
-- [ ] Read `docs/SITE_MAP.md`, `docs/IMPLEMENTATION_STATUS.md`, `docs/ACCEPTANCE_CRITERIA.md`, and `ui_kits/website/README.md`.
-- [ ] List every missing public route in `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] Decide canonical route names from `docs/SITE_MAP.md`; do not invent aliases unless the docs explicitly require redirects.
-- [ ] Identify existing nav/footer links that currently point to missing routes.
-- [ ] Run `npm.cmd test`.
-- [ ] Run `npm.cmd run lint`.
-- [ ] Run `npm.cmd run build`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Read `docs/SITE_MAP.md`, `docs/IMPLEMENTATION_STATUS.md`, `docs/ACCEPTANCE_CRITERIA.md`, and `ui_kits/website/README.md`.
+- [x] List every missing public route in `docs/IMPLEMENTATION_STATUS.md`.
+- [x] Decide canonical route names from `docs/SITE_MAP.md`; do not invent aliases unless the docs explicitly require redirects.
+- [x] Identify existing nav/footer links that currently point to missing routes.
+- [x] Run `npm.cmd test`.
+- [x] Run `npm.cmd run lint`.
+- [x] Run `npm.cmd run build`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Exit criteria:** Missing routes and canonical URLs are documented before any page is added.
 
@@ -85,16 +85,16 @@ npm.cmd run test:e2e -- public-pages
 
 ## Milestone 2: High-Priority Utility Pages
 
-- [ ] Add `/book-skydebanen` using `ui_kits/website/Booking.jsx` as the reference, keeping it static/read-only unless booking integration is already scoped.
-- [ ] Add `/kalender` using `ui_kits/website/Calendar.jsx` as the reference. If Google Calendar embed details are unavailable, render the approved static/placeholder state and document the integration gap.
-- [ ] Add `/bliv-medlem` using `ui_kits/website/Membership.jsx` as the reference.
-- [ ] Add E2E smoke coverage for each page in `tests/e2e/public-pages.spec.ts`.
-- [ ] Run `npm.cmd test`.
-- [ ] Run `npm.cmd run lint`.
-- [ ] Run `npm.cmd run build`.
-- [ ] Run `npm.cmd run test:e2e -- public-pages`.
-- [ ] Update `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Add `/book-skydebanen` using `ui_kits/website/Booking.jsx` as the reference, keeping it static/read-only unless booking integration is already scoped.
+- [x] Add `/kalender` using `ui_kits/website/Calendar.jsx` as the reference. If Google Calendar embed details are unavailable, render the approved static/placeholder state and document the integration gap.
+- [x] Add `/bliv-medlem` using `ui_kits/website/Membership.jsx` as the reference.
+- [x] Add E2E smoke coverage for each page in `tests/e2e/public-pages.spec.ts`.
+- [x] Run `npm.cmd test`.
+- [x] Run `npm.cmd run lint`.
+- [x] Run `npm.cmd run build`.
+- [x] Run `npm.cmd run test:e2e -- public-pages`.
+- [x] Update `docs/IMPLEMENTATION_STATUS.md`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Exit criteria:** The primary public CTA destinations exist and pass smoke tests.
 
@@ -102,17 +102,17 @@ npm.cmd run test:e2e -- public-pages
 
 ## Milestone 3: Activities Pages
 
-- [ ] Add `/aktiviteter/jagt`.
-- [ ] Add `/aktiviteter/hjalp-til-jagtproven`.
-- [ ] Add `/aktiviteter/premieskydninger` using `ui_kits/website/Activities.jsx` as the reference.
-- [ ] If prize-shoot detail pages are required by `docs/SITE_MAP.md`, add only the documented set and keep content static.
-- [ ] Extend E2E smoke coverage for each route.
-- [ ] Run `npm.cmd test`.
-- [ ] Run `npm.cmd run lint`.
-- [ ] Run `npm.cmd run build`.
-- [ ] Run `npm.cmd run test:e2e -- public-pages`.
-- [ ] Update `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Add `/aktiviteter/jagt`.
+- [x] Add `/aktiviteter/hjalp-til-jagtproven`.
+- [x] Add `/aktiviteter/premieskydninger` using `ui_kits/website/Activities.jsx` as the reference.
+- [x] If prize-shoot detail pages are required by `docs/SITE_MAP.md`, add only the documented set and keep content static.
+- [x] Extend E2E smoke coverage for each route.
+- [x] Run `npm.cmd test`.
+- [x] Run `npm.cmd run lint`.
+- [x] Run `npm.cmd run build`.
+- [x] Run `npm.cmd run test:e2e -- public-pages`.
+- [x] Update `docs/IMPLEMENTATION_STATUS.md`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Exit criteria:** Activity routes from the site map exist or are explicitly deferred with a reason.
 
@@ -120,18 +120,18 @@ npm.cmd run test:e2e -- public-pages
 
 ## Milestone 4: Practical Info Pages And Navigation Alignment
 
-- [ ] Add `/praktisk-info/aabningstider-og-skydetider`.
-- [ ] Add `/praktisk-info/bestyrelsen`.
-- [ ] Add `/find-os` if required by `docs/SITE_MAP.md` or current footer links.
-- [ ] Update `components/Nav.tsx` links to canonical implemented routes.
-- [ ] Update `components/Footer.tsx` links to canonical implemented routes.
-- [ ] Extend E2E smoke coverage for practical info routes and nav/footer link destinations.
-- [ ] Run `npm.cmd test`.
-- [ ] Run `npm.cmd run lint`.
-- [ ] Run `npm.cmd run build`.
-- [ ] Run `npm.cmd run test:e2e -- public-pages`.
-- [ ] Update `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Add `/praktisk-info/aabningstider-og-skydetider`.
+- [x] Add `/praktisk-info/bestyrelsen`.
+- [x] Add `/find-os` if required by `docs/SITE_MAP.md` or current footer links.
+- [x] Update `components/Nav.tsx` links to canonical implemented routes.
+- [x] Update `components/Footer.tsx` links to canonical implemented routes.
+- [x] Extend E2E smoke coverage for practical info routes and nav/footer link destinations.
+- [x] Run `npm.cmd test`.
+- [x] Run `npm.cmd run lint`.
+- [x] Run `npm.cmd run build`.
+- [x] Run `npm.cmd run test:e2e -- public-pages`.
+- [x] Update `docs/IMPLEMENTATION_STATUS.md`.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Exit criteria:** Public navigation no longer points at missing internal pages unless the destination is intentionally external or deferred.
 

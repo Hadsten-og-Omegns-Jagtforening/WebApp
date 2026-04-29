@@ -8,6 +8,7 @@ Focus:
 - build stability
 - type safety
 - lint correctness
+- targeted regression coverage for verified issues
 
 ---
 
@@ -17,6 +18,7 @@ Run in Windows:
 
 npm.cmd run typecheck
 npm.cmd run lint
+npm.cmd test
 npm.cmd run build
 
 ---
@@ -40,12 +42,14 @@ All commands must:
 ### Build
 - Next.js compiles successfully
 
+### Test
+- Vitest unit/component regression suite passes
+
 ---
 
 ## Known Limitations
 
-- No full test suite required yet
-- No automated UI tests yet
+- UI/browser validation is still milestone-specific and may require Playwright or browser review
 - Environment issues (Windows, permissions) may occur
 
 If something fails:

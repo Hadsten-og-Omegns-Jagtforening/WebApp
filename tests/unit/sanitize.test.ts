@@ -32,4 +32,9 @@ describe('sanitizeBody', () => {
     const result = sanitizeBody('<a href="http://evil.com">click</a>')
     expect(result).not.toContain('http://evil.com')
   })
+
+  it('strips protocol-relative hrefs', () => {
+    const result = sanitizeBody('<a href="//evil.example">click</a>')
+    expect(result).not.toContain('//evil.example')
+  })
 })
