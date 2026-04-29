@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="da"><head>
+<meta charset="utf-8">
+<title>HOJ Admin · Login</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="login-bg">
+    <div class="login-card">
+      <div class="brand">
+        <img src="../../assets/logo-hoj.png" alt="HOJ">
+        <div class="w">
+          <div class="mark">Hadsten &amp; Omegns Jagtforening</div>
+          <div class="sub">Admin · nyheder &amp; indhold</div>
+        </div>
+      </div>
+      <h1>Log ind</h1>
+      <p class="lede">For bestyrelsen og redaktører. Spørg Magnus hvis du mangler adgang.</p>
+      <form class="form" onsubmit="event.preventDefault(); window.location.href='news-list.html';">
+        <div class="fld">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" placeholder="dit.navn@hadstenjagtforening.dk" autofocus>
+        </div>
+        <div class="fld">
+          <label for="pw">Adgangskode</label>
+          <input id="pw" type="password" placeholder="••••••••••">
+        </div>
+        <div class="remember-row">
+          <label class="checkbox"><input type="checkbox" checked> Husk mig</label>
+          <a href="#">Glemt adgangskode?</a>
+        </div>
+        <button type="submit" class="btn primary lg block">Log ind</button>
+      </form>
+      <div class="foot">Stiftet 1968 · Vissingvej 6, 8370 Hadsten</div>
+    </div>
+  </div>
+</body></html>

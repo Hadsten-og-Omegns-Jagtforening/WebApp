@@ -1,0 +1,259 @@
+/* ==========================================================================
+   HOJ — Hadsten & Omegns Jagtforening
+   Design tokens: colours, type, spacing, radii, shadows.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  /* ---------- Colours — raw palette ---------- */
+  --hoj-forest-900: #151E18;
+  --hoj-forest-800: #1E2A22;  /* PRIMARY dark */
+  --hoj-forest-700: #2C3B30;
+  --hoj-forest-600: #3D4F41;
+
+  --hoj-loam-900:   #3A2E22;
+  --hoj-loam-700:   #5A4A3A;
+  --hoj-loam-500:   #8A7359;
+  --hoj-loam-300:   #B9A689;
+  --hoj-loam-100:   #E3D6BF;
+
+  --hoj-bone:       #F4EFE4;  /* primary bg */
+  --hoj-paper:      #FAF8F2;  /* surface */
+  --hoj-bone-dim:   #ECE5D4;
+  --hoj-white:      #FFFFFF;
+
+  --hoj-brass-700:  #8E6A22;
+  --hoj-brass-600:  #B8893A;  /* PRIMARY accent */
+  --hoj-brass-500:  #C99A4A;
+  --hoj-brass-400:  #D4A557;
+  --hoj-brass-200:  #EDCF95;
+
+  --hoj-clay-700:   #B84A10;
+  --hoj-clay-600:   #E8691F;  /* danger / alert — matched to logo orange */
+  --hoj-clay-400:   #F19256;
+
+  --hoj-moss-600:   #5E7347;
+  --hoj-moss-500:   #7A8F5F;
+  --hoj-moss-300:   #A9BC8F;
+
+  --hoj-spaniel-500: #A6CE38;  /* heritage lime, from the 1968 logo badge */
+  --hoj-spaniel-700: #7FA028;  /* deeper lime for accents on light bg */
+
+  --hoj-slate-800:  #2A333D;
+  --hoj-slate-600:  #3A4550;
+  --hoj-slate-400:  #6B7785;
+  --hoj-slate-200:  #B6BEC8;
+
+  /* ---------- Semantic tokens ---------- */
+  --bg:             var(--hoj-bone);
+  --bg-alt:         var(--hoj-bone-dim);
+  --surface:        var(--hoj-paper);
+  --surface-raised: var(--hoj-white);
+  --surface-inverse:var(--hoj-forest-800);
+
+  --fg1:            var(--hoj-forest-800);   /* primary text */
+  --fg2:            var(--hoj-loam-700);     /* secondary text */
+  --fg3:            var(--hoj-loam-500);     /* tertiary / meta */
+  --fg-inverse:     var(--hoj-bone);
+  --fg-inverse-dim: rgba(244,239,228,0.72);
+
+  --accent:         var(--hoj-brass-600);
+  --accent-hover:   var(--hoj-brass-700);
+  --accent-soft:    var(--hoj-brass-200);
+  --accent-text:    #1A1308;
+
+  --danger:         var(--hoj-clay-600);   /* alert, banen lukket, fejl */
+  --success:        var(--hoj-moss-600);   /* banen åben, OK */
+  --live:           var(--hoj-moss-600);   /* "åben nu" pulse — positive, not danger */
+
+  --border:         rgba(138,115,89,0.25);   /* loam @ 25% */
+  --border-strong:  rgba(138,115,89,0.55);
+  --border-inverse: rgba(244,239,228,0.15);
+  --divider:        rgba(30,42,34,0.08);
+
+  --focus-ring:     var(--hoj-brass-400);
+
+  /* ---------- Typography — families ---------- */
+  --font-display:   "Bitter", "Roboto Slab", Georgia, serif;
+  --font-body:      "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono:      "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ---------- Typography — scale ---------- */
+  --fs-12: 0.75rem;
+  --fs-13: 0.8125rem;
+  --fs-15: 0.9375rem;
+  --fs-17: 1.0625rem;
+  --fs-20: 1.25rem;
+  --fs-24: 1.5rem;
+  --fs-32: 2rem;
+  --fs-44: 2.75rem;
+  --fs-56: 3.5rem;
+  --fs-64: 4rem;
+  --fs-96: 6rem;
+
+  /* line-heights */
+  --lh-tight: 1.05;
+  --lh-snug:  1.2;
+  --lh-body:  1.5;
+  --lh-loose: 1.65;
+
+  /* tracking */
+  --tr-tight:  -0.02em;
+  --tr-normal: 0;
+  --tr-label:  0.06em;
+  --tr-caps:   0.09em;
+
+  /* ---------- Spacing — 8px base ---------- */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  24px;
+  --sp-6:  32px;
+  --sp-7:  48px;
+  --sp-8:  64px;
+  --sp-9:  96px;
+  --sp-10: 128px;
+
+  /* ---------- Radii ---------- */
+  --r-xs: 2px;
+  --r-sm: 4px;   /* buttons, inputs */
+  --r-md: 8px;   /* cards */
+  --r-lg: 12px;  /* hero, modals */
+  --r-full: 999px;
+
+  /* ---------- Shadows ---------- */
+  --sh-0: none;
+  --sh-hairline: 0 1px 0 rgba(30,42,34,0.06);
+  --sh-card:     0 1px 2px rgba(30,42,34,0.08), 0 2px 8px rgba(30,42,34,0.06);
+  --sh-raised:   0 2px 4px rgba(30,42,34,0.10), 0 6px 16px rgba(30,42,34,0.08);
+  --sh-modal:    0 20px 60px rgba(30,42,34,0.25), 0 4px 12px rgba(30,42,34,0.15);
+  --sh-inset-top:inset 0 1px 0 rgba(255,255,255,0.18);
+
+  /* ---------- Layout ---------- */
+  --container:        1200px;
+  --container-wide:   1440px;
+  --nav-height:       64px;
+
+  /* ---------- Motion ---------- */
+  --ease-out:   cubic-bezier(0.2, 0.6, 0.2, 1);
+  --ease-soft:  cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:   120ms;
+  --dur-base:   180ms;
+  --dur-slow:   280ms;
+}
+
+/* ==========================================================================
+   Base element styles (semantic)
+   ========================================================================== */
+
+html { font-family: var(--font-body); color: var(--fg1); background: var(--bg); }
+
+body {
+  font-size: var(--fs-17);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(var(--fs-44), 4.4vw, var(--fs-56));
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--fg1);
+  text-wrap: balance;
+  margin: 0 0 var(--sp-5);
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(var(--fs-32), 3.2vw, var(--fs-44));
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  margin: 0 0 var(--sp-4);
+}
+
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-24);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.005em;
+  margin: 0 0 var(--sp-3);
+}
+
+h4, .h4 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-17);
+  line-height: var(--lh-snug);
+  margin: 0 0 var(--sp-2);
+}
+
+p, .p {
+  font-size: var(--fs-17);
+  line-height: var(--lh-body);
+  color: var(--fg1);
+  max-width: 68ch;
+  margin: 0 0 var(--sp-4);
+  text-wrap: pretty;
+}
+
+.lede {
+  font-size: var(--fs-20);
+  line-height: 1.45;
+  color: var(--fg2);
+}
+
+small, .small, .caption {
+  font-size: var(--fs-13);
+  line-height: 1.4;
+  color: var(--fg3);
+}
+
+.eyebrow, .label {
+  font-size: var(--fs-12);
+  font-weight: 600;
+  letter-spacing: var(--tr-caps);
+  text-transform: uppercase;
+  color: var(--fg3);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+}
+
+a {
+  color: var(--fg1);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: var(--border-strong);
+  transition: text-decoration-thickness var(--dur-base) var(--ease-out),
+              text-decoration-color var(--dur-base) var(--ease-out);
+}
+a:hover { text-decoration-thickness: 2px; text-decoration-color: var(--fg1); }
+a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--r-xs);
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: var(--border);
+  margin: var(--sp-6) 0;
+}
+
+::selection { background: var(--hoj-brass-200); color: var(--fg1); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
