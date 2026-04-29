@@ -148,6 +148,9 @@ This must ALWAYS match the actual code.
 - Plan 007 milestone 3 validation passed for `npm.cmd run typecheck`, `npm.cmd run lint`, elevated `npm.cmd test`, and elevated `npm.cmd run build`.
 - Plan 007 milestone 3 browser review blocker: local `/admin` and `/admin/nyheder` manual review on dev servers at `http://localhost:3003` and `http://localhost:3004` still hit a Supabase env runtime error in `middleware.ts` without a real local env setup. No auth/Supabase code was changed to bypass that.
 - Plan 007 milestone 3 blocker outside scope: elevated `npm.cmd run test:e2e` fails in `tests/e2e/homepage.spec.ts` because `page.locator('h2')` matches multiple headings on `/` and triggers a Playwright strict-mode failure while checking `Seneste nyheder`. This is a public homepage test issue, not an admin-plan regression.
+- Plan 008 milestone 1 fixed the Playwright homepage selector in `tests/e2e/homepage.spec.ts` by replacing the ambiguous `page.locator('h2')` assertion with `getByRole('heading', { name: 'Seneste nyheder' })`, which matches the intended user-visible heading without changing UI behavior.
+- Plan 008 milestone 1 validation passed: `npm.cmd run typecheck`, `npm.cmd run lint`, elevated `npm.cmd test`, elevated `npm.cmd run build`, and elevated `npm.cmd run test:e2e` all pass.
+- Plan 008 milestone 1 validation note: a transient `PageNotFoundError: /_document` appeared only when `npm.cmd run build` was run in parallel with the Playwright suite. Re-running `npm.cmd run build` sequentially passed, so this was classified as validation-process interference rather than an app bug.
 
 ---
 

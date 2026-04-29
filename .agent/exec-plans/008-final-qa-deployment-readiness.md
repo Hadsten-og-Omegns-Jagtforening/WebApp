@@ -73,15 +73,15 @@ npm.cmd run start
 
 ## Milestone 1: Full Automated Validation
 
-- [ ] Read `docs/IMPLEMENTATION_STATUS.md`, `docs/ACCEPTANCE_CRITERIA.md`, and `docs/TESTING.md`.
-- [ ] Run `npm.cmd test`.
-- [ ] Run `npm.cmd run lint`.
-- [ ] Run `npm.cmd run build`.
-- [ ] Run `npm.cmd run test:e2e`.
-- [ ] Record exact results in `docs/IMPLEMENTATION_STATUS.md`.
-- [ ] If a command fails, classify it as app bug, test bug, environment issue, Supabase/env issue, or missing external service.
-- [ ] Fix only small direct blockers; larger fixes must become a new ExecPlan.
-- [ ] Run `.agent/REVIEW_LOOP.md`.
+- [x] Read `docs/IMPLEMENTATION_STATUS.md`, `docs/ACCEPTANCE_CRITERIA.md`, and `docs/TESTING.md`.
+- [x] Run `npm.cmd test`.
+- [x] Run `npm.cmd run lint`.
+- [x] Run `npm.cmd run build`.
+- [x] Run `npm.cmd run test:e2e`.
+- [x] Record exact results in `docs/IMPLEMENTATION_STATUS.md`.
+- [x] If a command fails, classify it as app bug, test bug, environment issue, Supabase/env issue, or missing external service.
+- [x] Fix only small direct blockers; larger fixes must become a new ExecPlan.
+- [x] Run `.agent/REVIEW_LOOP.md`.
 
 **Exit criteria:** Automated validation is either passing or blockers are precisely documented.
 
