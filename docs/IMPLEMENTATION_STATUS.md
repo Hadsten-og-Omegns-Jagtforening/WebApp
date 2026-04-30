@@ -73,6 +73,32 @@ This must ALWAYS match the actual code.
   - post-deploy smoke tests
   - rollback expectations
 
+### Production launch follow-up QA - 2026-04-30
+
+- Added a subtle `Admin` link to `components/Nav.tsx`. It uses the existing public nav structure, links to `/admin`, and appears in both desktop and mobile navigation without becoming a primary CTA.
+- Improved contrast for the homepage hero `Se kalender` button in `components/Hero.tsx` without changing the surrounding hero layout or CTA hierarchy.
+- Kept `/kalender` in placeholder mode and added an explicit in-page note that the real public Google Calendar embed code or public calendar URL for `booking@hadstenjagtforening.dk` is still required from the customer.
+- Added an explicit hero-image TODO in `components/Hero.tsx` and documented that a customer-approved hero image is required before final launch.
+- Added a concrete old-news migration plan and manual fallback to `docs/LAUNCH_CHECKLIST.md`.
+- Updated `docs/DEPLOYMENT.md` and this file so the remaining launch inputs are explicit rather than implied.
+
+### Calendar embed readiness - 2026-04-30
+
+- `/kalender` now reads `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL`.
+- If the env value is present, the page renders a responsive iframe for the customer-provided public Google Calendar embed URL.
+- If the env value is missing, the page renders a clear fallback message explaining that the calendar integration is still in progress and that booking can be handled via `booking@hadstenjagtforening.dk` for now.
+- `.env.example`, `docs/DEPLOYMENT.md`, and `docs/LAUNCH_CHECKLIST.md` now document where the embed URL must be added later.
+
+### Admin auth onboarding and recovery - 2026-04-30
+
+- Added `/auth/reset-password`, `/auth/callback`, and `/auth/update-password`.
+- `/admin` now links to the reset-password flow through `Glemt adgangskode?`.
+- Password reset emails now use `resetPasswordForEmail()` with a callback redirect to `/auth/callback?next=/auth/update-password`.
+- `/auth/callback` exchanges the Supabase auth code for a session and redirects the recovery user to the update-password screen.
+- `/auth/update-password` now lets the recovery-session user set a new password and shows a clear invalid/expired-link message when no recovery session exists.
+- Admin provisioning remains closed: no public signup was added, and docs now require manual Supabase Auth user creation for the first admin.
+- Added focused regression coverage in `tests/unit/auth-actions.test.ts` and `tests/unit/auth-callback-route.test.ts`, plus Playwright coverage for the reset and update-password routes in `tests/e2e/admin-news.spec.ts`.
+
 ### Route inventory - 2026-04-29
 
 | Route | Status | Source |
@@ -225,6 +251,12 @@ This must ALWAYS match the actual code.
 - Final security/design gate concluded that technical feasibility is not enough to responsibly approve a Simply-only rewrite for this organization because long-term maintenance and recovery responsibilities would remain largely unmanaged.
 - Final security/design gate validation: `npm.cmd run typecheck` and `npm.cmd run lint` passed directly; `npm.cmd test` and `npm.cmd run build` passed when rerun elevated after the known Windows `spawn EPERM` sandbox issue.
 - Plan 010 launch-prep validation: `npm.cmd run typecheck` and `npm.cmd run lint` passed directly; `npm.cmd test` and `npm.cmd run build` passed when rerun elevated after the known Windows `spawn EPERM` sandbox issue. `npm.cmd run test:e2e` was not rerun because this plan changed documentation only and did not alter routes or UI behavior.
+- Plan 010 follow-up QA validation: `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd test`, `npm.cmd run build`, and `npm.cmd run test:e2e` were rerun because the public nav, hero CTA, and `/kalender` route changed. Non-elevated `test` and `build` remain subject to the known Windows `spawn EPERM` environment issue and should be rerun elevated if they fail for that reason.
+- Calendar embed readiness validation: rerun the same validation set because `/kalender` now conditionally renders an iframe based on `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL`.
+- Calendar embed readiness validation results: `npm.cmd run typecheck` passed, `npm.cmd run lint` passed, elevated `npm.cmd test` passed, and elevated `npm.cmd run build` passed. Elevated `npm.cmd run test:e2e` is currently unstable in the local environment: one run completed all 22 tests but exited nonzero after a dev-server `ECONNRESET` during teardown, and a rerun passed the `/kalender` page check but later lost the local dev server and failed three unrelated public-page navigations with `ERR_CONNECTION_RESET` / `ERR_CONNECTION_REFUSED`.
+- Admin auth onboarding/recovery validation: rerun `npm.cmd run typecheck`, `npm.cmd run lint`, `npm.cmd test`, `npm.cmd run build`, and `npm.cmd run test:e2e` because admin routes, auth routes, actions, and docs changed.
+- Admin auth onboarding/recovery validation results: `npm.cmd run typecheck` passed, `npm.cmd run lint` passed, elevated `npm.cmd test` passed, elevated `npm.cmd run build` passed, and elevated `npm.cmd run test:e2e` passed.
+- Validation configuration update: `playwright.config.ts` now runs E2E against `npm.cmd run build && npm.cmd run start -- -p 3000` instead of the Turbopack dev server. This keeps auth/UI checks on the production build path and avoids the previously observed local dev-manifest instability.
 
 ---
 
@@ -345,6 +377,8 @@ Admin visual and UX mismatches:
 - Plan 006 milestone 4 browser review: `/praktisk-info`, `/praktisk-info/aabningstider-og-skydetider`, `/praktisk-info/bestyrelsen`, `/find-os`, and `/` render with visible public header/footer and expected page headings.
 - Plan 006 milestone 4 mobile check: at 390px, `/`, `/book-skydebanen`, `/kalender`, `/bliv-medlem`, `/aktiviteter`, `/aktiviteter/jagt`, `/aktiviteter/hjalp-til-jagtproven`, `/aktiviteter/premieskydninger`, `/praktisk-info`, `/praktisk-info/aabningstider-og-skydetider`, `/praktisk-info/bestyrelsen`, and `/find-os` all report `documentElement.scrollWidth` 390px. The previously documented 421px mobile overflow is resolved for these routes.
 - Browser screenshot capture timed out once during milestone 4 review, but DOM/browser checks and Playwright viewport measurements completed successfully.
+- Plan 010 follow-up QA: `/kalender` now uses `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` for the final embed and falls back to a booking email message when the env value is absent. No calendar URL has been guessed or hardcoded.
+- Plan 010 follow-up QA: the homepage hero still uses `/assets/placeholder-hero.svg`; this is intentional until the customer supplies an approved hero image for launch.
 
 ---
 
@@ -352,7 +386,7 @@ Admin visual and UX mismatches:
 
 - In the default sandbox, `npm.cmd run build` can fail with Windows `spawn EPERM`; the same command passes when run with elevated permission.
 - In the default sandbox, `npm.cmd test`, `npm.cmd run build`, and local dev/start smoke can require elevated execution because of the known Windows `spawn EPERM` environment issue.
-- The current admin auth implementation does not support Supabase magic-link or reset-password completion flows. Admin access currently depends on a manually provisioned email/password account.
+- Admin access still depends on manually provisioned Supabase Auth users. There is no public signup flow.
 - Deleting a news post does not automatically delete its uploaded image object from the Supabase `news-images` bucket. Storage cleanup is currently manual.
 
 ---
@@ -360,7 +394,7 @@ Admin visual and UX mismatches:
 ## Missing / Not Implemented
 
 - All public routes currently listed in `docs/SITE_MAP.md` are implemented.
-- Deferred non-route gaps: live Google Calendar sync/embed details, booking backend behavior, real Supabase news data/empty states, and prize-shoot detail pages not listed in `docs/SITE_MAP.md`.
+- Deferred non-route gaps: customer-approved hero image, old-news migration execution, booking backend behavior, real Supabase news data/empty states, and prize-shoot detail pages not listed in `docs/SITE_MAP.md`.
 
 ---
 

@@ -54,8 +54,11 @@ test('desktop hamburger is hidden and mobile menu opens', async ({ page }) => {
 
   await page.setViewportSize({ width: 390, height: 900 })
   await page.reload()
+  await page.waitForLoadState('networkidle')
+  await expect(page.locator('.nav-hamburger')).toBeVisible()
+  await expect(page.locator('.nav-hamburger')).toHaveAttribute('aria-expanded', 'false')
   await page.locator('.nav-hamburger').click()
-  await expect(page.locator('#primary-navigation')).toBeVisible()
+  await expect(page.locator('.nav-hamburger')).toHaveAttribute('aria-expanded', 'true')
 
   await page.locator('button.nav-trigger').filter({ hasText: 'Aktiviteter' }).click()
   await expect(page.locator('a[href="/aktiviteter/jagt"]')).toBeVisible()

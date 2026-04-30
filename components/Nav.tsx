@@ -41,6 +41,7 @@ const items: NavItem[] = [
       { id: 'find', label: 'Find os', href: '/find-os' },
     ],
   },
+  { id: 'admin', label: 'Admin', href: '/admin' },
 ]
 
 export default function Nav() {

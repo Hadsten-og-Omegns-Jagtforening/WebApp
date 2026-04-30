@@ -47,7 +47,7 @@ That makes it a direct fit for Vercel + Supabase. No runtime rewrite is required
 ### Important implementation limits
 
 - The admin flow currently supports **email + password login only**
-- Supabase magic-link and reset-password completion are **not implemented** in the current app
+- There is **no public self-registration**
 - News image upload accepts **JPG/PNG only**
 - News image upload enforces **5 MB max file size**
 - The app does **not** automatically delete Supabase Storage objects when a news post is deleted or an image is replaced
@@ -61,13 +61,17 @@ Set these in Vercel for both **Production** and **Preview**:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+NEXT_PUBLIC_SITE_URL=https://your-domain.example
+NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL=
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 ```
 
 ### Notes
 
-- All three values must come from the **same** Supabase project
+- All four values must come from the **same** deployment context
 - `SUPABASE_SERVICE_ROLE_KEY` must remain server-only
+- `NEXT_PUBLIC_SITE_URL` must match the current site origin for the environment where password-reset emails are sent
+- `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` must only be set when the customer provides the final public Google Calendar embed URL
 - The homepage and admin middleware will fail at runtime if `NEXT_PUBLIC_SUPABASE_URL` or `NEXT_PUBLIC_SUPABASE_ANON_KEY` are missing
 - The admin news actions will fail if `SUPABASE_SERVICE_ROLE_KEY` is missing
 
@@ -101,35 +105,53 @@ This provisions:
 
 ### 4. Provision the first admin user
 
+Admin provisioning model:
+
+- no public self-registration
+- no public signup UI
+- admin users are created manually in Supabase Auth
+- keep the admin account count minimal
+
 Create the first admin user in Supabase Auth with a known email and password.
 
 Current implementation note:
 
 - the app supports password login only
-- there is no in-app password reset completion flow yet
-- there is no magic-link login flow yet
+- password reset is handled through `/auth/reset-password` and `/auth/update-password`
+- there is no public signup flow
 
-That means the initial admin account should be created and communicated manually.
+First-admin steps:
+
+1. open Supabase Dashboard -> Authentication -> Users
+2. create the admin user manually with the intended email address
+3. either assign a temporary strong password there or trigger the reset flow afterward
+4. communicate the login URL `/admin`
+5. if using a temporary password, require the admin to change it immediately through the reset/update-password flow
 
 ### 5. Auth URL settings
 
-For the current password-only flow, the app does not require a callback route for everyday login.
+Everyday admin login still uses email + password on `/admin`, but password-reset emails now depend on the callback and update-password routes working correctly.
 
-Still configure the following correctly in Supabase:
+Configure the following in Supabase:
 
-- **Site URL**: production HOJ URL
-- **Additional Redirect URLs**: local dev URL and Vercel preview URLs if future auth flows are added
+- **Site URL**: the environment base URL, which should match `NEXT_PUBLIC_SITE_URL`
+- **Additional Redirect URLs** must include:
+  - `http://localhost:3000/auth/callback`
+  - `http://localhost:3000/auth/update-password`
+  - `https://*-<your-vercel-team>.vercel.app/auth/callback`
+  - `https://*-<your-vercel-team>.vercel.app/auth/update-password`
+  - `https://your-production-domain/auth/callback`
+  - `https://your-production-domain/auth/update-password`
 
-Recommended minimum:
+Password reset route flow:
 
-- `http://localhost:3000/**`
-- `https://*-<your-vercel-team>.vercel.app/**`
-- your final production URL
+1. admin visits `/auth/reset-password`
+2. app calls `resetPasswordForEmail(..., { redirectTo: <site>/auth/callback?next=/auth/update-password })`
+3. Supabase sends the reset email
+4. callback route exchanges the auth code for a session
+5. admin lands on `/auth/update-password` and sets a new password
 
-Reason:
-
-- Supabase documents that Site URL and Redirect URLs are critical for email confirmations, password resets, and passwordless flows
-- the current app does not yet implement those flows, but the project settings should still be correct before future auth work
+This is the required recovery path for launch.
 
 ## Vercel deployment steps
 
@@ -160,6 +182,7 @@ Add:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_SITE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY`
 
 Set them for:
@@ -186,6 +209,31 @@ After deployment, verify:
 - `/admin`
 
 Use `docs/LAUNCH_CHECKLIST.md` for the full post-deploy smoke sequence and rollback preparation.
+
+Customer-provided launch inputs still required before final cutover:
+
+- a customer-approved homepage hero image
+- the public Google Calendar embed URL for `booking@hadstenjagtforening.dk`, to be stored in `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL`
+
+Do not invent or hardcode either asset. Keep the current placeholders until the customer provides the approved source material.
+
+## Admin auth onboarding and recovery
+
+### Login entry point
+
+- admins sign in at `/admin`
+- there is no public signup
+
+### Password reset entry point
+
+- admins request a reset at `/auth/reset-password`
+- reset emails must return through `/auth/callback`
+- the password is updated at `/auth/update-password`
+
+### Operational rule
+
+- if an admin loses access, do not create a public registration workaround
+- either trigger the reset flow for the existing Supabase Auth user or create a replacement admin user manually in Supabase Auth
 
 ## DNS and mail notes for Simply
 

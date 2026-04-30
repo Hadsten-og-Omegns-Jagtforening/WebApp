@@ -34,12 +34,15 @@ Set these for **Production** and **Preview**:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL`
 - `SUPABASE_SERVICE_ROLE_KEY`
 
 Checks:
 
 - all values come from the same Supabase project
 - `SUPABASE_SERVICE_ROLE_KEY` is never copied into client code or public docs
+- `NEXT_PUBLIC_SITE_URL` matches the current environment origin
 - env vars are set before the first production deploy
 
 ### Production domain setup
@@ -62,6 +65,12 @@ After production deployment, verify:
 - `/praktisk-info`
 - `/find-os`
 - `/admin`
+
+### Customer-provided launch assets still required
+
+- Collect the customer-approved hero image for the homepage before final launch
+- Collect the public Google Calendar embed URL for `booking@hadstenjagtforening.dk`
+- Confirm the Google Calendar is public and embeddable before replacing the current placeholder state
 
 ## 2. Supabase production checklist
 
@@ -107,7 +116,8 @@ Verify:
 Current implementation note:
 
 - production admin auth is password-only
-- magic-link and reset-password completion are not implemented
+- password reset uses `/auth/reset-password`, `/auth/callback`, and `/auth/update-password`
+- there is no public signup flow
 
 ### Admin user provisioning
 
@@ -115,6 +125,17 @@ Current implementation note:
 - Use a strong unique password
 - Record who holds admin access
 - Keep the admin account count minimal
+- Do not enable public self-registration
+- First-admin setup:
+  1. create the user manually in Supabase Auth
+  2. confirm the email address is correct
+  3. either assign a temporary password or use the reset-password flow
+  4. verify the user can reach `/admin`
+- Password reset path:
+  1. open `/auth/reset-password`
+  2. submit the admin email
+  3. open the email link
+  4. complete the new password form at `/auth/update-password`
 
 ### RLS / policy verification
 
@@ -189,7 +210,7 @@ If rollback is needed:
 - Verify accepted upload types are still limited to JPG/PNG
 - Verify upload size limits are still enforced
 - Verify there is no public self-registration if it is not required
-- Verify password/reset/magic-link limitations are documented
+- Verify password reset routes and Supabase redirect URLs are configured correctly
 - Verify content/storage policy is documented
 - Verify the admin account count is minimal
 - Verify a strong password policy is communicated to the admin owner
@@ -200,6 +221,7 @@ If rollback is needed:
 
 - explain how to reach `/admin`
 - explain how to log in
+- explain how to request a password reset through `/auth/reset-password`
 - explain how to create news
 - explain how to edit news
 - explain how to delete news
@@ -215,6 +237,7 @@ If rollback is needed:
   - video files
   - sensitive/private documents
   - executable or archive files
+- explain that the homepage hero image must come from a customer-approved source and be prepared separately from the news upload flow
 
 ### Failure handling
 
@@ -235,6 +258,9 @@ If rollback is needed:
 ### Admin flow
 
 - admin login works
+- forgot-password flow opens `/auth/reset-password`
+- reset email returns through `/auth/callback`
+- update-password form works at `/auth/update-password`
 - create draft/test news
 - upload test image
 - edit test news
@@ -246,8 +272,53 @@ If rollback is needed:
 - verify no critical production console errors
 - verify no obvious broken images
 - verify no broken internal links
+- verify the homepage hero no longer uses the placeholder asset before final launch
+- verify `/kalender` uses the approved public Google Calendar embed or public URL rather than the temporary placeholder notice
+- verify `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` is set correctly in Vercel before checking the production calendar iframe
 
-## 7. Rollback plan
+## 7. Old news migration plan
+
+### Target scope
+
+- migrate only the old public news content needed for launch
+- preserve current public functionality and design
+- do not expand the content model during migration
+
+### Required fields per migrated item
+
+- `title`
+- `date`
+- `body/content`
+- `image` if available and approved for reuse
+- `source URL` if the old article should remain traceable
+
+### Recommended migration sequence
+
+1. inventory the old website news archive and record source URLs
+2. decide which historical posts must exist at launch and which can stay behind
+3. extract title, publish date, body, image, and source URL for each selected article
+4. normalize body content into the current editor-safe format
+5. compress and prepare each image before upload
+6. create the news posts in the new admin
+7. verify each migrated article on `/nyheder` and `/nyheder/[slug]`
+
+### Manual fallback
+
+Use manual entry if scraping or bulk import is risky because of inconsistent HTML, missing assets, or formatting drift:
+
+1. open the old article
+2. copy title, date, and body into the new admin
+3. upload the associated image only if the file is available and approved
+4. store the old article URL in migration notes or a source field if one is added later
+5. publish only after visual QA confirms the new article renders correctly
+
+### Launch decision rule
+
+- do not block launch on full historical migration
+- prioritize the most recent or most important news first
+- leave the remaining archive for a controlled post-launch migration pass if needed
+
+## 8. Rollback plan
 
 ### Vercel rollback
 

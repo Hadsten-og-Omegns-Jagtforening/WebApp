@@ -9,6 +9,7 @@ export default function Hero() {
         <img src="/assets/placeholder-hero.svg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
       </div>
       <div className="hero-shade" />
+      {/* TODO: replace placeholder-hero.svg with a customer-approved hero image before production launch. */}
       {/* TODO: replace with dynamic open/closed status in Phase 2 */}
       <div className="hero-status"><span className="dot" />Banen åben · ons 17–20</div>
       <div className="container hero-inner">
@@ -19,7 +20,15 @@ export default function Hero() {
           <Link href="/book-skydebanen" className="btn primary lg">
             <Icon name="crosshair" size={18} />Book skydebanen
           </Link>
-          <Link href="/kalender" className="btn secondary lg" style={{ color: '#F4EFE4', borderColor: 'rgba(244,239,228,0.4)' }}>
+          <Link
+            href="/kalender"
+            className="btn secondary lg"
+            style={{
+              color: '#151E18',
+              borderColor: 'rgba(244,239,228,0.9)',
+              background: 'rgba(244,239,228,0.92)',
+            }}
+          >
             Se kalender
           </Link>
         </div>

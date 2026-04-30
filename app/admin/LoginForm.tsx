@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useTransition } from 'react'
 import { signIn } from '@/lib/actions/auth'
 
@@ -36,12 +37,17 @@ export default function LoginForm() {
           id="pw"
           name="password"
           type="password"
-          placeholder="••••••••••"
+          placeholder="**********"
           required
         />
       </div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: -6, marginBottom: 8 }}>
+        <Link href="/auth/reset-password" style={{ fontSize: 14 }}>
+          Glemt adgangskode?
+        </Link>
+      </div>
       <button type="submit" className="btn primary lg block" disabled={isPending}>
-        {isPending ? 'Logger ind…' : 'Log ind'}
+        {isPending ? 'Logger ind...' : 'Log ind'}
       </button>
     </form>
   )
