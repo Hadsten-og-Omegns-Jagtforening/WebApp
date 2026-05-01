@@ -7,7 +7,7 @@ test('homepage loads with hero', async ({ page }) => {
 
 test('homepage has news feed section', async ({ page }) => {
   await page.goto('/')
-  await expect(page.locator('h2')).toContainText('Seneste nyheder')
+  await expect(page.getByRole('heading', { name: 'Seneste nyheder' })).toBeVisible()
 })
 
 test('nav has booking CTA', async ({ page }) => {

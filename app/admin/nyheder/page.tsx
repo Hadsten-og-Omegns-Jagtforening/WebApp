@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { deletePost } from '@/lib/actions/news'
 import Icon from '@/components/Icon'
+import DeletePostButton from '@/components/admin/DeletePostButton'
 import type { NewsPost, NewsCategory } from '@/lib/database.types'
 
 const CATEGORY_CLASS: Record<NewsCategory, string> = {
@@ -52,7 +53,13 @@ export default async function AdminNyhederPage() {
             </tr>
           </thead>
           <tbody>
-            {((posts as NewsPost[]) ?? []).map(post => (
+            {((posts as NewsPost[]) ?? []).length === 0 ? (
+              <tr>
+                <td colSpan={5} className="adm-empty">
+                  Ingen nyheder endnu
+                </td>
+              </tr>
+            ) : ((posts as NewsPost[]) ?? []).map(post => (
               <tr key={post.id}>
                 <td>
                   <span className={`cat ${CATEGORY_CLASS[post.category as NewsCategory]}`}>
@@ -76,9 +83,7 @@ export default async function AdminNyhederPage() {
                     <Icon name="pencil" size={15} />
                   </Link>
                   <form action={deletePost.bind(null, post.id) as unknown as (formData: FormData) => Promise<void>} style={{ display: 'inline' }}>
-                    <button type="submit" title="Slet" className="btn danger icon-only">
-                      <Icon name="trash" size={15} />
-                    </button>
+                    <DeletePostButton />
                   </form>
                 </td>
               </tr>

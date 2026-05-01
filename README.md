@@ -4,6 +4,26 @@ A fresh design system for a planned redesign of the web app for **Hadsten & Omeg
 
 > ⚠️ **This is a proposed refresh, not a recreation.** The current site (https://www.hadstenjagtforening.dk/) runs on a dated WordPress "Minamaze" theme with orange accents and a photographic hero style. The user has asked for a redesign, so this system is a modern reinterpretation grounded in the brand's realities — not a copy of the existing site.
 
+## Local environment
+
+This app requires real Supabase environment variables to run locally.
+
+Create `C:\Users\kaspe\hobby_proj\websites\HOJ_webapp\.env.local` from `.env.example` and fill in real values from your Supabase project:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-real-anon-key-from-supabase
+SUPABASE_SERVICE_ROLE_KEY=your-real-service-role-key-from-supabase
+```
+
+Notes:
+- `NEXT_PUBLIC_SUPABASE_URL` must be the actual Supabase project URL.
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` must be the real `anon` key for the same project.
+- `SUPABASE_SERVICE_ROLE_KEY` must be the real `service_role` key for the same project.
+- Placeholder values like `ABCD` will still fail.
+- Restart `npm run dev` after changing `.env.local`.
+- Do not commit `.env.local`.
+
 ## About the association
 
 - **Legal name:** Hadsten & Omegns Jagtforening · **CVR:** 34123268

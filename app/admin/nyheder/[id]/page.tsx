@@ -31,8 +31,9 @@ export default async function EditNyhedPage({ params }: Props) {
         }}
         onPublish={async (fd) => {
           'use server'
-          await updatePost(id, fd)
-          return publishPost(id, fd.get('published_at') as string | null)
+          const result = await updatePost(id, fd, post.slug)
+          if (result?.error) return result
+          return publishPost(id, fd.get('published_at') as string | null, post.slug)
         }}
         onDelete={async () => {
           'use server'

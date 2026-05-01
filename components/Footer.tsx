@@ -52,7 +52,10 @@ export default function Footer() {
                 <Link href="/bliv-medlem">Bliv medlem</Link>
               </li>
               <li>
-                <Link href="/praemieskydninger">Præmieskydninger</Link>
+                <Link href="/aktiviteter/premieskydninger">Præmieskydninger</Link>
+              </li>
+              <li>
+                <Link href="/nyheder">Nyheder</Link>
               </li>
             </ul>
           </div>
@@ -61,10 +64,13 @@ export default function Footer() {
             <h4>Kontakt</h4>
             <ul>
               <li>
-                <Link href="/bestyrelsen">Bestyrelsen</Link>
+                <Link href="/praktisk-info/bestyrelsen">Bestyrelsen</Link>
               </li>
               <li>
                 <a href="mailto:info@hadstenjagtforening.dk">info@hadstenjagtforening.dk</a>
+              </li>
+              <li>
+                <a href="https://hoj.zendesk.com/hc/da">Få svar - Zendesk</a>
               </li>
             </ul>
           </div>

@@ -1,3 +1,103 @@
 @import '../colors_and_type.css';
 @import '../ui_kits/website/kit.css';
 @import '../ui_kits/admin/admin.css';
+
+.nav-trigger {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--fg1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 8px 0;
+  white-space: nowrap;
+}
+
+.nav-trigger:hover {
+  color: var(--fg1);
+}
+
+.nav-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin-left: auto;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--fg1);
+  cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .nav-inner {
+    position: relative;
+    gap: 12px;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+  .nav-hamburger {
+    display: inline-flex;
+  }
+
+  .nav.nav--open ul {
+    display: flex;
+    position: absolute;
+    top: var(--nav-height);
+    left: 24px;
+    right: 24px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 12px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-top: 0;
+    border-radius: 0 0 8px 8px;
+    box-shadow: var(--sh-modal);
+  }
+
+  .nav.nav--open ul > li,
+  .nav.nav--open a,
+  .nav.nav--open .nav-trigger {
+    width: 100%;
+  }
+
+  .nav.nav--open a,
+  .nav.nav--open .nav-trigger {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+  }
+
+  .nav.nav--open .dropdown-menu {
+    display: none;
+    position: static;
+    min-width: 0;
+    padding: 0 0 8px 12px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .nav.nav--open .dropdown.open .dropdown-menu {
+    display: block;
+  }
+
+  .nav.nav--open .dropdown-menu a {
+    padding: 10px 12px;
+  }
+}
