@@ -39,6 +39,20 @@ describe('AdminNyhederPage', () => {
     expect(screen.getByText('Ingen nyheder endnu')).toBeInTheDocument()
   })
 
+  it('renders a controlled error state when the admin client cannot initialize', async () => {
+    mocks.createAdminClient.mockImplementationOnce(() => {
+      throw new Error('supabaseKey is required.')
+    })
+
+    render(await AdminNyhederPage())
+
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      'Kunne ikke hente nyheder. Kontroller Supabase serverkonfigurationen i Vercel.'
+    )
+    expect(screen.getByText('supabaseKey is required.')).toBeInTheDocument()
+    expect(screen.getByText('Nyheder kunne ikke indlæses')).toBeInTheDocument()
+  })
+
   it('renders the post title and teaser when posts exist', async () => {
     mocks.order.mockResolvedValue({
       data: [{

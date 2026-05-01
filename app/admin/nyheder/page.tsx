@@ -5,7 +5,7 @@ import Icon from '@/components/Icon'
 import DeletePostButton from '@/components/admin/DeletePostButton'
 import type { NewsPost, NewsCategory } from '@/lib/database.types'
 
-const CATEGORY_CLASS: Record<NewsCategory, string> = {
+const CATEGORY_CLASS: Partial<Record<NewsCategory, string>> = {
   'Nyhed': 'cat-nyhed',
   'Jagt': 'cat-jagt',
   'Præmieskydning': 'cat-praemie',
@@ -20,13 +20,27 @@ function formatDate(iso: string) {
 }
 
 export default async function AdminNyhederPage() {
-  const db = createAdminClient()
-  const { data: posts, count, error } = await db
-    .from('news')
-    .select('*', { count: 'exact' })
-    .order('created_at', { ascending: false })
+  let posts: NewsPost[] = []
+  let count = 0
+  let loadError: string | null = null
 
-  if (error) throw new Error(`Database error: ${error.message}`)
+  try {
+    const db = createAdminClient()
+    const result = await db
+      .from('news')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+
+    if (result.error) {
+      throw new Error(result.error.message)
+    }
+
+    posts = (result.data as NewsPost[]) ?? []
+    count = result.count ?? 0
+  } catch (error) {
+    loadError = error instanceof Error ? error.message : 'Ukendt serverfejl'
+    console.error('[admin/nyheder] Failed to load news posts', error)
+  }
 
   return (
     <div className="adm-content">
@@ -34,12 +48,22 @@ export default async function AdminNyhederPage() {
         <div>
           <div className="adm-breadcrumb">Dashboard / Nyheder</div>
           <h1>Nyheder</h1>
-          <p className="subtitle">{count ?? 0} indlæg</p>
+          <p className="subtitle">{count} indl&aelig;g</p>
         </div>
         <Link href="/admin/nyheder/ny" className="btn primary">
           + Ny nyhed
         </Link>
       </div>
+
+      {loadError && (
+        <div className="adm-card" role="alert">
+          <div className="adm-empty">
+            Kunne ikke hente nyheder. Kontroller Supabase serverkonfigurationen i Vercel.
+            <br />
+            <small>{loadError}</small>
+          </div>
+        </div>
+      )}
 
       <div className="adm-card">
         <table className="adm-table">
@@ -53,16 +77,16 @@ export default async function AdminNyhederPage() {
             </tr>
           </thead>
           <tbody>
-            {((posts as NewsPost[]) ?? []).length === 0 ? (
+            {posts.length === 0 ? (
               <tr>
                 <td colSpan={5} className="adm-empty">
-                  Ingen nyheder endnu
+                  {loadError ? 'Nyheder kunne ikke indlæses' : 'Ingen nyheder endnu'}
                 </td>
               </tr>
-            ) : ((posts as NewsPost[]) ?? []).map(post => (
+            ) : posts.map(post => (
               <tr key={post.id}>
                 <td>
-                  <span className={`cat ${CATEGORY_CLASS[post.category as NewsCategory]}`}>
+                  <span className={`cat ${CATEGORY_CLASS[post.category] ?? 'cat-nyhed'}`}>
                     {post.category}
                   </span>
                 </td>

@@ -99,6 +99,15 @@ This must ALWAYS match the actual code.
 - Admin provisioning remains closed: no public signup was added, and docs now require manual Supabase Auth user creation for the first admin.
 - Added focused regression coverage in `tests/unit/auth-actions.test.ts` and `tests/unit/auth-callback-route.test.ts`, plus Playwright coverage for the reset and update-password routes in `tests/e2e/admin-news.spec.ts`.
 
+### Production admin news 500 - 2026-05-02
+
+- Investigated the production `GET /admin/nyheder` 500 using the provided Vercel runtime log and local source inspection.
+- Root cause boundary: auth was not the failing layer. The log showed Supabase Auth `/auth/v1/user` returned 200, then the admin news server render entered the service-role Supabase client/query path.
+- Verified locally that `@supabase/supabase-js` throws synchronously with `supabaseKey is required.` when the service-role key is missing or blank, which matches the runtime log showing no subsequent database request before the function failed.
+- Updated `app/admin/nyheder/page.tsx` so admin-news loading failures are caught, logged with `[admin/nyheder] Failed to load news posts`, and rendered as a controlled admin error state instead of crashing the server render.
+- Added regression coverage in `tests/unit/admin-news-list-page.test.tsx` for the missing admin client key path.
+- Validation: `npm.cmd run typecheck` passed, `npm.cmd run lint` passed, elevated focused `npm.cmd test -- tests/unit/admin-news-list-page.test.tsx` passed, elevated full `npm.cmd test` passed, and elevated `npm.cmd run build` passed after the known Windows sandbox `spawn EPERM` build issue.
+
 ### Route inventory - 2026-04-29
 
 | Route | Status | Source |
