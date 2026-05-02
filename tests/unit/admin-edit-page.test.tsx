@@ -41,6 +41,10 @@ vi.mock('@/lib/actions/news', () => ({
   saveDraft: mocks.saveDraft,
   deletePost: mocks.deletePost,
 }))
+vi.mock('@/lib/actions/categories', () => ({
+  listNewsCategories: vi.fn(async () => ['Nyhed', 'Præmieskydning']),
+  createNewsCategory: vi.fn(),
+}))
 vi.mock('@/components/admin/NewsForm', () => ({
   default: (props: Record<string, unknown>) => {
     mocks.setLatestNewsFormProps(props)

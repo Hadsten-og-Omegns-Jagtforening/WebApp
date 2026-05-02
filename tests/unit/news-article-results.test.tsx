@@ -3,14 +3,20 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mocks = vi.hoisted(() => {
   const single = vi.fn()
-  const eq = vi.fn(() => ({ eq, single }))
-  const from = vi.fn(() => ({ select: vi.fn(() => ({ eq })) }))
+  const chain: { eq?: unknown; lte?: unknown; single?: unknown } = {}
+  const eq = vi.fn(() => chain)
+  const lte = vi.fn(() => chain)
+  chain.eq = eq
+  chain.lte = lte
+  chain.single = single
+  const from = vi.fn(() => ({ select: vi.fn(() => chain) }))
   const createClient = vi.fn(async () => ({ from }))
   const notFound = vi.fn()
 
   return {
     single,
     eq,
+    lte,
     from,
     createClient,
     notFound,

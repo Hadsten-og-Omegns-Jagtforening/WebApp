@@ -15,7 +15,7 @@ export async function signIn(formData: FormData) {
     return { error: 'Forkert e-mail eller adgangskode.' }
   }
 
-  redirect('/admin/nyheder')
+  redirect('/admin')
 }
 
 export async function requestPasswordReset(formData: FormData) {
@@ -60,7 +60,7 @@ export async function updatePassword(formData: FormData) {
     return { error: 'Kunne ikke opdatere adgangskoden. Bed om et nyt nulstillingslink.' }
   }
 
-  redirect('/admin')
+  redirect('/')
 }
 
 export async function signOut() {

@@ -27,4 +27,12 @@ describe('supabase storage migrations', () => {
     expect(sql).toContain('storage.objects')
     expect(sql).toContain('bucket_id = \'news-images\'')
   })
+
+  it('provisions reusable news categories', () => {
+    const sql = readMigrations()
+
+    expect(sql).toContain('create table public.news_categories')
+    expect(sql).toContain('news_categories_lower_name_idx')
+    expect(sql).toContain("'Præmieskydning'")
+  })
 })

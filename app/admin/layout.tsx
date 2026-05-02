@@ -27,19 +27,25 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </div>
         <nav>
           <div className="section-label">Indhold</div>
+          <Link href="/admin" className="adm-link">
+            <Icon name="eye" size={16} /> Dashboard
+          </Link>
           <Link href="/admin/nyheder" className="adm-link">
             <Icon name="pencil" size={16} /> Nyheder
           </Link>
-          <span className="adm-link disabled" aria-disabled="true">
+          <Link href="/admin/kalender" className="adm-link">
             <Icon name="calendar" size={16} /> Kalender
-          </span>
-          <span className="adm-link disabled" aria-disabled="true">
+          </Link>
+          <Link href="/admin/premieskydninger" className="adm-link">
             <Icon name="trophy" size={16} /> Præmieskydninger
-          </span>
+          </Link>
+          <Link href="/" className="adm-link">
+            <Icon name="arrow-right" size={16} /> Se hjemmeside
+          </Link>
         </nav>
         <div className="who">
           <div className="avatar">{initials}</div>
-          <div>
+          <div className="who-meta">
             <div className="name">{user?.email ?? 'Admin'}</div>
             <div className="role">Administrator</div>
           </div>

@@ -29,6 +29,8 @@
 - `/admin/nyheder`
 - `/admin/nyheder/ny`
 - `/admin/nyheder/[id]`
+- `/admin/kalender`
+- `/admin/premieskydninger`
 
 ## External support
 

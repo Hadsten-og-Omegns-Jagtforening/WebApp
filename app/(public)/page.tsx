@@ -3,6 +3,7 @@ import Hero from '@/components/Hero'
 import NewsFeed from '@/components/NewsFeed'
 import Icon from '@/components/Icon'
 import Link from 'next/link'
+import { getPublishedCutoffIso } from '@/lib/news-visibility'
 import type { NewsPost } from '@/lib/database.types'
 
 export default async function HomePage() {
@@ -12,6 +13,7 @@ export default async function HomePage() {
     .from('news')
     .select('*')
     .eq('status', 'published')
+    .lte('published_at', getPublishedCutoffIso())
     .order('highlighted', { ascending: false })
     .order('published_at', { ascending: false })
     .limit(6)

@@ -1,11 +1,6 @@
 export type NewsStatus = 'draft' | 'published'
 
-export type NewsCategory =
-  | 'Nyhed'
-  | 'Jagt'
-  | 'Præmieskydning'
-  | 'Klubaften'
-  | 'Praktisk info'
+export type NewsCategory = string
 
 export type ResultRow = {
   rank: string
@@ -34,3 +29,10 @@ export type NewsPost = {
 
 export type NewsPostInsert = Omit<NewsPost, 'id' | 'created_at' | 'updated_at'>
 export type NewsPostUpdate = Partial<NewsPostInsert>
+
+export type NewsCategoryRow = {
+  id: string
+  name: string
+  sort_order: number
+  created_at: string
+}

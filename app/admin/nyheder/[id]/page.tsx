@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { createAdminClient } from '@/lib/supabase/admin'
 import NewsForm from '@/components/admin/NewsForm'
 import { updatePost, publishPost, saveDraft, deletePost } from '@/lib/actions/news'
+import { createNewsCategory, listNewsCategories } from '@/lib/actions/categories'
 import type { NewsPost } from '@/lib/database.types'
 
 type Props = { params: Promise<{ id: string }> }
@@ -13,6 +14,7 @@ export default async function EditNyhedPage({ params }: Props) {
   if (error && error.code !== 'PGRST116') throw new Error(`Database error: ${error.message}`)
   if (!data) notFound()
   const post = data as NewsPost
+  const categories = await listNewsCategories()
 
   return (
     <div className="adm-content">
@@ -25,6 +27,8 @@ export default async function EditNyhedPage({ params }: Props) {
       </div>
       <NewsForm
         post={post}
+        categories={categories}
+        onCreateCategory={createNewsCategory}
         onSaveDraft={async (fd) => {
           'use server'
           return saveDraft(id, fd)

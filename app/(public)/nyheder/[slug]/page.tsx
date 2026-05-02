@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { sanitizeBody } from '@/lib/sanitize'
+import { getPublishedCutoffIso } from '@/lib/news-visibility'
+import { normalizeResults } from '@/lib/results'
 import type { NewsPost, ResultRow } from '@/lib/database.types'
 import type { Metadata } from 'next'
 
@@ -15,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     .select('title, teaser')
     .eq('slug', slug)
     .eq('status', 'published')
+    .lte('published_at', getPublishedCutoffIso())
     .single()
 
   if (!data) return {}
@@ -36,11 +39,13 @@ export default async function NewsArticlePage({ params }: Props) {
     .select('*')
     .eq('slug', slug)
     .eq('status', 'published')
+    .lte('published_at', getPublishedCutoffIso())
     .single()
 
   if (!post) notFound()
 
   const article = post as NewsPost
+  const results = normalizeResults(article.results as ResultRow[] | null)
 
   return (
     <section className="section">
@@ -63,7 +68,7 @@ export default async function NewsArticlePage({ params }: Props) {
           )}
           {/* Body is sanitised HTML — safe to render */}
           <div dangerouslySetInnerHTML={{ __html: sanitizeBody(article.body) }} />
-          {article.has_results && article.results && (
+          {article.has_results && results.length > 0 && (
             <details className="results" open>
               <summary>Resultater</summary>
               <table>
@@ -75,7 +80,7 @@ export default async function NewsArticlePage({ params }: Props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {(article.results as ResultRow[]).map((r, i) => (
+                  {results.map((r, i) => (
                     <tr key={i}>
                       <td>{r.rank}</td>
                       <td>{r.name}</td>

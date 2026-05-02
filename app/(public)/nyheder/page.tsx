@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import NewsCard from '@/components/NewsCard'
+import { getPublishedCutoffIso } from '@/lib/news-visibility'
 import type { NewsPost } from '@/lib/database.types'
 
 const PER_PAGE = 9
@@ -19,6 +20,7 @@ export default async function NyhederPage({ searchParams }: Props) {
     .from('news')
     .select('*', { count: 'exact' })
     .eq('status', 'published')
+    .lte('published_at', getPublishedCutoffIso())
     .order('published_at', { ascending: false })
     .range(from, to)
 

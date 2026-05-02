@@ -108,6 +108,19 @@ This must ALWAYS match the actual code.
 - Added regression coverage in `tests/unit/admin-news-list-page.test.tsx` for the missing admin client key path.
 - Validation: `npm.cmd run typecheck` passed, `npm.cmd run lint` passed, elevated focused `npm.cmd test -- tests/unit/admin-news-list-page.test.tsx` passed, elevated full `npm.cmd test` passed, and elevated `npm.cmd run build` passed after the known Windows sandbox `spawn EPERM` build issue.
 
+### Admin CMS publishing improvements - 2026-05-02
+
+- Added database-backed news categories through `supabase/migrations/0003_news_categories.sql` and `lib/actions/categories.ts`.
+- The news editor now loads categories from Supabase, supports inline category creation, and selects a newly created category immediately.
+- Enlarged the TipTap content editor and replaced the raw browser date field with a styled calendar/time picker.
+- Publish now saves the current form data before setting `status = published`; drafts can keep a planned `published_at`.
+- Scheduled posts are represented as `status = published` with a future `published_at`; public news queries now require `published_at <= now`.
+- Added working `/admin` dashboard, `/admin/kalender`, and `/admin/premieskydninger` routes.
+- Image uploads are cropped client-side to a consistent 3:2 JPEG before upload to the existing `news-images` bucket.
+- Result rows are normalized server-side and on article render so score tables sort best score first.
+- Admin logout now redirects to the public homepage.
+- Validation in this session: `npm.cmd run typecheck` passed and `npm.cmd run lint` passed. `npm.cmd test -- ...` and `npm.cmd run build` were blocked in the sandbox by Windows `spawn EPERM`; escalation was unavailable in this environment, so those commands still need to be rerun outside the sandbox before deployment.
+
 ### Route inventory - 2026-04-29
 
 | Route | Status | Source |
