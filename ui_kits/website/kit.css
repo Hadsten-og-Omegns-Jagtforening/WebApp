@@ -67,8 +67,8 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg1); fo
 /* ---------- Buttons ---------- */
 .btn { font-family: var(--font-body); font-size: 15px; font-weight: 600; padding: 12px 22px; min-width: 96px; justify-content: center; border-radius: 4px; border: 1px solid transparent; cursor: pointer; line-height: 1; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: background 150ms var(--ease-out), transform 100ms var(--ease-out); }
 .btn:active { transform: translateY(1px); }
-.btn.primary { background: var(--accent); color: var(--accent-text); box-shadow: var(--sh-inset-top); }
-.btn.primary:hover { background: var(--accent-hover); }
+.btn.primary { background: #e3812a; color: #f4efe4; box-shadow: var(--sh-inset-top); }
+.btn.primary:hover { background: #c4651e; }
 .btn.secondary { background: transparent; color: var(--fg1); border-color: var(--border-strong); }
 .btn.secondary:hover { background: rgba(138,115,89,0.1); }
 .btn.ghost { background: transparent; color: var(--fg1); text-decoration: underline; text-underline-offset: 4px; padding: 12px 4px; min-width: 0; }

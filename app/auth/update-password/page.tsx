@@ -26,7 +26,7 @@ export default async function UpdatePasswordPage({ searchParams }: Props) {
         </div>
         <h1 style={{ fontSize: 22, marginBottom: 4 }}>Opdater adgangskode</h1>
         <p style={{ fontSize: 14, marginBottom: 22 }}>
-          Vaelg en ny adgangskode for din admin-bruger.
+          Vælg en ny adgangskode for din admin-bruger.
         </p>
         <UpdatePasswordForm invalid={!user} errorMessage={error ?? null} />
         <p style={{ fontSize: 14, marginTop: 18, marginBottom: 0 }}>

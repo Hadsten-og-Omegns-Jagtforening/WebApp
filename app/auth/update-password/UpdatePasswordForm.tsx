@@ -28,7 +28,7 @@ export default function UpdatePasswordForm({ invalid = false, errorMessage }: Pr
   if (invalid) {
     return (
       <div style={{ color: 'var(--danger)', background: 'rgba(220,53,69,0.08)', padding: '10px 14px', borderRadius: 6, fontSize: 14 }}>
-        {errorMessage ?? 'Linket er ugyldigt eller udloeber. Bed om et nyt nulstillingslink.'}
+        {errorMessage ?? 'Linket er ugyldigt eller udløbet. Bed om et nyt nulstillingslink.'}
       </div>
     )
   }
