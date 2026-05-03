@@ -630,7 +630,7 @@
 }
 
 .crop-frame {
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--bg-alt);
   border: 1px solid var(--border);
