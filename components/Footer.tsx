@@ -9,7 +9,7 @@ export default function Footer() {
           <div>
             <Image
               src="/assets/logo-hoj.png"
-              alt="Hadsten & Omegns Jagtforening"
+              alt="Hadsten og Omegns Jagtforening"
               width={96}
               height={96}
               style={{ marginBottom: 18, display: 'block' }}
@@ -20,11 +20,10 @@ export default function Footer() {
                 lineHeight: 1.5,
                 color: 'rgba(244,239,228,0.72)',
                 margin: 0,
-                maxWidth: '32ch',
+                maxWidth: '34ch',
               }}
             >
-              Lokal jagt- og skydeforening i Hadsten siden 1968. Vi er for både erfarne jægere og
-              nye på banen.
+              Jagt, flugtskydning og fællesskab i hjertet af Østjylland siden 1933.
             </p>
           </div>
 
@@ -49,10 +48,10 @@ export default function Footer() {
                 <Link href="/kalender">Kalender</Link>
               </li>
               <li>
-                <Link href="/bliv-medlem">Bliv medlem</Link>
+                <Link href="/aktiviteter">Aktiviteter</Link>
               </li>
               <li>
-                <Link href="/aktiviteter/premieskydninger">Præmieskydninger</Link>
+                <Link href="/om-hoj">Om HOJ</Link>
               </li>
               <li>
                 <Link href="/nyheder">Nyheder</Link>
@@ -64,10 +63,7 @@ export default function Footer() {
             <h4>Kontakt</h4>
             <ul>
               <li>
-                <Link href="/praktisk-info/bestyrelsen">Bestyrelsen</Link>
-              </li>
-              <li>
-                <a href="mailto:info@hadstenjagtforening.dk">info@hadstenjagtforening.dk</a>
+                <a href="mailto:booking@hadstenjagtforening.dk">booking@hadstenjagtforening.dk</a>
               </li>
               <li>
                 <a href="https://hoj.zendesk.com/hc/da">Få svar - Zendesk</a>
@@ -77,8 +73,8 @@ export default function Footer() {
         </div>
 
         <div className="bottom">
-          <span>© Hadsten &amp; Omegns Jagtforening · CVR 34123268</span>
-          <span>Stiftet 1968</span>
+          <span>© Hadsten og Omegns Jagtforening · CVR 34123268</span>
+          <span>Stiftet 1933</span>
         </div>
       </div>
     </footer>

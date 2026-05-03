@@ -1,3 +1,5 @@
+import { getCalendarEmbedUrl } from '@/lib/calendar-embed'
+
 const events = [
   { day: 6, time: '17:00-20:00', title: 'Traeningsaften', tag: 'Flugtskydning', color: 'var(--hoj-brass-600)' },
   { day: 13, time: '17:00-20:00', title: 'Traeningsaften', tag: 'Flugtskydning', color: 'var(--hoj-brass-600)' },
@@ -8,8 +10,7 @@ const events = [
 ]
 
 export default function KalenderPage() {
-  const calendarEmbedUrl = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL?.trim()
-  const hasCalendarEmbed = Boolean(calendarEmbedUrl)
+  const calendarEmbedUrl = getCalendarEmbedUrl(process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL)
 
   return (
     <section className="section">
@@ -47,40 +48,28 @@ export default function KalenderPage() {
               }}
             >
               <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22, margin: 0 }}>Foreningens kalender</h2>
-              <span className="badge">{hasCalendarEmbed ? 'Google Kalender' : 'Integration mangler'}</span>
+              <span className="badge">Google Kalender</span>
             </div>
 
-            {hasCalendarEmbed ? (
-              <div style={{ padding: 16 }}>
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 11' }}>
-                  <iframe
-                    src={calendarEmbedUrl}
-                    title="Hadsten og Omegns Jagtforening kalender"
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      width: '100%',
-                      height: '100%',
-                      border: 0,
-                      borderRadius: 6,
-                      background: 'var(--surface)',
-                    }}
-                    loading="lazy"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                  />
-                </div>
+            <div style={{ padding: 16 }}>
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 11' }}>
+                <iframe
+                  src={calendarEmbedUrl}
+                  title="Hadsten og Omegns Jagtforening kalender"
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    width: '100%',
+                    height: '100%',
+                    border: 0,
+                    borderRadius: 6,
+                    background: 'var(--surface)',
+                  }}
+                  loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                />
               </div>
-            ) : (
-              <div style={{ padding: '18px 22px' }}>
-                <p style={{ margin: '0 0 8px', maxWidth: '65ch' }}>
-                  Kalenderintegrationen er under opsaetning. Den offentlige Google Kalender bliver vist her, naar embed-URL&apos;en er lagt ind i miljoekonfigurationen.
-                </p>
-                <p style={{ margin: 0, maxWidth: '65ch', color: 'var(--fg2)' }}>
-                  Indtil da kan booking og spoergsmaal haandteres via{' '}
-                  <a href="mailto:booking@hadstenjagtforening.dk">booking@hadstenjagtforening.dk</a>.
-                </p>
-              </div>
-            )}
+            </div>
           </div>
 
           <aside>

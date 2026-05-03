@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { getUserWithTimeout } from '@/lib/supabase/auth-timeout'
 
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
@@ -24,7 +25,7 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user } } = await getUserWithTimeout(supabase)
 
   const isAdminSubroute =
     request.nextUrl.pathname.startsWith('/admin') &&

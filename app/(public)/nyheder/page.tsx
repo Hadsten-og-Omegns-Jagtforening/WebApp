@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import NewsCard from '@/components/NewsCard'
+import { getPublishedCutoffIso } from '@/lib/news-visibility'
 import type { NewsPost } from '@/lib/database.types'
 
 const PER_PAGE = 9
@@ -19,6 +20,7 @@ export default async function NyhederPage({ searchParams }: Props) {
     .from('news')
     .select('*', { count: 'exact' })
     .eq('status', 'published')
+    .lte('published_at', getPublishedCutoffIso())
     .order('published_at', { ascending: false })
     .range(from, to)
 
@@ -28,6 +30,9 @@ export default async function NyhederPage({ searchParams }: Props) {
     <section className="section">
       <div className="container">
         <h1>Nyheder</h1>
+        <p className="lede" style={{ marginTop: -12, marginBottom: 32 }}>
+          Hold dig opdateret med, hvad der sker hos os.
+        </p>
         <div className="grid-3">
           {((posts as NewsPost[]) ?? []).map(post => (
             <NewsCard key={post.id} post={post} />

@@ -1,56 +1,70 @@
-import Icon from '@/components/Icon'
-import Link from 'next/link'
+const openingHours = [
+  { season: 'Februar - marts', day: 'Lørdag', time: '13.00 - 16.00' },
+  { season: 'April - august', day: 'Onsdag', time: '18.00 - 21.30' },
+  { season: 'September', day: 'Lørdag', time: '13.00 - 16.00' },
+]
 
-const notes = [
-  'Træningsaftener og særlige skydedage fremgår af kalenderen.',
-  'Kortsalg og praktiske tider meldes ud sammen med den enkelte aktivitet.',
-  'Ved private arrangementer aftales tidspunkt og behov direkte med foreningen.',
+const environmentTimes = [
+  { day: 'Mandag', summer: '07.00 - 22.00', winter: '07.00 - 22.00' },
+  { day: 'Tirsdag', summer: '07.00 - 18.00', winter: '07.00 - 20.00' },
+  { day: 'Onsdag', summer: '07.00 - 22.00', winter: '07.00 - 22.00' },
+  { day: 'Lørdag', summer: '09.00 - 16.00', winter: '09.00 - 16.00' },
 ]
 
 export default function AabningstiderOgSkydetiderPage() {
   return (
     <section className="section">
-      <div className="container" style={{ maxWidth: 980 }}>
-        <div style={{ marginBottom: 40 }}>
-          <span className="eyebrow" style={{ color: 'var(--accent)' }}>Praktisk info</span>
-          <h1
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 500,
-              fontSize: 'clamp(40px, 7vw, 56px)',
-              letterSpacing: '-0.02em',
-              margin: '8px 0 12px',
-              fontVariationSettings: '"opsz" 144',
-            }}
-          >
-            Åbningstider og skydetider
-          </h1>
-          <p style={{ fontSize: 18, color: 'var(--fg2)', maxWidth: '58ch', margin: 0, lineHeight: 1.5 }}>
-            Brug kalenderen som den aktuelle oversigt over skydetider, træning og arrangementer.
+      <div className="container copy-page">
+        <div className="page-intro">
+          <span className="eyebrow">Praktisk info</span>
+          <h1>Åbningstider og skydebanen</h1>
+          <p className="lede">
+            Her finder du de faste åbningstider, hvornår du kan booke banen - og de tidspunkter vores miljøgodkendelse tillader skydning.
           </p>
         </div>
 
-        <div className="grid-2" style={{ alignItems: 'start', gap: 24 }}>
-          <article style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)', borderRadius: 8, padding: '28px 30px' }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 24, margin: '0 0 16px' }}>Praktisk at vide</h2>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {notes.map((note) => (
-                <li key={note} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', color: 'var(--fg1)', lineHeight: 1.5 }}>
-                  <span style={{ color: 'var(--accent)', flexShrink: 0, marginTop: 3 }}><Icon name="check" size={16} /></span>
-                  {note}
-                </li>
-              ))}
-            </ul>
-          </article>
+        <section className="info-panel">
+          <h2>Åbningstider</h2>
+          <p>Banen har faste åbningsdage gennem sæsonen. Ændringer fremgår altid af kalenderen.</p>
+          <div className="time-card-grid">
+            {openingHours.map((item) => (
+              <article key={item.season} className="time-card">
+                <strong>{item.season}</strong>
+                <span>{item.day}</span>
+                <em>{item.time}</em>
+              </article>
+            ))}
+          </div>
+          <p>Januar samt oktober-december afholder vi som udgangspunkt ingen skydninger.</p>
+        </section>
 
-          <aside style={{ background: 'var(--bg-alt)', borderRadius: 8, padding: '28px 30px' }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22, margin: '0 0 10px' }}>Se næste aktivitet</h2>
-            <p style={{ color: 'var(--fg2)', lineHeight: 1.5, margin: '0 0 18px' }}>
-              Kalenderen viser de kommende træningsaftener, jagtdatoer og klubaftener.
-            </p>
-            <Link className="btn primary" href="/kalender">Åbn kalender</Link>
-          </aside>
-        </div>
+        <section className="info-panel">
+          <h2>Miljøgodkendelse</h2>
+          <p>Vores miljøgodkendelse fastlægger, hvornår der må skydes på banen.</p>
+          <div className="permit-grid">
+            {environmentTimes.map((item) => (
+              <article key={item.day}>
+                <strong>{item.day}</strong>
+                <span>Sommer: {item.summer}</span>
+                <span>Vinter: {item.winter}</span>
+              </article>
+            ))}
+          </div>
+          <p>
+            Herudover afvikles der stævner, kurser og øvelser på 4 weekender i hvert halvår:
+            lørdag/hverdag før helligdag kl. 09.00-20.00 og søndag/helligdag kl. 09.00-18.00.
+          </p>
+        </section>
+
+        <section className="info-panel">
+          <h2>Klubhuset</h2>
+          <p>
+            Klubhuset på Vissingvej er åbent i forbindelse med træning, præmieskydninger og foreningens arrangementer.
+            Det er samlingspunktet - før og efter skydningen.
+          </p>
+          <h3>Er du i tvivl om noget?</h3>
+          <p>Kig forbi en træningsaften eller skriv til os på info@hadstenjagtforening.dk.</p>
+        </section>
       </div>
     </section>
   )

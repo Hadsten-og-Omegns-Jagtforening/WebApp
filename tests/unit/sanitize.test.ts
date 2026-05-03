@@ -37,4 +37,10 @@ describe('sanitizeBody', () => {
     const result = sanitizeBody('<a href="//evil.example">click</a>')
     expect(result).not.toContain('//evil.example')
   })
+
+  it('escapes text outside allowed tags', () => {
+    expect(sanitizeBody('<p>2 < 3 & 4 > 1</p>')).toBe(
+      '<p>2 &lt; 3 &amp; 4 &gt; 1</p>'
+    )
+  })
 })

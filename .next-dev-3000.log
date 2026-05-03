@@ -1,0 +1,52 @@
+
+> hoj-webapp@0.1.0 dev
+> next dev --turbopack -p 3000
+
+   ▲ Next.js 15.5.15 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.148:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Compiled middleware in 154ms
+ ✓ Ready in 1225ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 1472ms
+ GET /admin 200 in 1769ms
+ ✓ Compiled /praktisk-info in 274ms
+ GET /praktisk-info 200 in 346ms
+ GET /admin 200 in 1655ms
+ ○ Compiling /admin/nyheder/ny ...
+ ✓ Compiled /admin/nyheder/ny in 1132ms
+ GET /admin/nyheder/ny 200 in 1276ms
+ GET /admin/nyheder/ny 200 in 666ms
+ ✓ Compiled /favicon.ico in 173ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 459ms
+ GET /admin 200 in 198ms
+ GET /admin/nyheder/ny 200 in 138ms
+ ✓ Compiled /admin/nyheder/[id] in 303ms
+ GET /admin/nyheder/e3e7b2aa-1da4-4005-a0f8-2fcc5ab41737 200 in 950ms
+ POST /admin/nyheder/ny 303 in 1252ms
+ ✓ Compiled / in 223ms
+ GET / 200 in 521ms
+ GET /admin 200 in 282ms
+ GET /admin/nyheder/e3e7b2aa-1da4-4005-a0f8-2fcc5ab41737 200 in 212ms
+ POST /admin/nyheder/e3e7b2aa-1da4-4005-a0f8-2fcc5ab41737 200 in 521ms
+ GET / 200 in 153ms
+ ✓ Compiled /nyheder/[slug] in 213ms
+ GET /nyheder/123 200 in 771ms
+ GET /admin 200 in 214ms
+ GET /admin/nyheder/e3e7b2aa-1da4-4005-a0f8-2fcc5ab41737 200 in 225ms
+ GET / 200 in 612ms
+ GET /admin 200 in 362ms
+ GET /admin/nyheder/e3e7b2aa-1da4-4005-a0f8-2fcc5ab41737 200 in 230ms
+ ✓ Compiled /admin/nyheder in 223ms
+ GET /admin/nyheder 200 in 356ms
+ GET /admin/nyheder/ny 200 in 133ms
+ GET /admin/nyheder/c7969ea7-e565-4a87-93e6-2fc7836be96c 200 in 224ms
+ POST /admin/nyheder/ny 303 in 503ms
+ GET / 200 in 159ms
+ GET /nyheder/123 200 in 485ms
+ GET /nyheder/321 200 in 211ms
+ GET /nyheder/saa-begynder-admin-at-ligne-noget 200 in 159ms
+ GET /nyheder/123 200 in 224ms

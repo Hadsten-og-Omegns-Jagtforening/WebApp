@@ -90,7 +90,7 @@ describe('auth actions', () => {
     formData.set('email', 'admin@example.com')
     formData.set('password', 'secret-password')
 
-    await expect(signIn(formData)).rejects.toThrow('REDIRECT:/admin/nyheder')
+    await expect(signIn(formData)).rejects.toThrow('REDIRECT:/admin')
 
     expect(mocks.signInWithPassword).toHaveBeenCalledWith({
       email: 'admin@example.com',
@@ -98,8 +98,8 @@ describe('auth actions', () => {
     })
   })
 
-  it('signs out and redirects to admin', async () => {
-    await expect(signOut()).rejects.toThrow('REDIRECT:/admin')
+  it('signs out and redirects to the public homepage', async () => {
+    await expect(signOut()).rejects.toThrow('REDIRECT:/')
     expect(mocks.signOut).toHaveBeenCalled()
   })
 })

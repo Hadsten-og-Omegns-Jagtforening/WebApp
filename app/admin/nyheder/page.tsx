@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { deletePost } from '@/lib/actions/news'
+import { getAdminPostState } from '@/lib/news-visibility'
 import Icon from '@/components/Icon'
 import DeletePostButton from '@/components/admin/DeletePostButton'
 import type { NewsPost, NewsCategory } from '@/lib/database.types'
@@ -83,7 +84,10 @@ export default async function AdminNyhederPage() {
                   {loadError ? 'Nyheder kunne ikke indlæses' : 'Ingen nyheder endnu'}
                 </td>
               </tr>
-            ) : posts.map(post => (
+            ) : posts.map(post => {
+              const state = getAdminPostState(post.status, post.published_at)
+              const label = state === 'scheduled' ? 'Planlagt' : state === 'published' ? 'Publiceret' : 'Kladde'
+              return (
               <tr key={post.id}>
                 <td>
                   <span className={`cat ${CATEGORY_CLASS[post.category] ?? 'cat-nyhed'}`}>
@@ -98,8 +102,8 @@ export default async function AdminNyhederPage() {
                   {post.published_at ? formatDate(post.published_at) : '—'}
                 </td>
                 <td>
-                  <span className={`adm-status${post.status === 'draft' ? ' draft' : ''}`}>
-                    {post.status === 'published' ? 'Publiceret' : 'Kladde'}
+                  <span className={`adm-status ${state}`}>
+                    {label}
                   </span>
                 </td>
                 <td className="actions-cell">
@@ -111,7 +115,8 @@ export default async function AdminNyhederPage() {
                   </form>
                 </td>
               </tr>
-            ))}
+              )
+            })}
           </tbody>
         </table>
       </div>

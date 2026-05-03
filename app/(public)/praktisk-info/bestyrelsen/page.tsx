@@ -1,54 +1,62 @@
-import Icon from '@/components/Icon'
-
-const areas = [
-  'Bestyrelsen håndterer foreningens drift, medlemskab og fælles beslutninger.',
-  'Udvalg koordinerer bane, jagt, riffel og skydning efter behov.',
-  'Henvendelser kan sendes til foreningens fælles mail, så de lander det rigtige sted.',
+const board = [
+  ['Formand', 'Peter Glavind'],
+  ['Næstformand', 'Keld Kristensen'],
+  ['Kasserer', 'Christian Krogh Hansen'],
+  ['Sekretær', 'Magnus Asmussen'],
+  ['Medlem', 'Bjarne Larsen'],
+  ['Medlem', 'Claus Horn'],
+  ['Medlem', 'Claus Vinge'],
+  ['Medlem', 'Claus Christensen'],
+  ['Medlem', 'Anders Glavind'],
+  ['Suppleant', 'Allan Søsted'],
+  ['Suppleant', 'Sten Nielsen'],
 ]
 
 export default function BestyrelsenPage() {
   return (
     <section className="section">
-      <div className="container" style={{ maxWidth: 980 }}>
-        <div style={{ marginBottom: 40 }}>
-          <span className="eyebrow" style={{ color: 'var(--accent)' }}>Praktisk info</span>
-          <h1
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 500,
-              fontSize: 'clamp(42px, 7vw, 56px)',
-              letterSpacing: '-0.02em',
-              margin: '8px 0 12px',
-              fontVariationSettings: '"opsz" 144',
-            }}
-          >
-            Bestyrelsen
-          </h1>
-          <p style={{ fontSize: 18, color: 'var(--fg2)', maxWidth: '56ch', margin: 0, lineHeight: 1.5 }}>
-            Kontakt foreningen om medlemskab, aktiviteter, bane og praktiske spørgsmål.
+      <div className="container copy-page">
+        <div className="page-intro">
+          <span className="eyebrow">Praktisk info</span>
+          <h1>Folkene bag foreningen</h1>
+          <p className="lede">
+            Hadsten og Omegns Jagtforening drives af frivillige mennesker, som bruger deres fritid på at holde banen i gang,
+            arrangere jagter og sørge for at foreningslivet kører.
           </p>
         </div>
 
-        <div className="grid-2" style={{ alignItems: 'start', gap: 24 }}>
-          <article style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)', borderRadius: 8, padding: '28px 30px' }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 24, margin: '0 0 16px' }}>Opgaver</h2>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {areas.map((area) => (
-                <li key={area} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', color: 'var(--fg1)', lineHeight: 1.5 }}>
-                  <span style={{ color: 'var(--accent)', flexShrink: 0, marginTop: 3 }}><Icon name="check" size={16} /></span>
-                  {area}
-                </li>
-              ))}
-            </ul>
-          </article>
-
-          <aside style={{ background: 'var(--bg-alt)', borderRadius: 8, padding: '28px 30px' }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22, margin: '0 0 10px' }}>Skriv til foreningen</h2>
-            <p style={{ color: 'var(--fg2)', lineHeight: 1.5, margin: '0 0 18px' }}>
-              Brug den fælles mail, hvis du er i tvivl om hvem du skal have fat i.
+        <div className="copy-stack">
+          <section className="info-panel">
+            <h2>Bliv frivillig</h2>
+            <p>
+              En stor del af foreningens daglige drift hviler på vores vagthold, som består af frivillige medlemmer der hjælper
+              med at afvikle træningsaftenerne og holde banen kørende.
             </p>
-            <a className="btn primary" href="mailto:info@hadstenjagtforening.dk">info@hadstenjagtforening.dk</a>
-          </aside>
+            <p>
+              Det er en god måde at blive en del af fællesskabet på, og der er altid brug for flere hænder.
+              Spørg endelig på banen, hvis det lyder som noget for dig.
+            </p>
+          </section>
+
+          <section className="info-panel">
+            <h2>Bestyrelsen</h2>
+            <div className="compact-list">
+              {board.map(([role, name]) => (
+                <div key={`${role}-${name}`}>
+                  <span>{role}</span>
+                  <strong>{name}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="info-panel">
+            <h2>Udvalg</h2>
+            <p>
+              Ud over bestyrelsen har vi et skyde- og jagtudvalg, der arbejder med alt fra baneforhold til jagtplanlægning.
+              Har du gode ideer eller lyst til at bidrage, er du velkommen til at møde op og tage kontakt til os.
+            </p>
+          </section>
         </div>
       </div>
     </section>

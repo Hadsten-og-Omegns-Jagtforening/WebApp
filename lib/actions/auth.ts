@@ -15,7 +15,7 @@ export async function signIn(formData: FormData) {
     return { error: 'Forkert e-mail eller adgangskode.' }
   }
 
-  redirect('/admin/nyheder')
+  redirect('/admin')
 }
 
 export async function requestPasswordReset(formData: FormData) {
@@ -66,5 +66,5 @@ export async function updatePassword(formData: FormData) {
 export async function signOut() {
   const supabase = await createClient()
   await supabase.auth.signOut()
-  redirect('/admin')
+  redirect('/')
 }

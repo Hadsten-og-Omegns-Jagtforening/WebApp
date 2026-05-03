@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/server'
 import { validatePostInput } from '@/lib/news-validation'
 import { sanitizeBody } from '@/lib/sanitize'
 import { generateSlug } from '@/lib/slug'
+import { normalizeResults } from '@/lib/results'
 import type { NewsCategory, NewsPostInsert } from '@/lib/database.types'
 
 function safeParseResults(value: FormDataEntryValue | null) {
@@ -16,6 +17,22 @@ function safeParseResults(value: FormDataEntryValue | null) {
   } catch {
     return null
   }
+}
+
+function parsePublishedAt(value: FormDataEntryValue | null) {
+  if (!value || typeof value !== 'string') return null
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? null : date.toISOString()
+}
+
+function revalidateNewsPaths(slug?: string) {
+  revalidatePath('/admin')
+  revalidatePath('/admin/nyheder')
+  revalidatePath('/admin/kalender')
+  revalidatePath('/admin/premieskydninger')
+  revalidatePath('/')
+  revalidatePath('/nyheder')
+  if (slug) revalidatePath(`/nyheder/${slug}`)
 }
 
 async function getAuthenticatedUserId(): Promise<string> {
@@ -36,6 +53,8 @@ export async function createPost(formData: FormData) {
   const validationError = validatePostInput({ title, teaser, category, body })
   if (validationError) return { error: validationError }
   const slug = generateSlug(title)
+  const shouldPublish = formData.get('publish') === 'true'
+  const selectedPublishedAt = parsePublishedAt(formData.get('published_at'))
 
   const post: NewsPostInsert = {
     slug,
@@ -45,21 +64,18 @@ export async function createPost(formData: FormData) {
     body,
     image_url: (formData.get('image_url') as string) || null,
     has_results: formData.get('has_results') === 'true',
-    results: safeParseResults(formData.get('results')),
-    status: formData.get('publish') === 'true' ? 'published' : 'draft',
+    results: normalizeResults(safeParseResults(formData.get('results'))),
+    status: shouldPublish ? 'published' : 'draft',
     highlighted: formData.get('highlighted') === 'true',
     allow_comments: false,
-    published_at: formData.get('publish') === 'true'
-      ? ((formData.get('published_at') as string) || new Date().toISOString())
-      : null,
+    published_at: shouldPublish ? selectedPublishedAt ?? new Date().toISOString() : selectedPublishedAt,
     created_by: userId,
   }
 
   const { data, error } = await db.from('news').insert(post).select('id').single()
   if (error) return { error: error.message }
 
-  revalidatePath('/admin/nyheder')
-  revalidatePath('/')
+  revalidateNewsPaths()
   redirect(`/admin/nyheder/${data.id}`)
 }
 
@@ -81,16 +97,14 @@ export async function updatePost(id: string, formData: FormData, slug?: string) 
     body,
     image_url: (formData.get('image_url') as string) || null,
     has_results: formData.get('has_results') === 'true',
-    results: safeParseResults(formData.get('results')),
+    results: normalizeResults(safeParseResults(formData.get('results'))),
     highlighted: formData.get('highlighted') === 'true',
+    published_at: parsePublishedAt(formData.get('published_at')),
   }).eq('id', id)
 
   if (error) return { error: error.message }
 
-  revalidatePath('/admin/nyheder')
-  revalidatePath('/')
-  revalidatePath(`/nyheder`)
-  if (slug) revalidatePath(`/nyheder/${slug}`)
+  revalidateNewsPaths(slug)
   return { success: true }
 }
 
@@ -100,15 +114,12 @@ export async function publishPost(id: string, publishedAt: string | null, slug?:
 
   const { error } = await db.from('news').update({
     status: 'published',
-    published_at: publishedAt ?? new Date().toISOString(),
+    published_at: parsePublishedAt(publishedAt) ?? new Date().toISOString(),
   }).eq('id', id)
 
   if (error) return { error: error.message }
 
-  revalidatePath('/admin/nyheder')
-  revalidatePath('/')
-  revalidatePath('/nyheder')
-  if (slug) revalidatePath(`/nyheder/${slug}`)
+  revalidateNewsPaths(slug)
   return { success: true }
 }
 
@@ -130,12 +141,14 @@ export async function saveDraft(id: string, formData: FormData) {
     body,
     image_url: (formData.get('image_url') as string) || null,
     has_results: formData.get('has_results') === 'true',
-    results: safeParseResults(formData.get('results')),
+    results: normalizeResults(safeParseResults(formData.get('results'))),
     highlighted: formData.get('highlighted') === 'true',
+    published_at: parsePublishedAt(formData.get('published_at')),
     status: 'draft',
   }).eq('id', id)
 
   if (error) return { error: error.message }
+  revalidateNewsPaths()
   return { success: true }
 }
 
@@ -146,8 +159,6 @@ export async function deletePost(id: string) {
   const { error } = await db.from('news').delete().eq('id', id)
   if (error) return { error: error.message }
 
-  revalidatePath('/admin/nyheder')
-  revalidatePath('/')
-  revalidatePath('/nyheder')
+  revalidateNewsPaths()
   redirect('/admin/nyheder')
 }

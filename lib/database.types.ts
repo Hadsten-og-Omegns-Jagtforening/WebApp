@@ -1,11 +1,6 @@
 export type NewsStatus = 'draft' | 'published'
 
-export type NewsCategory =
-  | 'Nyhed'
-  | 'Jagt'
-  | 'Præmieskydning'
-  | 'Klubaften'
-  | 'Praktisk info'
+export type NewsCategory = string
 
 export type ResultRow = {
   rank: string
@@ -34,3 +29,27 @@ export type NewsPost = {
 
 export type NewsPostInsert = Omit<NewsPost, 'id' | 'created_at' | 'updated_at'>
 export type NewsPostUpdate = Partial<NewsPostInsert>
+
+export type NewsCategoryRow = {
+  id: string
+  name: string
+  sort_order: number
+  created_at: string
+}
+
+export type PrizeActivity = {
+  id: string
+  slug: string
+  title: string
+  month_label: string
+  card_description: string
+  body: string
+  icon: string
+  sort_order: number
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
+export type PrizeActivityInsert = Omit<PrizeActivity, 'id' | 'created_at' | 'updated_at'>
+export type PrizeActivityUpdate = Partial<PrizeActivityInsert>
