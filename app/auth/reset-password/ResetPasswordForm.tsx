@@ -13,7 +13,8 @@ export default function ResetPasswordForm() {
     setMessage(null)
     setError(null)
 
-    const formData = new FormData(e.currentTarget)
+    const form = e.currentTarget
+    const formData = new FormData(form)
 
     startTransition(async () => {
       const result = await requestPasswordReset(formData)
@@ -23,7 +24,7 @@ export default function ResetPasswordForm() {
       }
 
       setMessage(result?.success ?? 'Nulstillingsmail sendt.')
-      e.currentTarget.reset()
+      form.reset()
     })
   }
 

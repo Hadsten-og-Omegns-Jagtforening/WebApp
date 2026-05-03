@@ -50,3 +50,89 @@
  GET /nyheder/321 200 in 211ms
  GET /nyheder/saa-begynder-admin-at-ligne-noget 200 in 159ms
  GET /nyheder/123 200 in 224ms
+ ✓ Compiled in 59ms
+ ✓ Compiled in 18ms
+ GET / 200 in 805ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 284ms
+ GET /admin 200 in 407ms
+ GET /admin/nyheder/ny 200 in 138ms
+ POST /admin/nyheder/ny 200 in 125ms
+ GET /admin/nyheder/926f5c46-8bb4-4a2c-ab1e-9d09441e5587 200 in 255ms
+ POST /admin/nyheder/ny 303 in 497ms
+ GET / 200 in 144ms
+ GET / 200 in 611ms
+ ✓ Compiled /nyheder in 431ms
+ GET /nyheder 200 in 584ms
+ ✓ Compiled /aktiviteter in 187ms
+ GET /aktiviteter 200 in 247ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 277ms
+ ✓ Compiled /aktiviteter/hjalp-til-jagtproven in 215ms
+ GET /aktiviteter/hjalp-til-jagtproven 200 in 270ms
+ GET /aktiviteter/hjalp-til-jagtproven 200 in 77ms
+ ✓ Compiled /praktisk-info/bestyrelsen in 205ms
+ GET /praktisk-info/bestyrelsen 200 in 261ms
+ ✓ Compiled /kalender in 187ms
+ GET /kalender 200 in 243ms
+ GET /kalender 200 in 119ms
+ ✓ Compiled in 149ms
+ GET /kalender 200 in 212ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 281ms
+ ✓ Compiled middleware in 2ms
+ GET /kalender 200 in 137ms
+ GET /kalender 200 in 101ms
+ GET /kalender 200 in 90ms
+ ✓ Compiled in 14ms
+ GET /kalender 200 in 93ms
+ GET /kalender 200 in 83ms
+ GET /kalender 200 in 81ms
+ GET /kalender 200 in 207ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 321ms
+ ✓ Compiled /admin in 33ms
+ GET /admin 200 in 517ms
+ ✓ Compiled /admin/brugere in 226ms
+ GET /admin/brugere 200 in 364ms
+ POST /admin/brugere 200 in 205ms
+ GET /admin/brugere 200 in 329ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 265ms
+ GET / 200 in 222ms
+ POST /admin/brugere 303 in 357ms
+ GET /admin 200 in 80ms
+ ✓ Compiled /auth/reset-password in 264ms
+ GET /auth/reset-password 200 in 356ms
+ POST /auth/reset-password 200 in 201ms
+ POST /auth/reset-password 200 in 214ms
+ POST /auth/reset-password 200 in 286ms
+ GET /admin 200 in 80ms
+ POST /admin 200 in 175ms
+ GET /admin?error=1 200 in 115ms
+ POST /admin?error=1 200 in 284ms
+ GET /admin?error=1 200 in 99ms
+ GET /admin 200 in 426ms
+ POST /admin?error=1 303 in 770ms
+ GET /admin/brugere 200 in 161ms
+ POST /admin/brugere 200 in 143ms
+ POST /admin/brugere 200 in 129ms
+ GET / 200 in 211ms
+ POST /admin/brugere 303 in 343ms
+ GET /admin 200 in 80ms
+ GET /auth/reset-password 200 in 72ms
+ POST /auth/reset-password 200 in 235ms
+ POST /auth/reset-password 200 in 214ms
+ GET /admin 200 in 86ms
+ GET /admin 200 in 253ms
+ POST /admin 303 in 571ms
+ GET /admin/brugere 200 in 136ms
+ POST /admin/brugere 200 in 148ms
+ ✓ Compiled in 62ms
+ ✓ Compiled /admin/brugere in 46ms
+ GET /admin/brugere 200 in 366ms
+ GET /admin/brugere 200 in 399ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 288ms
+ GET /admin/brugere 200 in 230ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 282ms
+ GET / 200 in 240ms
+ POST /admin/brugere 303 in 391ms
+ ✓ Compiled /admin in 36ms
+ GET /admin 200 in 147ms
+ POST /admin 200 in 317ms
+ GET /admin?error=1 200 in 158ms

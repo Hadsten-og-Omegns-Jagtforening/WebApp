@@ -43,6 +43,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/" className="adm-link">
             <Icon name="arrow-right" size={16} /> Se hjemmeside
           </Link>
+          <div className="section-label" style={{ marginTop: 8 }}>Administration</div>
+          <Link href="/admin/brugere" className="adm-link">
+            <Icon name="users" size={16} /> Brugere
+          </Link>
         </nav>
         <div className="who">
           <div className="avatar">{initials}</div>
