@@ -13,7 +13,7 @@ export default async function PremieskydningerPage() {
           <span className="eyebrow">Aktiviteter</span>
           <h1>Præmieskydninger</h1>
           <p className="lede">
-            Gennem året samles vi om en håndfuld faste skydninger - fra fastelavnsskydningen i februar til juleskydningen i december.
+            Gennem året samles vi om en håndfuld faste skydninger – fra fastelavnsskydningen i februar til juleskydningen i december.
             De fleste er åbne for alle, og som medlem er du altid med.
           </p>
         </div>
