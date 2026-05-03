@@ -35,7 +35,7 @@ Set these for **Production** and **Preview**:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `NEXT_PUBLIC_SITE_URL`
-- `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL`
+- `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` (optional override)
 - `SUPABASE_SERVICE_ROLE_KEY`
 
 Checks:
@@ -43,6 +43,7 @@ Checks:
 - all values come from the same Supabase project
 - `SUPABASE_SERVICE_ROLE_KEY` is never copied into client code or public docs
 - `NEXT_PUBLIC_SITE_URL` matches the current environment origin
+- if `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` is blank, `/kalender` falls back to the public `booking@hadstenjagtforening.dk` calendar
 - env vars are set before the first production deploy
 
 ### Production domain setup
@@ -273,8 +274,8 @@ If rollback is needed:
 - verify no obvious broken images
 - verify no broken internal links
 - verify the homepage hero no longer uses the placeholder asset before final launch
-- verify `/kalender` uses the approved public Google Calendar embed or public URL rather than the temporary placeholder notice
-- verify `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` is set correctly in Vercel before checking the production calendar iframe
+- verify `/kalender` renders the public booking Google Calendar iframe
+- if `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` is set, verify the override renders the intended calendar iframe
 
 ## 7. Old news migration plan
 

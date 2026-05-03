@@ -35,4 +35,12 @@ describe('supabase storage migrations', () => {
     expect(sql).toContain('news_categories_lower_name_idx')
     expect(sql).toContain("'Præmieskydning'")
   })
+
+  it('provisions editable prize activities', () => {
+    const sql = readMigrations()
+
+    expect(sql).toContain('create table public.prize_activities')
+    expect(sql).toContain('prize_activities_slug_key')
+    expect(sql).toContain("'Fastelavnsskydning'")
+  })
 })

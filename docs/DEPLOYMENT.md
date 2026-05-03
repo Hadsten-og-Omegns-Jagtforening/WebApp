@@ -71,7 +71,8 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 - All four values must come from the **same** deployment context
 - `SUPABASE_SERVICE_ROLE_KEY` must remain server-only
 - `NEXT_PUBLIC_SITE_URL` must match the current site origin for the environment where password-reset emails are sent
-- `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` must only be set when the customer provides the final public Google Calendar embed URL
+- `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` is optional; without it, `/kalender` uses the public booking calendar for `booking@hadstenjagtforening.dk`
+- `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` can be a raw Google Calendar embed URL or copied iframe embed code
 - The homepage and admin middleware will fail at runtime if `NEXT_PUBLIC_SUPABASE_URL` or `NEXT_PUBLIC_SUPABASE_ANON_KEY` are missing
 - The admin news actions will fail if `SUPABASE_SERVICE_ROLE_KEY` is missing
 
@@ -91,10 +92,12 @@ From `Settings -> API`, copy:
 
 ### 3. Run the migrations
 
-Run both migrations in order:
+Run migrations in order:
 
 1. `supabase/migrations/0001_news_table.sql`
 2. `supabase/migrations/0002_news_images_storage.sql`
+3. `supabase/migrations/0003_news_categories.sql`
+4. `supabase/migrations/0004_prize_activities.sql`
 
 This provisions:
 
@@ -102,6 +105,8 @@ This provisions:
 - RLS for news content
 - the `news-images` public storage bucket
 - storage policies for authenticated uploads and public reads
+- editable news categories
+- editable prize activity cards and detail pages
 
 ### 4. Provision the first admin user
 
@@ -213,9 +218,9 @@ Use `docs/LAUNCH_CHECKLIST.md` for the full post-deploy smoke sequence and rollb
 Customer-provided launch inputs still required before final cutover:
 
 - a customer-approved homepage hero image
-- the public Google Calendar embed URL for `booking@hadstenjagtforening.dk`, to be stored in `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL`
+- optional final Google Calendar iframe/embed override if the default public booking calendar should be replaced
 
-Do not invent or hardcode either asset. Keep the current placeholders until the customer provides the approved source material.
+Do not invent or hardcode the hero image. Keep the current placeholder until the customer provides the approved source material.
 
 ## Admin auth onboarding and recovery
 

@@ -9,6 +9,7 @@
 - `/book-skydebanen` - Shooting range booking information
 - `/bliv-medlem` - Membership information
 - `/find-os` - Location and contact information
+- `/om-hoj` - Association history and background
 
 ### Activity routes
 
@@ -16,12 +17,13 @@
 - `/aktiviteter/jagt` - Hunting
 - `/aktiviteter/hjalp-til-jagtproven` - Help for the hunting exam
 - `/aktiviteter/premieskydninger` - Prize shoots
+- `/aktiviteter/premieskydninger/[slug]` - Prize shoot detail
 
 ### Practical information routes
 
 - `/praktisk-info` - Practical information overview
 - `/praktisk-info/aabningstider-og-skydetider` - Opening hours and shooting times
-- `/praktisk-info/bestyrelsen` - Board
+- `/praktisk-info/bestyrelsen` - Folkene bag foreningen
 
 ## Admin routes
 
@@ -31,6 +33,8 @@
 - `/admin/nyheder/[id]`
 - `/admin/kalender`
 - `/admin/premieskydninger`
+- `/admin/premieskydninger/ny`
+- `/admin/premieskydninger/[id]`
 
 ## External support
 

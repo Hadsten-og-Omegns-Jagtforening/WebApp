@@ -1,85 +1,45 @@
-import Icon from '@/components/Icon'
-
-const memberships = [
-  {
-    name: 'Aktivt medlemskab',
-    price: '825',
-    bullets: [
-      'Fri træning på skydebanen',
-      'Adgang til lodtrækninger og jagtaktiviteter',
-      'Medlemsrabat på præmieskydninger',
-      'Klubaftener og foredrag',
-    ],
-  },
-  {
-    name: 'Familiemedlem',
-    price: '1.150',
-    bullets: [
-      'Alt i aktivt medlemskab',
-      'For dig og din husstand',
-      'Op til 2 voksne og børn under 18',
-      'Fællesskab omkring klubhus og bane',
-    ],
-  },
-]
-
 export default function BlivMedlemPage() {
   return (
     <section className="section">
-      <div className="container" style={{ maxWidth: 980 }}>
-        <div style={{ marginBottom: 40 }}>
-          <span className="eyebrow" style={{ color: 'var(--accent)' }}>Om HOJ</span>
-          <h1
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 500,
-              fontSize: 'clamp(44px, 8vw, 64px)',
-              letterSpacing: '-0.02em',
-              margin: '8px 0 16px',
-              fontVariationSettings: '"opsz" 144',
-            }}
-          >
-            Bliv medlem
-          </h1>
-          <p style={{ fontSize: 19, color: 'var(--fg2)', maxWidth: '56ch', margin: 0, lineHeight: 1.5 }}>
-            Adgang til jagt, træning på banen og fællesskab omkring klubhuset siden 1968.
+      <div className="container copy-page">
+        <div className="page-intro">
+          <span className="eyebrow">Bliv medlem</span>
+          <h1>Bliv en del af fællesskabet</h1>
+          <p className="lede">
+            Hos Hadsten og Omegns Jagtforening er medlemskabet mere end et kort i lommen.
           </p>
         </div>
 
-        <div className="grid-2" style={{ gap: 20, marginBottom: 48 }}>
-          {memberships.map((membership) => (
-            <article key={membership.name} style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)', borderRadius: 8, padding: '28px 30px' }}>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--fg3)', marginBottom: 8 }}>
-                {membership.name}
-              </div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 20 }}>
-                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 44, letterSpacing: '-0.02em', color: 'var(--fg1)' }}>{membership.price}</span>
-                <span style={{ fontSize: 15, color: 'var(--fg3)' }}>kr / år</span>
-              </div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {membership.bullets.map((bullet) => (
-                  <li key={bullet} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', fontSize: 15, color: 'var(--fg1)' }}>
-                    <span style={{ color: 'var(--accent)', flexShrink: 0, marginTop: 3 }}><Icon name="check" size={16} /></span>
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
-              <a className="btn primary" href="mailto:info@hadstenjagtforening.dk?subject=Medlemskab" style={{ width: '100%', justifyContent: 'center' }}>
-                Tilmeld dig
-              </a>
-            </article>
-          ))}
-        </div>
+        <section className="info-panel">
+          <p>
+            Det er adgang til foreningens jagter - bukkejagt, hjortejagt og efterårsjagt - og til et fællesskab,
+            der har holdt sammen om jagt og flugtskydning i Østjylland siden 1933.
+          </p>
+          <p>Skydebanen, kurserne og arrangementerne er åbne for alle. Men vil du med på jagt, skal du være medlem.</p>
+        </section>
 
-        <div style={{ background: 'var(--bg-alt)', borderRadius: 8, padding: '28px 32px', display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, minWidth: 280 }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600, margin: '0 0 6px' }}>Usikker på om det er noget for dig?</h2>
-            <p style={{ margin: 0, color: 'var(--fg2)', fontSize: 15 }}>
-              Kig forbi en træningsaften. Vi har udstyr klar, så du kan prøve flugtskydning uden selv at have udstyr.
-            </p>
-          </div>
-          <a className="btn secondary" href="/book-skydebanen">Prøv en træningsaften</a>
-        </div>
+        <section className="info-panel">
+          <h2>Sådan bliver du medlem</h2>
+          <p>
+            Medlemskab tegnes gennem Danmarks Jægerforbund, som er dem, der administrerer medlemskaber for landets frivillige jagtforeninger,
+            herunder os.
+          </p>
+          <p>Du bliver medlem i tre trin:</p>
+          <ol>
+            <li>Gå ind på jaegerforbundet.dk og find Hadsten og Omegns Jagtforening i listen over foreninger lidt længere nede på siden.</li>
+            <li>Vælg din medlemstype - ordinært eller ekstraordinært medlemskab.</li>
+            <li>Udfyld formularen med dine oplysninger - så er du officielt medlem ved os.</li>
+          </ol>
+          <p>Har du spørgsmål undervejs, kan du altid kontakte Danmarks Jægerforbund direkte eller skrive til os.</p>
+          <a
+            className="btn primary lg"
+            href="https://www.jaegerforbundet.dk/om-dj/medlemskab-for-din-og-for-jagtens-skyld/bliv-medlem/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Bliv medlem hos Danmarks Jægerforbund
+          </a>
+        </section>
       </div>
     </section>
   )

@@ -1,17 +1,19 @@
 import { expect, test } from '@playwright/test'
 
 const publicPages = [
-  { path: '/book-skydebanen', heading: 'Reservér banen' },
+  { path: '/book-skydebanen', heading: 'Book skydebanen' },
   { path: '/kalender', heading: 'Kalender' },
-  { path: '/bliv-medlem', heading: 'Bliv medlem' },
-  { path: '/aktiviteter', heading: 'Aktiviteter' },
+  { path: '/bliv-medlem', heading: 'Bliv en del af fællesskabet' },
+  { path: '/aktiviteter', heading: 'Det foregår hos os' },
   { path: '/aktiviteter/jagt', heading: 'Jagt' },
   { path: '/aktiviteter/hjalp-til-jagtproven', heading: 'Hjælp til jagtprøven' },
   { path: '/aktiviteter/premieskydninger', heading: 'Præmieskydninger' },
-  { path: '/praktisk-info', heading: 'Praktisk info' },
-  { path: '/praktisk-info/aabningstider-og-skydetider', heading: 'Åbningstider og skydetider' },
-  { path: '/praktisk-info/bestyrelsen', heading: 'Bestyrelsen' },
+  { path: '/aktiviteter/premieskydninger/fastelavnsskydning', heading: 'Fastelavnsskydning' },
+  { path: '/praktisk-info', heading: 'Alt du har brug for' },
+  { path: '/praktisk-info/aabningstider-og-skydetider', heading: 'Åbningstider og skydebanen' },
+  { path: '/praktisk-info/bestyrelsen', heading: 'Folkene bag foreningen' },
   { path: '/find-os', heading: 'Find os' },
+  { path: '/om-hoj', heading: 'Historien bag HOJ' },
 ]
 
 test.describe('public utility pages', () => {
@@ -40,11 +42,30 @@ test('nav and footer internal links use implemented routes', async ({ page }) =>
   expect(hrefs).not.toContain('/aabningstider')
   expect(hrefs).not.toContain('/bestyrelsen')
   expect(hrefs).not.toContain('/arkiv')
+  expect(hrefs).not.toContain('/banevagter')
 
   for (const href of Array.from(new Set(hrefs))) {
     const response = await page.goto(href)
     expect(response?.status(), href).toBeLessThan(400)
   }
+})
+
+test('prize shooting cards link to detail pages', async ({ page }) => {
+  await page.goto('/aktiviteter/premieskydninger')
+
+  const firstCard = page.locator('a[href="/aktiviteter/premieskydninger/fastelavnsskydning"]').first()
+  await expect(firstCard).toBeVisible()
+  await firstCard.click()
+  await expect(page).toHaveURL('/aktiviteter/premieskydninger/fastelavnsskydning')
+  await expect(page.locator('h1')).toContainText('Fastelavnsskydning')
+})
+
+test('calendar renders the booking Google Calendar iframe fallback', async ({ page }) => {
+  await page.goto('/kalender')
+
+  const iframe = page.locator('iframe[title="Hadsten og Omegns Jagtforening kalender"]')
+  await expect(iframe).toBeVisible()
+  await expect(iframe).toHaveAttribute('src', /booking%40hadstenjagtforening\.dk/)
 })
 
 test('desktop hamburger is hidden and mobile menu opens', async ({ page }) => {

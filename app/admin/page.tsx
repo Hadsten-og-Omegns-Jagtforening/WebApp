@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getUserWithTimeout } from '@/lib/supabase/auth-timeout'
 import { getAdminPostState } from '@/lib/news-visibility'
 import LoginForm from './LoginForm'
 import type { NewsPost } from '@/lib/database.types'
@@ -19,7 +20,7 @@ function formatDate(iso: string | null) {
 
 export default async function AdminPage({ searchParams }: Props) {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user } } = await getUserWithTimeout(supabase)
 
   if (!user) {
     const { error } = await searchParams

@@ -16,6 +16,59 @@ This must ALWAYS match the actual code.
 
 ## Current State
 
+### Admin CMS and prize activity follow-up - 2026-05-02
+
+- Restored the public accent/title/CTA token values to the approved brass design direction in `colors_and_type.css`.
+- Replaced the Præmieskydninger news/category workaround with a dedicated `public.prize_activities` data model and migration.
+- Added public DB-driven prize activity cards at `/aktiviteter/premieskydninger` and detail pages at `/aktiviteter/premieskydninger/[slug]`, with fallback seed content if Supabase is unavailable.
+- Replaced `/admin/premieskydninger` with a dedicated prize activity CMS for creating/editing title, period, card text, icon, sort order, active state, and rich text body.
+- Updated `/kalender` so it renders the public Google Calendar for `booking@hadstenjagtforening.dk` by default and still supports `NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL` as a raw URL or copied iframe override.
+- Improved the Bestyrelsen compact list with row and role/name dividers.
+- Improved admin news image controls over previews, added specific Danish image validation/crop/upload errors, and kept object URLs alive for crop preview loading.
+- Fixed TipTap toolbar mouse handling so formatting applies to selected text instead of losing selection on button press.
+- Added publish feedback so a successful `Udgiv` action shows `Udgivet` with the check icon state.
+- Added focused regression coverage for prize activity actions, calendar embed parsing, image validation/error mapping, TipTap toolbar mouse handling, migration provisioning, and public prize/calendar E2E routes.
+- Validation: `npm.cmd run typecheck` passed, `npm.cmd run lint` passed, elevated `npm.cmd test` passed with 23 files / 66 tests, elevated `npm.cmd run build` passed, and elevated focused `PLAYWRIGHT_PORT=3002 npm.cmd run test:e2e -- tests/e2e/public-pages.spec.ts` passed with 17 tests.
+- Browser smoke on `http://localhost:3002` verified `/aktiviteter/premieskydninger` renders 6 cards, the first card links to `/aktiviteter/premieskydninger/fastelavnsskydning`, the detail page renders, and `/kalender` uses the booking Google Calendar iframe fallback.
+- Local build/E2E logs still show expected fallback warnings when the local Supabase schema does not contain `public.prize_activities`; applying `supabase/migrations/0004_prize_activities.sql` removes that warning in a configured Supabase project.
+
+### Admin image crop preview follow-up - 2026-05-03
+
+- The `Tilpas billede` modal now includes a news-feed card preview so editors can judge the 3:2 landing/news-card crop before uploading.
+- Follow-up fix: crop preview image sources now use `FileReader.readAsDataURL()` instead of blob object URLs, so the actual selected JPG/PNG bytes remain visible while adjusting the image.
+- Added regression coverage in `tests/unit/image-uploader-preview.test.tsx`.
+- Browser Use verified the authenticated `/admin/nyheder/ny` editor renders and the `Hovedbillede` upload area is visible. Browser Use cannot safely drive the OS file chooser, so the modal preview is covered by component testing.
+- Validation: `npm.cmd run typecheck` passed, `npm.cmd run lint` passed, elevated `npm.cmd test` passed with 24 files / 67 tests, and elevated `npm.cmd run build` passed. The local dev server was restarted afterward because the production build invalidates the active dev server artifacts.
+- Follow-up validation after the FileReader change: `npm.cmd run typecheck` passed and `npm.cmd run lint` passed. Running the focused test/build with elevated permissions was blocked by the current Codex usage limit and needs to be rerun when approvals are available.
+
+### Customer copy and navigation corrections - 2026-05-02
+
+- Implemented the customer PDF content corrections across the public site:
+  - homepage hero/quick tiles
+  - `/nyheder`
+  - `/aktiviteter` and its Jagt, Hjælp til jagtprøven, and Præmieskydninger subpages
+  - `/praktisk-info`, Book skydebanen, Åbningstider og skydebanen, Folkene bag foreningen, and Find os-adjacent navigation
+  - `/bliv-medlem`
+  - new `/om-hoj` history page
+- Updated the public navigation hierarchy so Aktiviteter and Praktisk info expose their subpages as grouped dropdowns, while Om HOJ and Bliv medlem are top-level links.
+- Removed the separate header booking CTA while keeping Book skydebanen under Praktisk info and as normal page CTAs.
+- Updated header identity to read `Hadsten og Omegns Jagtforening` with `Stiftet 1933` as the subline.
+- Updated the footer copy/contact to use the PDF-provided tagline and `booking@hadstenjagtforening.dk`.
+- Earlier CTA accent tokens were temporarily moved to orange; the current approved tokens are restored to the brass design direction.
+- Updated `docs/SITE_MAP.md` and public-page e2e expectations to include `/om-hoj` and the revised headings.
+- Browser smoke on `http://localhost:3001` verified key headings, header brand, absence of a standalone nav CTA, `/om-hoj` navigation, and no linked banevagt route.
+- Validation: `npm.cmd run typecheck` passed, `npm.cmd run lint` passed, elevated `npm.cmd test` passed, and elevated `npm.cmd run build` passed. A focused Playwright public-pages run could not start because port 3000 was already occupied by a local Node server returning 500; browser smoke was run on port 3001 instead.
+
+### Admin new-news route hardening - 2026-05-02
+
+- Reproduced the local `/admin/nyheder/ny` failure in the in-app browser.
+- Confirmed the client-side TipTap crash is fixed in source by setting `immediatelyRender: false` in `components/admin/NewsForm.tsx`.
+- Added bounded Supabase auth checks through `lib/supabase/auth-timeout.ts`; admin auth now fails closed instead of letting admin routes hang indefinitely when Supabase auth does not respond.
+- Added a bounded category load around `news_categories`; `/admin/nyheder/ny` now falls back to the default category list if the category query times out or the category table is unavailable.
+- Restarted the stale local dev server on port 3000 and verified `/admin/nyheder/ny` renders the editor in the in-app browser with no console errors.
+- Re-verified key public content routes on `http://localhost:3000`: `/`, `/aktiviteter`, `/praktisk-info`, `/book-skydebanen`, `/bliv-medlem`, and `/om-hoj`.
+- Validation: `npm.cmd run typecheck` passed, `npm.cmd run lint` passed, elevated `npm.cmd test` passed with 20 files / 54 tests, elevated `npm.cmd run build` passed, and elevated focused `npm.cmd run test:e2e -- tests/e2e/public-pages.spec.ts` passed with 14 tests.
+
 ### Hosting decision addendum - 2026-04-29
 
 - Added `docs/HOSTING_DECISION.md` as a scoped architecture decision memo comparing:
@@ -119,7 +172,13 @@ This must ALWAYS match the actual code.
 - Image uploads are cropped client-side to a consistent 3:2 JPEG before upload to the existing `news-images` bucket.
 - Result rows are normalized server-side and on article render so score tables sort best score first.
 - Admin logout now redirects to the public homepage.
-- Validation in this session: `npm.cmd run typecheck` passed and `npm.cmd run lint` passed. `npm.cmd test -- ...` and `npm.cmd run build` were blocked in the sandbox by Windows `spawn EPERM`; escalation was unavailable in this environment, so those commands still need to be rerun outside the sandbox before deployment.
+- Follow-up fix: article headlines now opt out of global balanced wrapping so the single-news title uses the full article/image width.
+- Follow-up fix: missing `public.news_categories` no longer logs a server error when loading the editor; the editor falls back to the default categories and category creation shows a migration-specific message.
+- Follow-up fix: `/admin/nyheder/ny` no longer crashes in the browser. Root cause was TipTap SSR initialization in `NewsForm`; `useEditor` now sets `immediatelyRender: false`.
+- Follow-up fix: removed duplicate TipTap Link/Underline registration because StarterKit already includes both in the installed TipTap version.
+- Follow-up fix: auth redirects now match the intended admin flow: sign-in and password-update redirect to `/admin`, sign-out redirects to `/`.
+- Initial validation: `npm.cmd run typecheck` passed and `npm.cmd run lint` passed. Unprivileged `npm.cmd test -- ...` and `npm.cmd run build` were blocked in the sandbox by Windows `spawn EPERM`.
+- Follow-up validation: Browser Use reproduced the `/admin/nyheder/ny` crash locally, then verified that clicking `+ Ny nyhed` from `/admin/nyheder` reaches `/admin/nyheder/ny` and renders the form. `npm.cmd run typecheck` passed, `npm.cmd run lint` passed, elevated `npm.cmd test` passed with 19 files / 51 tests, and elevated `npm.cmd run build` passed.
 
 ### Route inventory - 2026-04-29
 
@@ -134,6 +193,7 @@ This must ALWAYS match the actual code.
 | `/aktiviteter/jagt` | implemented | `app/(public)/aktiviteter/jagt/page.tsx` |
 | `/aktiviteter/hjalp-til-jagtproven` | implemented | `app/(public)/aktiviteter/hjalp-til-jagtproven/page.tsx` |
 | `/aktiviteter/premieskydninger` | implemented | `app/(public)/aktiviteter/premieskydninger/page.tsx` |
+| `/aktiviteter/premieskydninger/[slug]` | implemented | `app/(public)/aktiviteter/premieskydninger/[slug]/page.tsx` |
 | `/praktisk-info` | implemented | `app/(public)/praktisk-info/page.tsx` |
 | `/praktisk-info/aabningstider-og-skydetider` | implemented | `app/(public)/praktisk-info/aabningstider-og-skydetider/page.tsx` |
 | `/praktisk-info/bestyrelsen` | implemented | `app/(public)/praktisk-info/bestyrelsen/page.tsx` |
@@ -143,6 +203,9 @@ This must ALWAYS match the actual code.
 | `/admin/nyheder` | implemented | `app/admin/nyheder/page.tsx` |
 | `/admin/nyheder/ny` | implemented | `app/admin/nyheder/ny/page.tsx` |
 | `/admin/nyheder/[id]` | implemented | `app/admin/nyheder/[id]/page.tsx` |
+| `/admin/premieskydninger` | implemented | `app/admin/premieskydninger/page.tsx` |
+| `/admin/premieskydninger/ny` | implemented | `app/admin/premieskydninger/ny/page.tsx` |
+| `/admin/premieskydninger/[id]` | implemented | `app/admin/premieskydninger/[id]/page.tsx` |
 
 ### Layout inventory - 2026-04-28
 
@@ -416,7 +479,7 @@ Admin visual and UX mismatches:
 ## Missing / Not Implemented
 
 - All public routes currently listed in `docs/SITE_MAP.md` are implemented.
-- Deferred non-route gaps: customer-approved hero image, old-news migration execution, booking backend behavior, real Supabase news data/empty states, and prize-shoot detail pages not listed in `docs/SITE_MAP.md`.
+- Deferred non-route gaps: customer-approved hero image, old-news migration execution, booking backend behavior, and real Supabase news data/empty states.
 
 ---
 

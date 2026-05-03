@@ -1,58 +1,45 @@
-import Icon from '@/components/Icon'
-import Link from 'next/link'
-
-const steps = [
-  'Vi hjælper med praktisk træning på banen før haglskydeprøven.',
-  'Du får rolig vejledning i sikkerhed, standplads og skydeteknik.',
-  'Nye skytter kan låne udstyr efter aftale på træningsaftener.',
-]
-
 export default function HjaelpTilJagtprovenPage() {
   return (
     <section className="section">
-      <div className="container" style={{ maxWidth: 980 }}>
-        <div style={{ marginBottom: 40 }}>
-          <span className="eyebrow" style={{ color: 'var(--accent)' }}>Aktiviteter</span>
-          <h1
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 500,
-              fontSize: 'clamp(40px, 7vw, 56px)',
-              letterSpacing: '-0.02em',
-              margin: '8px 0 12px',
-              fontVariationSettings: '"opsz" 144',
-            }}
-          >
-            Hjælp til jagtprøven
-          </h1>
-          <p style={{ fontSize: 18, color: 'var(--fg2)', maxWidth: '58ch', margin: 0, lineHeight: 1.5 }}>
-            Har du brug for mere træning før haglskydeprøven, kan du bruge HOJ som et praktisk og roligt træningssted.
+      <div className="container copy-page">
+        <div className="page-intro">
+          <span className="eyebrow">Aktiviteter</span>
+          <h1>Hjælp til jagtprøven</h1>
+          <p className="lede">
+            Skulle du være så uheldig at være dumpet til jagtprøven i 1., 2. eller 3. forsøg, så fortvivl ej.
           </p>
         </div>
 
-        <div className="grid-2" style={{ alignItems: 'start', gap: 24 }}>
-          <article style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)', borderRadius: 8, padding: '28px 30px' }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 24, margin: '0 0 16px' }}>Det kan vi hjælpe med</h2>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {steps.map((step) => (
-                <li key={step} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', color: 'var(--fg1)', lineHeight: 1.5 }}>
-                  <span style={{ color: 'var(--accent)', flexShrink: 0, marginTop: 3 }}><Icon name="check" size={16} /></span>
-                  {step}
-                </li>
-              ))}
-            </ul>
-          </article>
-
-          <aside style={{ background: 'var(--bg-alt)', borderRadius: 8, padding: '28px 30px' }}>
-            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22, margin: '0 0 10px' }}>Start med en træningsaften</h2>
-            <p style={{ color: 'var(--fg2)', lineHeight: 1.5, margin: '0 0 18px' }}>
-              Se de kommende træningsaftener, eller send en forespørgsel om at bruge banen med instruktør.
+        <div className="copy-stack">
+          <section className="info-panel">
+            <p>Eller ønsker du måske ekstra undervisning før jagtprøven?</p>
+            <p>
+              Vi tilbyder intensiv undervisning, som giver dig et godt og solidt grundlag for at bestå prøven med hjælp til alt fra teori,
+              til afstandsbedømmelse og våbenhåndtering.
             </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-              <Link className="btn secondary" href="/kalender">Se kalender</Link>
-              <Link className="btn primary" href="/book-skydebanen">Book banen</Link>
-            </div>
-          </aside>
+            <p>
+              Det er foreningens tidligere jagttegnslærer, Preben Holm, som forestår undervisningen, og altid med et godt resultat.
+            </p>
+            <p>
+              I 2025 deltog 26 kursister i 1 eller flere af undervisningsmodulerne, og 23 bestod fint jagtprøven.
+            </p>
+          </section>
+
+          <section className="info-panel">
+            <h2>Tilmelding</h2>
+            <p>
+              Direkte til Preben Holm på tlf. 4046 8690 / 2920 9976 eller mail: prebenjagt@email.dk.
+            </p>
+            <p>
+              Der vil blive gennemgået svært stof i forhold til teoriprøven og kørt nogle prøver, og i praktikken vil der være
+              afstandsbedømmelse og våbenhåndtering. Der er ingen skydning.
+            </p>
+            <p>Pris kr. 200-400, afhængig af deltagerantal.</p>
+            <p>
+              Vi planlægger løbende kurser, og også timer udelukkende med praktikken. Tøv derfor ikke med at kontakte Preben,
+              så planlægger han en dag.
+            </p>
+          </section>
         </div>
       </div>
     </section>

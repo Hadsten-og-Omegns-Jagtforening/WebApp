@@ -4,8 +4,7 @@ import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import Underline from '@tiptap/extension-underline'
-import TiptapLink from '@tiptap/extension-link'
+import Icon from '@/components/Icon'
 import DateTimePicker from './DateTimePicker'
 import ImageUploader from './ImageUploader'
 import ResultsBuilder from './ResultsBuilder'
@@ -45,15 +44,18 @@ export default function NewsForm({
   const [highlighted, setHighlighted] = useState(post?.highlighted ?? false)
   const [error, setError] = useState<string | null>(null)
   const [savedAt, setSavedAt] = useState<string | null>(null)
+  const [publishState, setPublishState] = useState<'idle' | 'publishing' | 'published'>('idle')
   const [isPending, startTransition] = useTransition()
 
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({ heading: { levels: [2, 3] } }),
-      Underline,
-      TiptapLink.configure({ openOnClick: false }),
+      StarterKit.configure({
+        heading: { levels: [2, 3] },
+        link: { openOnClick: false },
+      }),
     ],
     content: post?.body ?? '',
+    immediatelyRender: false,
   })
 
   function buildFormData(title: string, teaser: string, publishedAt: string) {
@@ -97,14 +99,24 @@ export default function NewsForm({
   function handlePublish(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
     setError(null)
+    setPublishState('publishing')
     const form = e.currentTarget.closest('form') as HTMLFormElement | null
     if (!form) return
     const { title, teaser, publishedAt } = getFormValues(form)
     const fd = buildFormData(title, teaser, publishedAt)
     startTransition(async () => {
       const result = await onPublish(fd)
-      if (result?.error) setError(result.error)
+      if (result?.error) {
+        setError(result.error)
+        setPublishState('idle')
+        return
+      }
+      setPublishState('published')
     })
+  }
+
+  function preventToolbarMouseDown(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault()
   }
 
   function handleCreateCategory() {
@@ -163,18 +175,18 @@ export default function NewsForm({
             <label>Indhold</label>
             <div className="editor">
               <div className="ed-tools">
-                <button type="button" onClick={() => editor?.chain().focus().toggleBold().run()} className={editor?.isActive('bold') ? 'active' : ''}>B</button>
-                <button type="button" onClick={() => editor?.chain().focus().toggleItalic().run()} className={editor?.isActive('italic') ? 'active' : ''}>I</button>
-                <button type="button" onClick={() => editor?.chain().focus().toggleUnderline().run()} className={editor?.isActive('underline') ? 'active' : ''}>U</button>
+                <button type="button" onMouseDown={preventToolbarMouseDown} onClick={() => editor?.chain().focus().toggleBold().run()} className={editor?.isActive('bold') ? 'active' : ''}>B</button>
+                <button type="button" onMouseDown={preventToolbarMouseDown} onClick={() => editor?.chain().focus().toggleItalic().run()} className={editor?.isActive('italic') ? 'active' : ''}>I</button>
+                <button type="button" onMouseDown={preventToolbarMouseDown} onClick={() => editor?.chain().focus().toggleUnderline().run()} className={editor?.isActive('underline') ? 'active' : ''}>U</button>
                 <span className="ed-sep" />
-                <button type="button" onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()} className={editor?.isActive('heading', { level: 2 }) ? 'active' : ''}>H2</button>
-                <button type="button" onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()} className={editor?.isActive('heading', { level: 3 }) ? 'active' : ''}>H3</button>
+                <button type="button" onMouseDown={preventToolbarMouseDown} onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()} className={editor?.isActive('heading', { level: 2 }) ? 'active' : ''}>H2</button>
+                <button type="button" onMouseDown={preventToolbarMouseDown} onClick={() => editor?.chain().focus().toggleHeading({ level: 3 }).run()} className={editor?.isActive('heading', { level: 3 }) ? 'active' : ''}>H3</button>
                 <span className="ed-sep" />
-                <button type="button" onClick={() => editor?.chain().focus().toggleBulletList().run()} className={editor?.isActive('bulletList') ? 'active' : ''}>List</button>
-                <button type="button" onClick={() => { const url = prompt('URL:'); if (url) editor?.chain().focus().setLink({ href: url }).run() }}>Link</button>
-                <button type="button" onClick={() => editor?.chain().focus().toggleBlockquote().run()} className={editor?.isActive('blockquote') ? 'active' : ''}>&quot;</button>
+                <button type="button" onMouseDown={preventToolbarMouseDown} onClick={() => editor?.chain().focus().toggleBulletList().run()} className={editor?.isActive('bulletList') ? 'active' : ''}>List</button>
+                <button type="button" onMouseDown={preventToolbarMouseDown} onClick={() => { const url = prompt('URL:'); if (url) editor?.chain().focus().setLink({ href: url }).run() }}>Link</button>
+                <button type="button" onMouseDown={preventToolbarMouseDown} onClick={() => editor?.chain().focus().toggleBlockquote().run()} className={editor?.isActive('blockquote') ? 'active' : ''}>&quot;</button>
                 <span className="ed-sep" />
-                <button type="button" onClick={() => editor?.chain().focus().undo().run()}>Undo</button>
+                <button type="button" onMouseDown={preventToolbarMouseDown} onClick={() => editor?.chain().focus().undo().run()}>Undo</button>
               </div>
               <EditorContent editor={editor} />
             </div>
@@ -261,7 +273,9 @@ export default function NewsForm({
               if (confirm('Slet denne nyhed permanent?')) await onDelete()
             }}>Slet</button>
           )}
-          <button type="button" className="btn primary" onClick={handlePublish} disabled={isPending}>Udgiv</button>
+          <button type="button" className="btn primary" onClick={handlePublish} disabled={isPending || publishState === 'published'}>
+            {publishState === 'published' ? <><Icon name="check" size={15} /> Udgivet</> : publishState === 'publishing' ? 'Udgiver...' : 'Udgiv'}
+          </button>
         </div>
       </div>
     </form>

@@ -61,7 +61,7 @@
   --accent:         var(--hoj-brass-600);
   --accent-hover:   var(--hoj-brass-700);
   --accent-soft:    var(--hoj-brass-200);
-  --accent-text:    #1A1308;
+  --accent-text:    var(--fg1);
 
   --danger:         var(--hoj-clay-600);   /* alert, banen lukket, fejl */
   --success:        var(--hoj-moss-600);   /* banen åben, OK */

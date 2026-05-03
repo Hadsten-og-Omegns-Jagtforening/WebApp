@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Hadsten & Omegns Jagtforening',
-  description: 'HOJ — flugtskydning, jagt og fællesskab siden 1968',
+  title: 'Hadsten og Omegns Jagtforening',
+  description: 'HOJ - jagt, flugtskydning og fællesskab siden 1933',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/server'
+import { getUserWithTimeout } from '@/lib/supabase/auth-timeout'
 import { signOut } from '@/lib/actions/auth'
 import Icon from '@/components/Icon'
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user } } = await getUserWithTimeout(supabase)
 
   // Login page: no sidebar
   if (!user) {

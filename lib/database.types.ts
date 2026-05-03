@@ -36,3 +36,20 @@ export type NewsCategoryRow = {
   sort_order: number
   created_at: string
 }
+
+export type PrizeActivity = {
+  id: string
+  slug: string
+  title: string
+  month_label: string
+  card_description: string
+  body: string
+  icon: string
+  sort_order: number
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
+export type PrizeActivityInsert = Omit<PrizeActivity, 'id' | 'created_at' | 'updated_at'>
+export type PrizeActivityUpdate = Partial<PrizeActivityInsert>

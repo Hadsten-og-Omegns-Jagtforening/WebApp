@@ -17,9 +17,9 @@ const items: NavItem[] = [
     label: 'Aktiviteter',
     children: [
       { id: 'activities-overview', label: 'Overblik', href: '/aktiviteter' },
-      { id: 'jagt', label: 'Jagt', href: '/aktiviteter/jagt', meta: 'Bukkejagt · Hjort · Efterårsjagt' },
-      { id: 'jagtprove', label: 'Hjælp til jagtprøven', href: '/aktiviteter/hjalp-til-jagtproven', meta: 'Dumpet? Vi hjælper dig videre' },
-      { id: 'premie', label: 'Præmieskydninger', href: '/aktiviteter/premieskydninger', meta: 'HOJ Cup · Fastelavn · Skt. Hans · Jul' },
+      { id: 'jagt', label: 'Jagt', href: '/aktiviteter/jagt', meta: 'Bukkejagt, hjortejagt og efterårsjagt' },
+      { id: 'jagtprove', label: 'Hjælp til jagtprøven', href: '/aktiviteter/hjalp-til-jagtproven', meta: 'Teori, afstand og våbenhåndtering' },
+      { id: 'premie', label: 'Præmieskydninger', href: '/aktiviteter/premieskydninger', meta: 'Årets faste skydninger' },
     ],
   },
   {
@@ -28,19 +28,14 @@ const items: NavItem[] = [
     children: [
       { id: 'praktisk-overview', label: 'Overblik', href: '/praktisk-info' },
       { id: 'kalender', label: 'Kalender', href: '/kalender' },
-      { id: 'tider', label: 'Åbningstider og skydetider', href: '/praktisk-info/aabningstider-og-skydetider' },
-      { id: 'book', label: 'Lej skydebanen', href: '/book-skydebanen' },
-      { id: 'bestyrelsen', label: 'Bestyrelsen', href: '/praktisk-info/bestyrelsen' },
-    ],
-  },
-  {
-    id: 'omhoj',
-    label: 'Om HOJ',
-    children: [
-      { id: 'medlem', label: 'Bliv medlem', href: '/bliv-medlem' },
+      { id: 'tider', label: 'Åbningstider og skydebanen', href: '/praktisk-info/aabningstider-og-skydetider' },
+      { id: 'book', label: 'Book skydebanen', href: '/book-skydebanen' },
+      { id: 'bestyrelsen', label: 'Folkene bag foreningen', href: '/praktisk-info/bestyrelsen' },
       { id: 'find', label: 'Find os', href: '/find-os' },
     ],
   },
+  { id: 'omhoj', label: 'Om HOJ', href: '/om-hoj' },
+  { id: 'medlem', label: 'Bliv medlem', href: '/bliv-medlem' },
   { id: 'admin', label: 'Admin', href: '/admin' },
 ]
 
@@ -57,10 +52,10 @@ export default function Nav() {
     <header className={`nav${menuOpen ? ' nav--open' : ''}`}>
       <div className="container nav-inner">
         <Link className="logo" href="/" onClick={closeMenus}>
-          <Image src="/assets/logo-hoj.png" alt="Hadsten & Omegns Jagtforening" width={44} height={44} priority />
+          <Image src="/assets/logo-hoj.png" alt="Hadsten og Omegns Jagtforening" width={44} height={44} priority />
           <div className="words">
-            <span className="mark">Hadsten &amp; Omegns</span>
-            <span className="sub">Jagtforening · stiftet 1968</span>
+            <span className="mark">Hadsten og Omegns Jagtforening</span>
+            <span className="sub">Stiftet 1933</span>
           </div>
         </Link>
 
@@ -94,11 +89,6 @@ export default function Nav() {
             </li>
           ))}
         </ul>
-
-        <Link className="btn primary sm nav-cta" href="/book-skydebanen" onClick={closeMenus}>
-          <Icon name="crosshair" size={16} />
-          Book skydebanen
-        </Link>
 
         <button
           className="nav-hamburger"

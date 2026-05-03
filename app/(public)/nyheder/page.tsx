@@ -30,6 +30,9 @@ export default async function NyhederPage({ searchParams }: Props) {
     <section className="section">
       <div className="container">
         <h1>Nyheder</h1>
+        <p className="lede" style={{ marginTop: -12, marginBottom: 32 }}>
+          Hold dig opdateret med, hvad der sker hos os.
+        </p>
         <div className="grid-3">
           {((posts as NewsPost[]) ?? []).map(post => (
             <NewsCard key={post.id} post={post} />

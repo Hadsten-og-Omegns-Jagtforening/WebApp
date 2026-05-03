@@ -3,6 +3,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { calculateCropSourceRect } from '@/lib/image-crop'
+import {
+  getCropFailureMessage,
+  ImageCropError,
+  IMAGE_UPLOAD_ALLOWED_TYPES,
+  IMAGE_UPLOAD_MAX_BYTES,
+  validateImageFile,
+} from '@/lib/image-upload-validation'
 import Icon from '@/components/Icon'
 
 type Props = {
@@ -10,8 +17,6 @@ type Props = {
   onUpload: (url: string | null) => void
 }
 
-const ALLOWED_TYPES = ['image/jpeg', 'image/png']
-const MAX_BYTES = 5 * 1024 * 1024
 const OUTPUT_WIDTH = 1200
 const OUTPUT_HEIGHT = 800
 
@@ -25,33 +30,55 @@ export default function ImageUploader({ initialUrl, onUpload }: Props) {
   const [offsetX, setOffsetX] = useState(0)
   const [offsetY, setOffsetY] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
+  const previewRequestId = useRef(0)
 
-  useEffect(() => {
-    return () => {
-      if (previewUrl) URL.revokeObjectURL(previewUrl)
-    }
-  }, [previewUrl])
+  useEffect(() => () => {
+    previewRequestId.current += 1
+  }, [])
 
-  function openCropper(file: File) {
+  function readPreviewDataUrl(file: File) {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        if (typeof reader.result === 'string') {
+          resolve(reader.result)
+          return
+        }
+        reject(new ImageCropError('image-load'))
+      }
+      reader.onerror = () => reject(new ImageCropError('image-load'))
+      reader.readAsDataURL(file)
+    })
+  }
+
+  async function openCropper(file: File) {
     setError(null)
-    if (!ALLOWED_TYPES.includes(file.type)) {
-      setError('Kun JPG og PNG er tilladt.')
+    const validationError = validateImageFile(file)
+    if (validationError) {
+      setError(validationError)
       return
     }
-    if (file.size > MAX_BYTES) {
-      setError('Filen må maksimalt være 5 MB.')
-      return
-    }
-    if (previewUrl) URL.revokeObjectURL(previewUrl)
-    setPendingFile(file)
-    setPreviewUrl(URL.createObjectURL(file))
+    const requestId = previewRequestId.current + 1
+    previewRequestId.current = requestId
+    setPreviewUrl(null)
     setZoom(1)
     setOffsetX(0)
     setOffsetY(0)
+    try {
+      const dataUrl = await readPreviewDataUrl(file)
+      if (previewRequestId.current !== requestId) return
+      setPendingFile(file)
+      setPreviewUrl(dataUrl)
+    } catch (error) {
+      if (previewRequestId.current !== requestId) return
+      const reason = error instanceof ImageCropError ? error.reason : 'image-load'
+      setPendingFile(null)
+      setError(getCropFailureMessage(reason))
+    }
   }
 
   function closeCropper() {
-    if (previewUrl) URL.revokeObjectURL(previewUrl)
+    previewRequestId.current += 1
     setPreviewUrl(null)
     setPendingFile(null)
     if (inputRef.current) inputRef.current.value = ''
@@ -60,8 +87,15 @@ export default function ImageUploader({ initialUrl, onUpload }: Props) {
   async function loadImage(src: string) {
     return new Promise<HTMLImageElement>((resolve, reject) => {
       const image = new Image()
-      image.onload = () => resolve(image)
-      image.onerror = () => reject(new Error('Image failed to load'))
+      image.decoding = 'async'
+      image.onload = () => {
+        if (image.naturalWidth <= 0 || image.naturalHeight <= 0) {
+          reject(new ImageCropError('image-load'))
+          return
+        }
+        resolve(image)
+      }
+      image.onerror = () => reject(new ImageCropError('image-load'))
       image.src = src
     })
   }
@@ -74,9 +108,8 @@ export default function ImageUploader({ initialUrl, onUpload }: Props) {
       .from('news-images')
       .upload(filename, blob, { contentType: 'image/jpeg' })
     if (uploadError) {
-      setError('Upload fejlede. Prøv igen.')
       setUploading(false)
-      return
+      throw new ImageCropError('upload')
     }
     const { data } = supabase.storage.from('news-images').getPublicUrl(filename)
     setUrl(data.publicUrl)
@@ -94,7 +127,7 @@ export default function ImageUploader({ initialUrl, onUpload }: Props) {
       canvas.width = OUTPUT_WIDTH
       canvas.height = OUTPUT_HEIGHT
       const ctx = canvas.getContext('2d')
-      if (!ctx) throw new Error('Canvas unavailable')
+      if (!ctx) throw new ImageCropError('canvas')
       const rect = calculateCropSourceRect({
         imageWidth: image.naturalWidth,
         imageHeight: image.naturalHeight,
@@ -104,10 +137,11 @@ export default function ImageUploader({ initialUrl, onUpload }: Props) {
       })
       ctx.drawImage(image, rect.sx, rect.sy, rect.sw, rect.sh, 0, 0, OUTPUT_WIDTH, OUTPUT_HEIGHT)
       const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.86))
-      if (!blob) throw new Error('Crop failed')
+      if (!blob) throw new ImageCropError('canvas')
       await uploadBlob(blob)
-    } catch {
-      setError('Billedet kunne ikke beskæres. Prøv et andet billede.')
+    } catch (error) {
+      const reason = error instanceof ImageCropError ? error.reason : 'unknown'
+      setError(getCropFailureMessage(reason))
       setUploading(false)
     }
   }
@@ -116,6 +150,10 @@ export default function ImageUploader({ initialUrl, onUpload }: Props) {
     setUrl(null)
     onUpload(null)
     if (inputRef.current) inputRef.current.value = ''
+  }
+
+  const cropPreviewStyle = {
+    transform: `translate(${offsetX * -60}%, ${offsetY * -60}%) scale(${zoom})`,
   }
 
   return (
@@ -142,13 +180,13 @@ export default function ImageUploader({ initialUrl, onUpload }: Props) {
         >
           <Icon name="image" size={24} />
           <span>{uploading ? 'Uploader...' : 'Klik for at uploade billede'}</span>
-          <span className="hint">JPG / PNG - maks 5 MB</span>
+          <span className="hint">JPG / PNG - maks {IMAGE_UPLOAD_MAX_BYTES / 1024 / 1024} MB</span>
         </button>
       )}
       <input
         ref={inputRef}
         type="file"
-        accept="image/jpeg,image/png"
+        accept={IMAGE_UPLOAD_ALLOWED_TYPES.join(',')}
         style={{ display: 'none' }}
         onChange={(event) => {
           const file = event.target.files?.[0]
@@ -164,15 +202,30 @@ export default function ImageUploader({ initialUrl, onUpload }: Props) {
                 <Icon name="x" size={16} />
               </button>
             </div>
-            <div className="crop-frame">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={previewUrl}
-                alt=""
-                style={{
-                  transform: `translate(${offsetX * -60}%, ${offsetY * -60}%) scale(${zoom})`,
-                }}
-              />
+            <div className="crop-preview-layout">
+              <div className="crop-adjust">
+                <div className="label">Beskæring</div>
+                <div className="crop-frame">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={previewUrl} alt="" style={cropPreviewStyle} />
+                </div>
+              </div>
+
+              <div className="crop-feed-preview" aria-label="Forhåndsvisning i nyhedsfeed">
+                <div className="label">Forhåndsvisning i nyhedsfeed</div>
+                <div className="newscard crop-feed-card">
+                  <div className="img">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={previewUrl} alt="" style={cropPreviewStyle} />
+                  </div>
+                  <div className="body">
+                    <div className="meta">Nyhed · forside</div>
+                    <h3>Billedbeskæring</h3>
+                    <p className="teaser">Sådan vises billedet i nyhedsfeedet.</p>
+                    <span className="cta">Læs mere her →</span>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="crop-controls">
               <label>

@@ -60,11 +60,11 @@ export async function updatePassword(formData: FormData) {
     return { error: 'Kunne ikke opdatere adgangskoden. Bed om et nyt nulstillingslink.' }
   }
 
-  redirect('/')
+  redirect('/admin')
 }
 
 export async function signOut() {
   const supabase = await createClient()
   await supabase.auth.signOut()
-  redirect('/admin')
+  redirect('/')
 }
