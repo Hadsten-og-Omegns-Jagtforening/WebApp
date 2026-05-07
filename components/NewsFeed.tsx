@@ -15,7 +15,7 @@ export default function NewsFeed({ posts }: Props) {
           </div>
           <Link href="/nyheder" className="link">Se alle nyheder →</Link>
         </div>
-        <div className="grid-3">
+        <div className="news-list grid-2">
           {posts.map(post => <NewsCard key={post.id} post={post} />)}
         </div>
       </div>

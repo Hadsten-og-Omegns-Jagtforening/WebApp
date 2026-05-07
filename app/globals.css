@@ -156,21 +156,28 @@
   justify-content: flex-end;
 }
 
+/* ---------- Compact newscard image (overrides kit.css 3/2 ratio) ---------- */
+.newscard .img {
+  height: 160px;
+  aspect-ratio: auto;
+}
+.newscard .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 /* ---------- News list (horizontal card layout) ---------- */
 .news-list .newscard {
   display: flex;
   flex-direction: row;
 }
 .news-list .newscard .img {
-  width: 240px;
+  width: 200px;
+  height: auto;
+  min-height: 140px;
   flex-shrink: 0;
-  aspect-ratio: auto;
-}
-.news-list .newscard .img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
 }
 @media (max-width: 860px) {
   .news-list .newscard {
@@ -178,6 +185,6 @@
   }
   .news-list .newscard .img {
     width: 100%;
-    height: 200px;
+    height: 160px;
   }
 }
