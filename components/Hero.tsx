@@ -19,7 +19,7 @@ export default function Hero() {
           <Link href="/book-skydebanen" className="btn primary lg">
             <Icon name="crosshair" size={18} />Book skydebanen
           </Link>
-          <Link href="/kalender" className="btn secondary lg" style={{ color: '#F4EFE4', borderColor: 'rgba(244,239,228,0.4)' }}>
+          <Link href="/kalender" className="btn secondary lg" style={{ color: '#F4EFE4', borderColor: 'rgba(244,239,228,0.65)', background: 'rgba(30,42,34,0.45)' }}>
             Se kalender
           </Link>
         </div>

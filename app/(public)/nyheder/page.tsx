@@ -28,7 +28,7 @@ export default async function NyhederPage({ searchParams }: Props) {
     <section className="section">
       <div className="container">
         <h1>Nyheder</h1>
-        <div className="grid-3">
+        <div className="news-list grid-2">
           {((posts as NewsPost[]) ?? []).map(post => (
             <NewsCard key={post.id} post={post} />
           ))}

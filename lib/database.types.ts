@@ -40,3 +40,18 @@ export type NewsPost = {
 
 export type NewsPostInsert = Omit<NewsPost, 'id' | 'created_at' | 'updated_at'>
 export type NewsPostUpdate = Partial<NewsPostInsert>
+
+export type PremieEvent = {
+  id: string
+  slug: string
+  title: string
+  month_label: string
+  icon: string
+  description: string
+  reglement: string
+  sort_order: number
+  created_at: string
+  updated_at: string
+}
+
+export type PremieEventUpdate = Pick<PremieEvent, 'title' | 'month_label' | 'icon' | 'description' | 'reglement' | 'sort_order'>

@@ -155,3 +155,29 @@
   gap: 8px;
   justify-content: flex-end;
 }
+
+/* ---------- News list (horizontal card layout) ---------- */
+.news-list .newscard {
+  display: flex;
+  flex-direction: row;
+}
+.news-list .newscard .img {
+  width: 240px;
+  flex-shrink: 0;
+  aspect-ratio: auto;
+}
+.news-list .newscard .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+@media (max-width: 860px) {
+  .news-list .newscard {
+    flex-direction: column;
+  }
+  .news-list .newscard .img {
+    width: 100%;
+    height: 200px;
+  }
+}

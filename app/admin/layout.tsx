@@ -33,9 +33,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <span className="adm-link disabled" aria-disabled="true">
             <Icon name="calendar" size={16} /> Kalender
           </span>
-          <span className="adm-link disabled" aria-disabled="true">
+          <Link href="/admin/premieskydninger" className="adm-link">
             <Icon name="trophy" size={16} /> Præmieskydninger
-          </span>
+          </Link>
         </nav>
         <div className="who">
           <div className="avatar">{initials}</div>

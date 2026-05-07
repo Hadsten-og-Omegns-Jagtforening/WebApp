@@ -1,45 +1,18 @@
+import Link from 'next/link'
 import Icon from '@/components/Icon'
+import { createClient } from '@/lib/supabase/server'
+import type { PremieEvent } from '@/lib/database.types'
+import type { IconName } from '@/components/Icon'
 
-const prizes = [
-  {
-    title: 'Fastelavnsskydning',
-    when: 'Feb',
-    icon: 'trophy' as const,
-    text: 'Årets første præmieskydning med rundstykker i klubhuset fra kl. 09.00.',
-  },
-  {
-    title: 'HOJ Cup',
-    when: 'Apr-Sep',
-    icon: 'trophy' as const,
-    text: 'Seks runder henover sæsonen. Samlet vinder kåres til juleskydningen.',
-  },
-  {
-    title: 'Skt. Hans / Midsommer',
-    when: 'Jun',
-    icon: 'trophy' as const,
-    text: 'Midsommerskydning med grill og fællesspisning efter skydningen.',
-  },
-  {
-    title: 'Mærkeskydning',
-    when: 'Aug',
-    icon: 'trophy' as const,
-    text: 'Foreningsmesterskab med guld-, sølv- og bronzemærker.',
-  },
-  {
-    title: '80 duers jagtskydning',
-    when: 'Apr',
-    icon: 'claypigeon' as const,
-    text: '20 duer i streg på hver af de fire standpladser.',
-  },
-  {
-    title: 'Juleskydning',
-    when: 'Dec',
-    icon: 'trophy' as const,
-    text: 'Sæsonens sidste skydning med præmier, gløgg og æbleskiver.',
-  },
-]
+export default async function PremieskydningerPage() {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('premieskydninger')
+    .select('*')
+    .order('sort_order', { ascending: true })
 
-export default function PremieskydningerPage() {
+  const events = (data as PremieEvent[]) ?? []
+
   return (
     <section className="section">
       <div className="container">
@@ -63,16 +36,20 @@ export default function PremieskydningerPage() {
         </div>
 
         <div className="grid-3">
-          {prizes.map((prize) => (
-            <article key={prize.title} className="tile" aria-label={prize.title} style={{ cursor: 'default' }}>
+          {events.map((event) => (
+            <Link key={event.id} href={`/aktiviteter/premieskydninger/${event.slug}`} className="tile">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-                <div className="icon-wrap"><Icon name={prize.icon} size={22} /></div>
-                <span className="badge">{prize.when}</span>
+                <div className="icon-wrap">
+                  <Icon name={event.icon as IconName} size={22} />
+                </div>
+                <span className="badge">{event.month_label}</span>
               </div>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22, lineHeight: 1.15, margin: 0 }}>{prize.title}</h2>
-              <p>{prize.text}</p>
-              <span className="arrow">Reglement offentliggøres i kalenderen</span>
-            </article>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 22, lineHeight: 1.15, margin: 0 }}>
+                {event.title}
+              </h2>
+              <p>{event.description}</p>
+              <span className="arrow">Læs mere →</span>
+            </Link>
           ))}
         </div>
       </div>
