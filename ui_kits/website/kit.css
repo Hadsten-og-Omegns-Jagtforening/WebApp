@@ -96,7 +96,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg1); fo
 .newscard:hover .cta { text-decoration-thickness: 2px; }
 
 /* ---------- Badge ---------- */
-.badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; background: rgba(184,137,58,0.18); color: var(--fg2); }
+.badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; background: rgba(227,129,42,0.18); color: var(--fg2); }
 .badge.live { background: var(--success); color: var(--fg-inverse); }
 .badge.live .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fg-inverse); animation: pulse 1.4s ease-in-out infinite; }
 .badge.alert { background: var(--danger); color: var(--fg-inverse); }
@@ -123,7 +123,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg1); fo
 .section { padding: 72px 0; }
 .section.tight { padding: 48px 0; }
 .section-head { margin-bottom: 32px; display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
-.section-head h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(32px, 3.2vw, 44px); line-height: 1.1; letter-spacing: -0.02em; margin: 0; color: var(--fg1); font-variation-settings: "opsz" 72; }
+.section-head h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(32px, 3.2vw, 44px); line-height: 1.1; letter-spacing: -0.02em; margin: 0; color: var(--fg1); font-variation-settings: "opsz" 72; }
 .section-head .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
 .section-head .link { font-size: 15px; font-weight: 600; color: var(--fg1); text-decoration: underline; text-underline-offset: 4px; }
 
@@ -147,7 +147,7 @@ html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg1); fo
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field label { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg3); }
 .field input, .field select, .field textarea { font-family: var(--font-body); font-size: 16px; padding: 12px 14px; background: var(--surface); color: var(--fg1); border: 1px solid var(--border); border-radius: 4px; outline: none; transition: border-color 150ms var(--ease-out), box-shadow 150ms var(--ease-out); }
-.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--fg1); box-shadow: 0 0 0 3px rgba(184,137,58,0.25); }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--fg1); box-shadow: 0 0 0 3px rgba(227,129,42,0.25); }
 
 /* ---------- Calendar day picker ---------- */
 .daygrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; background: var(--surface); padding: 14px; border: 1px solid var(--border); border-radius: 8px; }

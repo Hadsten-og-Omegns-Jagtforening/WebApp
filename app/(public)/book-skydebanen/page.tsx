@@ -8,18 +8,18 @@ export default function BookSkydebanenPage() {
     <section className="section">
       <div className="container" style={{ maxWidth: 980 }}>
         <div style={{ marginBottom: 40 }}>
-          <span className="eyebrow" style={{ color: 'var(--accent)' }}>Book skydebanen</span>
+          <span className="eyebrow" style={{ color: 'var(--accent)' }}>Skydebanen på Vissingvej</span>
           <h1
             style={{
               fontFamily: 'var(--font-display)',
-              fontWeight: 500,
+              fontWeight: 600,
               fontSize: 'clamp(42px, 7vw, 56px)',
               letterSpacing: '-0.02em',
               margin: '8px 0 16px',
               fontVariationSettings: '"opsz" 144',
             }}
           >
-            Reservér banen
+            Book skydebanen
           </h1>
           <p style={{ fontSize: 19, color: 'var(--fg2)', maxWidth: '56ch', margin: 0, lineHeight: 1.5 }}>
             Flugtskydning i Hadsten for private grupper, firmaer og polterabender. Vi har udstyr klar, så du møder bare op.
@@ -77,40 +77,26 @@ export default function BookSkydebanenPage() {
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-            <div className="field">
-              <label htmlFor="booking-time">Tidsrum</label>
-              <select id="booking-time" defaultValue="17:00 - 19:00" disabled>
-                <option>16:00 - 18:00</option>
-                <option>17:00 - 19:00</option>
-                <option>18:00 - 20:00</option>
-                <option>19:00 - 21:00</option>
-              </select>
-            </div>
-            <div className="field">
-              <label htmlFor="booking-group">Hvem er I?</label>
-              <select id="booking-group" defaultValue="Privat gruppe" disabled>
-                <option>Privat gruppe</option>
-                <option>Firmaarrangement</option>
-                <option>Polterabend</option>
-                <option>Nybegyndere - instruktør bedes</option>
-              </select>
-            </div>
-            <div className="field">
-              <label htmlFor="booking-size">Antal deltagere</label>
-              <input id="booking-size" type="number" min="1" max="20" defaultValue="4" disabled />
-            </div>
-            <div className="field">
-              <label htmlFor="booking-phone">Kontaktperson - telefon</label>
-              <input id="booking-phone" placeholder="+45 12 34 56 78" disabled />
-            </div>
-            <a className="btn primary lg" href="mailto:info@hadstenjagtforening.dk?subject=Booking%20af%20skydebane" style={{ marginTop: 4 }}>
-              Send booking-anmodning
+          <article style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)', borderRadius: 8, padding: '28px 30px' }}>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 24, margin: '0 0 16px' }}>Sådan booker du</h2>
+            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <li style={{ display: 'flex', gap: 10, alignItems: 'flex-start', color: 'var(--fg1)', lineHeight: 1.5 }}>
+                <span style={{ color: 'var(--accent)', flexShrink: 0, marginTop: 3 }}><Icon name="check" size={16} /></span>
+                Skriv til os med ønsket dato, tidspunkt og antal deltagere.
+              </li>
+              <li style={{ display: 'flex', gap: 10, alignItems: 'flex-start', color: 'var(--fg1)', lineHeight: 1.5 }}>
+                <span style={{ color: 'var(--accent)', flexShrink: 0, marginTop: 3 }}><Icon name="check" size={16} /></span>
+                Vi bekræfter bookingen på mail.
+              </li>
+              <li style={{ display: 'flex', gap: 10, alignItems: 'flex-start', color: 'var(--fg1)', lineHeight: 1.5 }}>
+                <span style={{ color: 'var(--accent)', flexShrink: 0, marginTop: 3 }}><Icon name="check" size={16} /></span>
+                Betaling sker på stedet eller via MobilePay.
+              </li>
+            </ul>
+            <a className="btn primary lg" href="mailto:booking@hadstenjagtforening.dk?subject=Booking%20af%20skydebane" style={{ width: '100%', justifyContent: 'center' }}>
+              Skriv til os her
             </a>
-            <p style={{ fontSize: 13, color: 'var(--fg3)', margin: 0, lineHeight: 1.5 }}>
-              Du modtager en bekræftelse på mail. Betaling sker på stedet eller via MobilePay.
-            </p>
-          </div>
+          </article>
         </div>
       </div>
     </section>

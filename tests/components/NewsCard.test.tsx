@@ -11,6 +11,7 @@ const mockPost: NewsPost = {
   teaser: 'Dette er en teaser',
   body: '<p>Indhold</p>',
   image_url: null,
+  gallery_images: null,
   has_results: false,
   results: null,
   status: 'published',

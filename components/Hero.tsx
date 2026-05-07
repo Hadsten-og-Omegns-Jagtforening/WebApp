@@ -12,7 +12,7 @@ export default function Hero() {
       {/* TODO: replace with dynamic open/closed status in Phase 2 */}
       <div className="hero-status"><span className="dot" />Banen åben · ons 17–20</div>
       <div className="container hero-inner">
-        <div className="hero-badge">Siden 1968 · Hadsten</div>
+        <div className="hero-badge">Siden 1968</div>
         <h1>Kom med<br />på banen.</h1>
         <p className="lede">Flugtskydning, jagt og fællesskab i hjertet af Østjylland. Book banen, tilmeld dig et arrangement, eller kig forbi klubhuset onsdag aften.</p>
         <div className="hero-ctas">

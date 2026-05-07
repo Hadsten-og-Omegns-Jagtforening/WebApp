@@ -7,8 +7,9 @@ import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import TiptapLink from '@tiptap/extension-link'
 import ImageUploader from './ImageUploader'
+import GalleryUploader from './GalleryUploader'
 import ResultsBuilder from './ResultsBuilder'
-import type { NewsPost, NewsCategory, ResultRow } from '@/lib/database.types'
+import type { NewsPost, NewsCategory, ResultRow, GalleryImage } from '@/lib/database.types'
 
 const CATEGORIES: NewsCategory[] = [
   'Nyhed', 'Jagt', 'Præmieskydning', 'Klubaften', 'Praktisk info',
@@ -23,6 +24,7 @@ type Props = {
 
 export default function NewsForm({ post, onSaveDraft, onPublish, onDelete }: Props) {
   const [imageUrl, setImageUrl] = useState<string | null>(post?.image_url ?? null)
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(post?.gallery_images ?? [])
   const [hasResults, setHasResults] = useState(post?.has_results ?? false)
   const [results, setResults] = useState<ResultRow[]>(post?.results ?? [])
   const [highlighted, setHighlighted] = useState(post?.highlighted ?? false)
@@ -47,6 +49,7 @@ export default function NewsForm({ post, onSaveDraft, onPublish, onDelete }: Pro
     fd.append('published_at', publishedAt)
     fd.append('body', editor?.getHTML() ?? '')
     fd.append('image_url', imageUrl ?? '')
+    fd.append('gallery_images', JSON.stringify(galleryImages))
     fd.append('has_results', String(hasResults))
     fd.append('results', JSON.stringify(results))
     fd.append('highlighted', String(highlighted))
@@ -140,6 +143,10 @@ export default function NewsForm({ post, onSaveDraft, onPublish, onDelete }: Pro
           <div className="panel">
             <h3 className="panel-heading">Hovedbillede</h3>
             <ImageUploader initialUrl={imageUrl} onUpload={setImageUrl} />
+          </div>
+          <div className="panel">
+            <h3 className="panel-heading">Galleri</h3>
+            <GalleryUploader images={galleryImages} onChange={setGalleryImages} />
           </div>
           <div className="panel">
             <h3 className="panel-heading">Indstillinger</h3>

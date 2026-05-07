@@ -26,6 +26,7 @@ export type IconName =
   | 'chevron-left'
   | 'chevron-up'
   | 'search'
+  | 'book-open'
 
 export interface IconProps {
   name: IconName
@@ -243,6 +244,13 @@ export default function Icon({ name, size = 22, stroke = 1.75, className = '' }:
         <svg {...common}>
           <circle cx="11" cy="11" r="8" />
           <path d="m21 21-4.3-4.3" />
+        </svg>
+      )
+    case 'book-open':
+      return (
+        <svg {...common}>
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
         </svg>
       )
     default:

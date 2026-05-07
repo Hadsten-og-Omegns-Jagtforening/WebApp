@@ -23,11 +23,11 @@
   --hoj-bone-dim:   #ECE5D4;
   --hoj-white:      #FFFFFF;
 
-  --hoj-brass-700:  #8E6A22;
-  --hoj-brass-600:  #B8893A;  /* PRIMARY accent */
-  --hoj-brass-500:  #C99A4A;
-  --hoj-brass-400:  #D4A557;
-  --hoj-brass-200:  #EDCF95;
+  --hoj-brass-700:  #c96d1f;
+  --hoj-brass-600:  #e3812a;  /* PRIMARY accent */
+  --hoj-brass-500:  #e99a50;
+  --hoj-brass-400:  #f0a85e;
+  --hoj-brass-200:  #f5d4a8;
 
   --hoj-clay-700:   #B84A10;
   --hoj-clay-600:   #E8691F;  /* danger / alert — matched to logo orange */
@@ -61,7 +61,7 @@
   --accent:         var(--hoj-brass-600);
   --accent-hover:   var(--hoj-brass-700);
   --accent-soft:    var(--hoj-brass-200);
-  --accent-text:    #1A1308;
+  --accent-text:    #f4efe4;
 
   --danger:         var(--hoj-clay-600);   /* alert, banen lukket, fejl */
   --success:        var(--hoj-moss-600);   /* banen åben, OK */

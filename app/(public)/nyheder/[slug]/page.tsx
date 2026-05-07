@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { sanitizeBody } from '@/lib/sanitize'
-import type { NewsPost, ResultRow } from '@/lib/database.types'
+import type { NewsPost, ResultRow, GalleryImage } from '@/lib/database.types'
 import type { Metadata } from 'next'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -63,6 +63,14 @@ export default async function NewsArticlePage({ params }: Props) {
           )}
           {/* Body is sanitised HTML — safe to render */}
           <div dangerouslySetInnerHTML={{ __html: sanitizeBody(article.body) }} />
+          {article.gallery_images && article.gallery_images.length > 0 && (
+            <div className="article-gallery">
+              {(article.gallery_images as GalleryImage[]).map((img, i) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img key={i} src={img.url} alt={img.alt || ''} />
+              ))}
+            </div>
+          )}
           {article.has_results && article.results && (
             <details className="results" open>
               <summary>Resultater</summary>

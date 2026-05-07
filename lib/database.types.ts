@@ -13,6 +13,11 @@ export type ResultRow = {
   score: string
 }
 
+export type GalleryImage = {
+  url: string
+  alt: string
+}
+
 export type NewsPost = {
   id: string
   slug: string
@@ -21,6 +26,7 @@ export type NewsPost = {
   teaser: string
   body: string
   image_url: string | null
+  gallery_images: GalleryImage[] | null
   has_results: boolean
   results: ResultRow[] | null
   status: NewsStatus

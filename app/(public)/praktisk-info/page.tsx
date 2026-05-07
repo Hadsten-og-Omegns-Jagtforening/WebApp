@@ -21,10 +21,16 @@ const infoTiles = [
     text: 'Information om private grupper, firmaarrangementer og polterabender.',
   },
   {
-    href: '/praktisk-info/bestyrelsen',
+    href: '/praktisk-info/folkene-bag-foreningen',
     icon: 'users' as const,
-    title: 'Bestyrelsen',
-    text: 'Kontakt foreningen og se hvordan opgaverne er fordelt.',
+    title: 'Folkene bag foreningen',
+    text: 'Bestyrelsen og de mennesker der driver foreningen.',
+  },
+  {
+    href: '/praktisk-info/historien-om-os',
+    icon: 'book-open' as const,
+    title: 'Historien om os',
+    text: 'Fra 15 medlemmer i 1968 til i dag.',
   },
   {
     href: '/find-os',
@@ -43,7 +49,7 @@ export default function PraktiskInfoPage() {
           <h1
             style={{
               fontFamily: 'var(--font-display)',
-              fontWeight: 500,
+              fontWeight: 600,
               fontSize: 'clamp(42px, 7vw, 56px)',
               letterSpacing: '-0.02em',
               margin: '8px 0 12px',

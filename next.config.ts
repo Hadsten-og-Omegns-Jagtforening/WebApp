@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
       ? [{ protocol: 'https', hostname: supabaseHost }]
       : [],
   },
+  async redirects() {
+    return [
+      {
+        source: '/praktisk-info/bestyrelsen',
+        destination: '/praktisk-info/folkene-bag-foreningen',
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {
