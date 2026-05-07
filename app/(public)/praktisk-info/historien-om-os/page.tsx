@@ -17,6 +17,9 @@ export default function HistorienOmOsPage() {
             Historien om os
           </h1>
           <p style={{ fontSize: 19, color: 'var(--fg2)', maxWidth: '58ch', margin: '0 0 12px', lineHeight: 1.55 }}>
+            Hadsten og Omegns Jagtforening blev stiftet den 7. november 1922 i Galten Forsamlingshus.
+          </p>
+          <p style={{ fontSize: 19, color: 'var(--fg2)', maxWidth: '58ch', margin: '0 0 12px', lineHeight: 1.55 }}>
             Foreningen startede med 15 medlemmer og et kontingent på 4 kroner om året - og holdt allerede deres første generalforsamling fire dage senere, hjemme hos formanden.
           </p>
           <p style={{ fontSize: 19, color: 'var(--fg2)', maxWidth: '58ch', margin: 0, lineHeight: 1.55 }}>
