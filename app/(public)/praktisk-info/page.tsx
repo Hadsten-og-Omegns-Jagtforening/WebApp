@@ -24,7 +24,7 @@ const infoTiles = [
     cta: 'Find os her',
   },
   {
-    href: '/praktisk-info/bestyrelsen',
+    href: '/praktisk-info/folkene-bag-foreningen',
     icon: 'users' as const,
     title: 'Folkene bag foreningen',
     text: 'Bag foreningen står et hold af frivillige. Kontakt os, eller spørg ind til at være med.',

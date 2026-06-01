@@ -33,7 +33,7 @@ export default function Footer() {
               <li>Vissingvej 6</li>
               <li>8370 Hadsten</li>
               <li style={{ marginTop: 10 }}>
-                <Link href="/find-os">Find os på kortet →</Link>
+                <Link href="/praktisk-info/find-os">Find os på kortet →</Link>
               </li>
             </ul>
           </div>
@@ -45,16 +45,16 @@ export default function Footer() {
                 <Link href="/book-skydebanen">Book skydebanen</Link>
               </li>
               <li>
-                <Link href="/kalender">Kalender</Link>
-              </li>
-              <li>
-                <Link href="/aktiviteter">Aktiviteter</Link>
-              </li>
-              <li>
-                <Link href="/om-hoj">Om HOJ</Link>
+                <Link href="/bliv-medlem">Bliv medlem</Link>
               </li>
               <li>
                 <Link href="/nyheder">Nyheder</Link>
+              </li>
+              <li>
+                <Link href="/kalender">Kalender</Link>
+              </li>
+              <li>
+                <Link href="/praktisk-info/historien-om-os">Historien om os</Link>
               </li>
             </ul>
           </div>
@@ -64,9 +64,6 @@ export default function Footer() {
             <ul>
               <li>
                 <a href="mailto:booking@hadstenjagtforening.dk">booking@hadstenjagtforening.dk</a>
-              </li>
-              <li>
-                <a href="https://hoj.zendesk.com/hc/da">Få svar - Zendesk</a>
               </li>
             </ul>
           </div>

@@ -2,6 +2,16 @@
 @import '../ui_kits/website/kit.css';
 @import '../ui_kits/admin/admin.css';
 
+/* All headings bold/fed (customer correction) — overrides kit.css weights */
+.hero h1,
+.section-head h2,
+.article h1,
+.tile h3,
+.tile-title,
+.newscard h3 {
+  font-weight: 700;
+}
+
 .nav-trigger {
   appearance: none;
   background: transparent;
@@ -30,6 +40,24 @@
   color: var(--fg1);
 }
 
+.nav-group-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-caret {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--fg1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 2px;
+  font: inherit;
+}
+
 .nav .logo .mark {
   white-space: nowrap;
   max-width: none;
@@ -39,6 +67,20 @@
   color: #151E18;
   border-color: rgba(244, 239, 228, 0.9);
   background: rgba(244, 239, 228, 0.92);
+}
+
+/* Hero text was flush to the viewport edge — give it the same
+   horizontal padding as .container (kit.css zeroes it via shorthand). */
+.hero-inner {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+@media (max-width: 860px) {
+  .hero-inner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 @media (max-width: 1080px) {
@@ -142,6 +184,20 @@
 
   .nav.nav--open .dropdown-menu a {
     padding: 10px 12px;
+  }
+
+  .nav.nav--open .nav-group-head {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .nav.nav--open .nav-group-head .nav-trigger {
+    flex: 1;
+  }
+
+  .nav.nav--open .nav-caret {
+    padding: 12px 16px;
   }
 }
 
@@ -586,13 +642,17 @@
   inset: 0;
   z-index: 50;
   display: grid;
-  place-items: center;
+  align-items: start;
+  justify-items: center;
+  overflow-y: auto;
   padding: 24px;
   background: rgba(21, 30, 24, 0.72);
 }
 
 .crop-panel {
   width: min(920px, 100%);
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
   padding: 18px;
   background: var(--surface-raised);
   border: 1px solid var(--border);
@@ -751,7 +811,7 @@
 
 .page-intro h1 {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 700;
   font-size: clamp(40px, 7vw, 56px);
   letter-spacing: -0.02em;
   margin: 8px 0 14px;
@@ -783,7 +843,7 @@
 .info-panel h2 {
   font-family: var(--font-display);
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 0 14px;
 }
 
@@ -796,6 +856,15 @@
 .info-panel ul:last-child,
 .info-panel ol:last-child {
   margin-bottom: 0;
+}
+
+/* Uniform body text size in info panels (lists matched to paragraphs) */
+.info-panel p,
+.info-panel ul,
+.info-panel ol,
+.info-panel li {
+  font-size: var(--fs-17);
+  line-height: var(--lh-body);
 }
 
 .tile-title {
@@ -891,6 +960,47 @@
   text-align: right;
 }
 
+/* Consistent card spacing across info pages (customer mockup) */
+.cards-stack {
+  gap: 16px;
+}
+
+/* Wider spacing between white cards (åbningstider — per PDF mockup) */
+.cards-stack--lg {
+  gap: 32px;
+}
+
+/* Bestyrelsen — classic left-aligned table */
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.board-table td {
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--divider);
+  overflow-wrap: anywhere;
+}
+
+.board-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.board-table td:first-child {
+  width: 40%;
+  color: var(--fg3);
+  font-size: 14px;
+}
+
+.board-table td:last-child {
+  font-weight: 700;
+}
+
 .prize-form .editor .ProseMirror {
   min-height: 300px;
 }
@@ -964,6 +1074,14 @@
 
   .crop-preview-layout {
     grid-template-columns: 1fr;
+  }
+
+  .crop-modal {
+    padding: 12px;
+  }
+
+  .crop-panel {
+    max-height: calc(100dvh - 24px);
   }
 
   .adm-table {

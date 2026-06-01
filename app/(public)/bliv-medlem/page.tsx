@@ -6,17 +6,14 @@ export default function BlivMedlemPage() {
           <span className="eyebrow">Bliv medlem</span>
           <h1>Bliv en del af fællesskabet</h1>
           <p className="lede">
-            Hos Hadsten og Omegns Jagtforening er medlemskabet mere end et kort i lommen.
+            Hos Hadsten og Omegns Jagtforening er medlemskabet mere end en tilmelding.
           </p>
-        </div>
-
-        <section className="info-panel">
           <p>
             Det er adgang til foreningens jagter - bukkejagt, hjortejagt og efterårsjagt - og til et fællesskab,
             der har holdt sammen om jagt og flugtskydning i Østjylland siden 1933.
           </p>
           <p>Skydebanen, kurserne og arrangementerne er åbne for alle. Men vil du med på jagt, skal du være medlem.</p>
-        </section>
+        </div>
 
         <section className="info-panel">
           <h2>Sådan bliver du medlem</h2>
@@ -37,7 +34,7 @@ export default function BlivMedlemPage() {
             target="_blank"
             rel="noreferrer"
           >
-            Bliv medlem hos Danmarks Jægerforbund
+            Bliv medlem hos os
           </a>
         </section>
       </div>

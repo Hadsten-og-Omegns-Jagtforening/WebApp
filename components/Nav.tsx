@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Icon from './Icon'
 
 type NavLeaf = { id: string; label: string; href: string }
-type NavGroup = { id: string; label: string; children: (NavLeaf & { meta?: string })[] }
+type NavGroup = { id: string; label: string; href: string; children: (NavLeaf & { meta?: string })[] }
 type NavItem = NavLeaf | NavGroup
 
 const items: NavItem[] = [
@@ -15,8 +15,8 @@ const items: NavItem[] = [
   {
     id: 'activities',
     label: 'Aktiviteter',
+    href: '/aktiviteter',
     children: [
-      { id: 'activities-overview', label: 'Overblik', href: '/aktiviteter' },
       { id: 'jagt', label: 'Jagt', href: '/aktiviteter/jagt', meta: 'Bukkejagt, hjortejagt og efterårsjagt' },
       { id: 'jagtprove', label: 'Hjælp til jagtprøven', href: '/aktiviteter/hjalp-til-jagtproven', meta: 'Teori, afstand og våbenhåndtering' },
       { id: 'premie', label: 'Præmieskydninger', href: '/aktiviteter/premieskydninger', meta: 'Årets faste skydninger' },
@@ -25,18 +25,17 @@ const items: NavItem[] = [
   {
     id: 'praktisk',
     label: 'Praktisk info',
+    href: '/praktisk-info',
     children: [
-      { id: 'praktisk-overview', label: 'Overblik', href: '/praktisk-info' },
-      { id: 'kalender', label: 'Kalender', href: '/kalender' },
-      { id: 'tider', label: 'Åbningstider og skydebanen', href: '/praktisk-info/aabningstider-og-skydetider' },
       { id: 'book', label: 'Book skydebanen', href: '/book-skydebanen' },
-      { id: 'bestyrelsen', label: 'Folkene bag foreningen', href: '/praktisk-info/bestyrelsen' },
-      { id: 'find', label: 'Find os', href: '/find-os' },
+      { id: 'tider', label: 'Åbningstider og skydebanen', href: '/praktisk-info/aabningstider-og-skydetider' },
+      { id: 'bestyrelsen', label: 'Folkene bag foreningen', href: '/praktisk-info/folkene-bag-foreningen' },
+      { id: 'historien', label: 'Historien om os', href: '/praktisk-info/historien-om-os' },
+      { id: 'kalender', label: 'Kalender', href: '/kalender' },
+      { id: 'find', label: 'Find os', href: '/praktisk-info/find-os' },
     ],
   },
-  { id: 'omhoj', label: 'Om HOJ', href: '/om-hoj' },
   { id: 'medlem', label: 'Bliv medlem', href: '/bliv-medlem' },
-  { id: 'admin', label: 'Admin', href: '/admin' },
 ]
 
 export default function Nav() {
@@ -64,16 +63,21 @@ export default function Nav() {
             <li key={it.id} className={'children' in it ? `dropdown${openGroup === it.id ? ' open' : ''}` : ''}>
               {'children' in it ? (
                 <>
-                  <button
-                    type="button"
-                    className="nav-trigger"
-                    aria-expanded={openGroup === it.id}
-                    aria-controls={`nav-menu-${it.id}`}
-                    onClick={() => setOpenGroup((current) => (current === it.id ? null : it.id))}
-                  >
-                    {it.label}
-                    <span className="caret">▾</span>
-                  </button>
+                  <div className="nav-group-head">
+                    <Link className="nav-trigger" href={it.href} onClick={closeMenus}>
+                      {it.label}
+                    </Link>
+                    <button
+                      type="button"
+                      className="nav-caret"
+                      aria-expanded={openGroup === it.id}
+                      aria-controls={`nav-menu-${it.id}`}
+                      aria-label={`Vis undermenu for ${it.label}`}
+                      onClick={() => setOpenGroup((current) => (current === it.id ? null : it.id))}
+                    >
+                      <span className="caret">▾</span>
+                    </button>
+                  </div>
                   <div className="dropdown-menu" id={`nav-menu-${it.id}`}>
                     {it.children.map((child) => (
                       <Link key={child.id} href={child.href} onClick={closeMenus}>

@@ -3,22 +3,19 @@ export default function OmHojPage() {
     <section className="section">
       <div className="container copy-page">
         <div className="page-intro">
-          <span className="eyebrow">Om HOJ</span>
+          <span className="eyebrow">Praktisk info</span>
           <h1>Historien bag HOJ</h1>
           <p className="lede">
             Hadsten og Omegns Jagtforening blev stiftet den 7. november 1933 i Galten Forsamlingshus.
           </p>
+          <p>
+            Foreningen startede med 15 medlemmer og et kontingent på 4 kroner om året - og holdt allerede deres første
+            generalforsamling fire dage senere, hjemme hos formanden.
+          </p>
+          <p>Det siger noget om energien dengang. Og den er ikke forsvundet siden.</p>
         </div>
 
-        <div className="copy-stack">
-          <section className="info-panel">
-            <p>
-              Foreningen startede med 15 medlemmer og et kontingent på 4 kroner om året - og holdt allerede deres første
-              generalforsamling fire dage senere, hjemme hos formanden.
-            </p>
-            <p>Det siger noget om energien dengang. Og den er ikke forsvundet siden.</p>
-          </section>
-
+        <div className="copy-stack cards-stack">
           <section className="info-panel">
             <h2>Fra skydebane til klubhus</h2>
             <p>

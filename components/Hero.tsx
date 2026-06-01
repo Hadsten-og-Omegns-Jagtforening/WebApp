@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Icon from './Icon'
+import HeroStatus from './HeroStatus'
 
 export default function Hero() {
   return (
@@ -10,10 +11,9 @@ export default function Hero() {
       </div>
       <div className="hero-shade" />
       {/* TODO: replace placeholder-hero.svg with a customer-approved hero image before production launch. */}
-      {/* TODO: replace with dynamic open/closed status in Phase 2 */}
-      <div className="hero-status"><span className="dot" />Banen åben · ons 17-20</div>
+      <HeroStatus />
       <div className="container hero-inner">
-        <div className="hero-badge">Siden 1933 · Hadsten</div>
+        <div className="hero-badge">Siden 1933</div>
         <h1>Hadsten og Omegns Jagtforening</h1>
         <p className="lede">
           Jagt, flugtskydning og fællesskab siden 1933. I hjertet af Østjylland samles vi om flugtskydning, jagt og fællesskab.

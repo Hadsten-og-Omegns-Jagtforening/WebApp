@@ -3,15 +3,12 @@ export default function BookSkydebanenPage() {
     <section className="section">
       <div className="container copy-page">
         <div className="page-intro">
-          <span className="eyebrow">Book skydebanen</span>
+          <span className="eyebrow">Skydebanen på Vissingvej</span>
           <h1>Book skydebanen</h1>
           <p className="lede">
             En dag på skydebanen er en dag, folk husker. Vi tager imod private grupper, firmaer og polterabender -
             og sørger for, at I er i gode hænder fra første skud til sidste.
           </p>
-          <a className="btn primary lg" href="mailto:booking@hadstenjagtforening.dk?subject=Booking%20af%20skydebane">
-            Send booking-anmodning
-          </a>
         </div>
 
         <div className="grid-2">
@@ -21,6 +18,9 @@ export default function BookSkydebanenPage() {
               Send en mail til booking@hadstenjagtforening.dk med dato, antal deltagere og hvad I har i tankerne.
               Vi svarer med ledige tider, pris og alt det praktiske - så kan I bare møde op.
             </p>
+            <a className="btn primary" href="mailto:booking@hadstenjagtforening.dk?subject=Booking%20af%20skydebane">
+              Skriv til os her
+            </a>
           </section>
 
           <section className="info-panel">

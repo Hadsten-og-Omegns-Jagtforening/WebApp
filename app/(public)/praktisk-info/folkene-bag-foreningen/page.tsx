@@ -25,7 +25,7 @@ export default function BestyrelsenPage() {
           </p>
         </div>
 
-        <div className="copy-stack">
+        <div className="copy-stack cards-stack">
           <section className="info-panel">
             <h2>Bliv frivillig</h2>
             <p>
@@ -40,14 +40,16 @@ export default function BestyrelsenPage() {
 
           <section className="info-panel">
             <h2>Bestyrelsen</h2>
-            <div className="compact-list">
-              {board.map(([role, name]) => (
-                <div key={`${role}-${name}`}>
-                  <span>{role}</span>
-                  <strong>{name}</strong>
-                </div>
-              ))}
-            </div>
+            <table className="board-table">
+              <tbody>
+                {board.map(([role, name]) => (
+                  <tr key={`${role}-${name}`}>
+                    <td>{role}</td>
+                    <td>{name}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </section>
 
           <section className="info-panel">
