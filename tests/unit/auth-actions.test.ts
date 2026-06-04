@@ -19,6 +19,7 @@ const mocks = vi.hoisted(() => {
     },
   }))
   const getRequestSiteUrl = vi.fn()
+  const getConfiguredSiteUrl = vi.fn(() => 'http://localhost:3000')
 
   return {
     redirect,
@@ -29,12 +30,16 @@ const mocks = vi.hoisted(() => {
     getUser,
     createClient,
     getRequestSiteUrl,
+    getConfiguredSiteUrl,
   }
 })
 
 vi.mock('next/navigation', () => ({ redirect: mocks.redirect }))
 vi.mock('@/lib/supabase/server', () => ({ createClient: mocks.createClient }))
-vi.mock('@/lib/site-url', () => ({ getRequestSiteUrl: mocks.getRequestSiteUrl }))
+vi.mock('@/lib/site-url', () => ({
+  getRequestSiteUrl: mocks.getRequestSiteUrl,
+  getConfiguredSiteUrl: mocks.getConfiguredSiteUrl,
+}))
 
 import { requestPasswordReset, signIn, signOut, updatePassword } from '@/lib/actions/auth'
 
