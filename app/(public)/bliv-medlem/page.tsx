@@ -30,7 +30,7 @@ export default function BlivMedlemPage() {
           <p>Har du spørgsmål undervejs, kan du altid kontakte Danmarks Jægerforbund direkte eller skrive til os.</p>
           <a
             className="btn primary lg"
-            href="https://www.jaegerforbundet.dk/om-dj/medlemskab-for-din-og-for-jagtens-skyld/bliv-medlem/"
+            href="https://minprofil.jaegerforbundet.dk/bliv-medlem"
             target="_blank"
             rel="noreferrer"
           >
