@@ -186,6 +186,11 @@
     padding: 10px 12px;
   }
 
+  /* Skjul undermenuernes beskrivelses-tekst i mobil-menuen (kundeønske) */
+  .nav.nav--open .dropdown-menu .meta {
+    display: none;
+  }
+
   .nav.nav--open .nav-group-head {
     display: flex;
     width: 100%;
