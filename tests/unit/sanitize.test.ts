@@ -43,4 +43,29 @@ describe('sanitizeBody', () => {
       '<p>2 &lt; 3 &amp; 4 &gt; 1</p>'
     )
   })
+
+  it('preserves existing entities without double-escaping', () => {
+    expect(sanitizeBody('<p>a&nbsp;b &amp; c &#160; &#xA0;</p>')).toBe(
+      '<p>a&nbsp;b &amp; c &#160; &#xA0;</p>'
+    )
+  })
+
+  it('does not double-escape ampersands in link hrefs', () => {
+    expect(sanitizeBody('<a href="https://x.dk/?a=1&amp;b=2">k</a>')).toBe(
+      '<a href="https://x.dk/?a=1&amp;b=2">k</a>'
+    )
+  })
+
+  it('is idempotent — re-sanitising stored output does not change it', () => {
+    const inputs = [
+      '<p>Jagt &amp; fiskeri &nbsp; mere</p>',
+      '<p>2 &lt; 3 &amp; 4 &gt; 1</p>',
+      '<a href="https://x.dk/?a=1&amp;b=2">link</a>',
+      '<p>Almindelig tekst uden specialtegn</p>',
+    ]
+    for (const input of inputs) {
+      const once = sanitizeBody(input)
+      expect(sanitizeBody(once)).toBe(once)
+    }
+  })
 })

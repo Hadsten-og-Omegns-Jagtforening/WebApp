@@ -5,16 +5,22 @@ const ALLOWED_TAGS = new Set([
 
 const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr'])
 
+// Escape kun bogstavelige & — ikke dem der allerede er en gyldig HTML-entitet
+// (fx &nbsp;, &amp;, &#160;, &#xA0;). Inputtet kommer fra TipTap's getHTML(),
+// som allerede er kodet HTML, så ubetinget &→&amp; ville dobbelt-escape ved
+// hver gem og ophobe sig (&amp;amp;amp;nbsp;). Dette gør saniteringen idempotent.
+function escapeAmpersands(value: string): string {
+  return value.replace(/&(?!(?:[a-zA-Z][a-zA-Z0-9]*|#\d+|#x[0-9a-fA-F]+);)/g, '&amp;')
+}
+
 function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
+  return escapeAmpersands(value)
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
 }
 
 function escapeAttribute(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
+  return escapeAmpersands(value)
     .replace(/"/g, '&quot;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
