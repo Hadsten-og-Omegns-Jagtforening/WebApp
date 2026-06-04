@@ -1146,11 +1146,93 @@
     max-height: calc(100dvh - 24px);
   }
 
-  .adm-table {
-    min-width: 720px;
+  /* Kort-visning af admin-tabeller på mobil (ingen vandret scroll) */
+  .adm-card {
+    overflow-x: visible;
   }
 
-  .adm-card {
-    overflow-x: auto;
+  .adm-table,
+  .adm-table thead,
+  .adm-table tbody,
+  .adm-table tr,
+  .adm-table td {
+    display: block;
+    width: auto;
+  }
+
+  .adm-table {
+    min-width: 0;
+  }
+
+  .adm-table thead {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .adm-table tbody tr {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 4px;
+    margin-bottom: 12px;
+    background: var(--surface-raised);
+  }
+
+  .adm-table tbody tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .adm-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    text-align: right;
+    white-space: normal;
+  }
+
+  .adm-table td.title-cell {
+    max-width: none;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 4px;
+  }
+
+  .adm-table td.date-cell {
+    white-space: normal;
+  }
+
+  .adm-table td[data-label]::before {
+    content: attr(data-label);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--fg3);
+    text-align: left;
+    flex: 0 0 auto;
+  }
+
+  .adm-table td:not([data-label])::before {
+    display: none;
+  }
+
+  .adm-table td.adm-empty {
+    display: block;
+    text-align: center;
+  }
+
+  .adm-table td.actions-cell {
+    justify-content: flex-start;
+    gap: 8px;
+    text-align: left;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+
+  .adm-table td.actions-cell .btn,
+  .adm-table td.actions-cell .icon-only {
+    min-height: 44px;
   }
 }

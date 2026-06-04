@@ -89,19 +89,19 @@ export default async function AdminNyhederPage() {
               const label = state === 'scheduled' ? 'Planlagt' : state === 'published' ? 'Publiceret' : 'Kladde'
               return (
               <tr key={post.id}>
-                <td>
+                <td data-label="Kategori">
                   <span className={`cat ${CATEGORY_CLASS[post.category] ?? 'cat-nyhed'}`}>
                     {post.category}
                   </span>
                 </td>
-                <td className="title-cell">
+                <td className="title-cell" data-label="Titel">
                   <div className="title">{post.title}</div>
                   <div className="excerpt">{post.teaser}</div>
                 </td>
-                <td className="date-cell">
+                <td className="date-cell" data-label="Dato">
                   {post.published_at ? formatDate(post.published_at) : '—'}
                 </td>
-                <td>
+                <td data-label="Status">
                   <span className={`adm-status ${state}`}>
                     {label}
                   </span>

@@ -44,14 +44,14 @@ export default async function AdminPremieskydningerPage() {
               const icon = isPrizeActivityIcon(activity.icon) ? activity.icon as IconName : 'trophy'
               return (
                 <tr key={activity.id}>
-                  <td><span className="icon-wrap compact"><Icon name={icon} size={18} /></span></td>
-                  <td className="title-cell">
+                  <td data-label="Ikon"><span className="icon-wrap compact"><Icon name={icon} size={18} /></span></td>
+                  <td className="title-cell" data-label="Titel">
                     <div className="title">{activity.title}</div>
                     <div className="excerpt">{activity.card_description}</div>
                   </td>
-                  <td className="date-cell">{activity.month_label}</td>
-                  <td>{activity.sort_order}</td>
-                  <td>
+                  <td className="date-cell" data-label="Periode">{activity.month_label}</td>
+                  <td data-label="Sortering">{activity.sort_order}</td>
+                  <td data-label="Status">
                     <span className={`adm-status ${activity.is_active ? 'published' : 'draft'}`}>
                       {activity.is_active ? 'Synlig' : 'Skjult'}
                     </span>

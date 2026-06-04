@@ -63,9 +63,9 @@ export default async function BrugerePage() {
                 </tr>
               ) : users.map(user => (
                 <tr key={user.id}>
-                  <td>{user.email ?? '—'}</td>
-                  <td className="date-cell">{formatDate(user.created_at)}</td>
-                  <td className="date-cell">{formatDate(user.last_sign_in_at)}</td>
+                  <td data-label="E-mail">{user.email ?? '—'}</td>
+                  <td className="date-cell" data-label="Oprettet">{formatDate(user.created_at)}</td>
+                  <td className="date-cell" data-label="Senest logget ind">{formatDate(user.last_sign_in_at)}</td>
                 </tr>
               ))}
             </tbody>
