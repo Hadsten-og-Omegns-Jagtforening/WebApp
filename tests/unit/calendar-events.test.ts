@@ -23,6 +23,10 @@ function cphMonth(date: Date): string {
   return new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Copenhagen', month: '2-digit' }).format(date)
 }
 
+function cphDay(date: Date): string {
+  return new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Copenhagen', day: 'numeric' }).format(date)
+}
+
 describe('unfoldLines', () => {
   it('joins folded continuation lines', () => {
     const lines = unfoldLines('SUMMARY:Lang titel der\n  fortsætter\nDTSTART:20260615T100000Z')
@@ -91,6 +95,22 @@ describe('getUpcomingEvents', () => {
     const first = result[0]
     expect(cphWeekday(first.start)).toBe('Sun')
     expect(cphMonth(first.start)).toBe('10')
+  })
+
+  it('excludes cancelled occurrences listed in EXDATE', () => {
+    // Ugentlig onsdag (Jun 3, 10, 17, 24), hvor Jun 17 er aflyst via EXDATE.
+    // Jun 3 er allerede i gang ift. NOW, så uden EXDATE ses 10/17/24.
+    const text = ics(
+      vevent({
+        'DTSTART;VALUE=DATE': '20260603',
+        RRULE: 'FREQ=WEEKLY;BYDAY=WE;COUNT=4',
+        'EXDATE;VALUE=DATE': '20260617',
+        SUMMARY: 'Heldags-træning',
+      }),
+    )
+    const result = getUpcomingEvents(text, NOW, 6)
+    const days = result.map((e) => cphDay(e.start))
+    expect(days).toEqual(['10', '24'])
   })
 
   it('parses all-day events', () => {

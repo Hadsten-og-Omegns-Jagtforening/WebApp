@@ -20,6 +20,8 @@ interface RawEvent {
   dtend: { value: string; params: Record<string, string> } | null
   summary: string
   rrule: Record<string, string> | null
+  // Aflyste/udeladte enkelt-forekomster af en gentagende serie (EXDATE).
+  exdates: { value: string; params: Record<string, string> }[]
 }
 
 const WEEKDAYS = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'] // index = JS getUTCDay()
@@ -80,7 +82,7 @@ export function parseEvents(ics: string): RawEvent[] {
 
   for (const line of lines) {
     if (line === 'BEGIN:VEVENT') {
-      current = { dtend: null, summary: '', rrule: null }
+      current = { dtend: null, summary: '', rrule: null, exdates: [] }
       continue
     }
     if (line === 'END:VEVENT') {
@@ -104,6 +106,13 @@ export function parseEvents(ics: string): RawEvent[] {
         break
       case 'RRULE':
         current.rrule = parseRRule(prop.value)
+        break
+      case 'EXDATE':
+        // EXDATE kan have flere komma-separerede datoer og optræde flere gange.
+        for (const part of prop.value.split(',')) {
+          const trimmed = part.trim()
+          if (trimmed) current.exdates!.push({ value: trimmed, params: prop.params })
+        }
         break
     }
   }
@@ -269,7 +278,13 @@ function expandEvent(event: RawEvent, now: Date, windowEnd: Date): CalendarEvent
   const isUpcoming = (occ: CalendarEvent) =>
     (occ.end ?? occ.start).getTime() >= now.getTime() && occ.start.getTime() <= windowEnd.getTime()
 
+  // Aflyste forekomster (EXDATE) som UTC-tidspunkter, til hurtigt opslag.
+  const exdateTimes = new Set(
+    event.exdates.map((ex) => parseIcsDate(ex.value, ex.params).instant.getTime()),
+  )
+
   if (!event.rrule) {
+    if (exdateTimes.has(start.instant.getTime())) return []
     const occ = makeOccurrence(start.instant)
     return isUpcoming(occ) ? [occ] : []
   }
@@ -293,6 +308,8 @@ function expandEvent(event: RawEvent, now: Date, windowEnd: Date): CalendarEvent
     if (produced > count) return 'stop'
     if (until && instant.getTime() > until.getTime()) return 'stop'
     if (instant.getTime() > windowEnd.getTime()) return 'stop'
+    // Aflyst forekomst: tæller stadig mod COUNT (jf. RFC 5545), men vises ikke.
+    if (exdateTimes.has(instant.getTime())) return 'continue'
     const occ = makeOccurrence(instant)
     if (isUpcoming(occ)) results.push(occ)
     return 'continue'
