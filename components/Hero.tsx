@@ -13,7 +13,7 @@ export default function Hero() {
       {/* TODO: replace placeholder-hero.svg with a customer-approved hero image before production launch. */}
       <HeroStatus />
       <div className="container hero-inner">
-        <div className="hero-badge">Siden 1933</div>
+        <div className="hero-badge">Stiftet 1933</div>
         <h1>Hadsten og Omegns Jagtforening</h1>
         <p className="lede">
           Jagt, flugtskydning og fællesskab siden 1933. I hjertet af Østjylland samles vi om flugtskydning, jagt og fællesskab.
