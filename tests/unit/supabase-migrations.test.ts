@@ -43,4 +43,11 @@ describe('supabase storage migrations', () => {
     expect(sql).toContain('prize_activities_slug_key')
     expect(sql).toContain("'Fastelavnsskydning'")
   })
+
+  it('adds a gallery_urls column to the news table', () => {
+    const sql = readMigrations()
+
+    expect(sql).toContain('gallery_urls')
+    expect(sql).toContain('add column gallery_urls')
+  })
 })

@@ -10,4 +10,12 @@ describe('article title CSS', () => {
     expect(articleTitleRule).toContain('max-width: none')
     expect(articleTitleRule).toContain('text-wrap: wrap')
   })
+
+  it('renders the article gallery as a responsive grid', () => {
+    const css = readFileSync(join(process.cwd(), 'app/globals.css'), 'utf8')
+    const galleryRule = css.match(/\.article-gallery\s*\{[^}]+\}/)?.[0] ?? ''
+
+    expect(galleryRule).toContain('display: grid')
+    expect(galleryRule).toContain('auto-fit')
+  })
 })

@@ -41,6 +41,7 @@ function buildFormData() {
   formData.set('body', '<p>Indhold</p>')
   formData.set('highlighted', 'false')
   formData.set('has_results', 'false')
+  formData.set('gallery_urls', JSON.stringify(['https://a.dk/1.jpg', '', 'https://a.dk/2.jpg']))
   return formData
 }
 
@@ -64,6 +65,20 @@ describe('news actions cache invalidation', () => {
     )
 
     expect(mocks.revalidatePath).toHaveBeenCalledWith('/nyheder/my-post')
+  })
+
+  it('persists a normalized gallery when updating a post', async () => {
+    const formData = buildFormData()
+
+    await (updatePost as unknown as (id: string, formData: FormData, slug: string) => Promise<unknown>)(
+      'post-1',
+      formData,
+      'my-post',
+    )
+
+    expect(mocks.update).toHaveBeenCalledWith(
+      expect.objectContaining({ gallery_urls: ['https://a.dk/1.jpg', 'https://a.dk/2.jpg'] }),
+    )
   })
 
   it('revalidates the article slug path when publishing a post', async () => {

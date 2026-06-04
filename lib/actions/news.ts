@@ -8,6 +8,7 @@ import { validatePostInput } from '@/lib/news-validation'
 import { sanitizeBody } from '@/lib/sanitize'
 import { generateSlug } from '@/lib/slug'
 import { normalizeResults } from '@/lib/results'
+import { normalizeGallery } from '@/lib/gallery'
 import type { NewsCategory, NewsPostInsert } from '@/lib/database.types'
 
 function safeParseResults(value: FormDataEntryValue | null) {
@@ -63,6 +64,7 @@ export async function createPost(formData: FormData) {
     teaser,
     body,
     image_url: (formData.get('image_url') as string) || null,
+    gallery_urls: normalizeGallery(safeParseResults(formData.get('gallery_urls'))),
     has_results: formData.get('has_results') === 'true',
     results: normalizeResults(safeParseResults(formData.get('results'))),
     status: shouldPublish ? 'published' : 'draft',
@@ -96,6 +98,7 @@ export async function updatePost(id: string, formData: FormData, slug?: string) 
     teaser,
     body,
     image_url: (formData.get('image_url') as string) || null,
+    gallery_urls: normalizeGallery(safeParseResults(formData.get('gallery_urls'))),
     has_results: formData.get('has_results') === 'true',
     results: normalizeResults(safeParseResults(formData.get('results'))),
     highlighted: formData.get('highlighted') === 'true',
@@ -140,6 +143,7 @@ export async function saveDraft(id: string, formData: FormData) {
     teaser,
     body,
     image_url: (formData.get('image_url') as string) || null,
+    gallery_urls: normalizeGallery(safeParseResults(formData.get('gallery_urls'))),
     has_results: formData.get('has_results') === 'true',
     results: normalizeResults(safeParseResults(formData.get('results'))),
     highlighted: formData.get('highlighted') === 'true',

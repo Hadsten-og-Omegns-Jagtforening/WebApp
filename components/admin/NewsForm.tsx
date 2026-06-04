@@ -7,6 +7,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Icon from '@/components/Icon'
 import DateTimePicker from './DateTimePicker'
 import ImageUploader from './ImageUploader'
+import GalleryUploader from './GalleryUploader'
 import ResultsBuilder from './ResultsBuilder'
 import type { NewsPost, ResultRow } from '@/lib/database.types'
 
@@ -39,6 +40,7 @@ export default function NewsForm({
   const [newCategory, setNewCategory] = useState('')
   const [categoryError, setCategoryError] = useState<string | null>(null)
   const [imageUrl, setImageUrl] = useState<string | null>(post?.image_url ?? null)
+  const [galleryUrls, setGalleryUrls] = useState<string[]>(post?.gallery_urls ?? [])
   const [hasResults, setHasResults] = useState(post?.has_results ?? false)
   const [results, setResults] = useState<ResultRow[]>(post?.results ?? [])
   const [highlighted, setHighlighted] = useState(post?.highlighted ?? false)
@@ -66,6 +68,7 @@ export default function NewsForm({
     fd.append('published_at', publishedAt)
     fd.append('body', editor?.getHTML() ?? '')
     fd.append('image_url', imageUrl ?? '')
+    fd.append('gallery_urls', JSON.stringify(galleryUrls))
     fd.append('has_results', String(hasResults))
     fd.append('results', JSON.stringify(results))
     fd.append('highlighted', String(highlighted))
@@ -229,6 +232,11 @@ export default function NewsForm({
           <div className="panel">
             <h3 className="panel-heading">Hovedbillede</h3>
             <ImageUploader initialUrl={imageUrl} onUpload={setImageUrl} />
+          </div>
+          <div className="panel">
+            <h3 className="panel-heading">Billedgalleri</h3>
+            <p className="panel-note">Vises nederst i artiklen, under evt. resultater.</p>
+            <GalleryUploader initialUrls={galleryUrls} onChange={setGalleryUrls} />
           </div>
           <div className="panel">
             <h3 className="panel-heading">Indstillinger</h3>

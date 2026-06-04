@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { sanitizeBody } from '@/lib/sanitize'
 import { getPublishedCutoffIso } from '@/lib/news-visibility'
 import { normalizeResults } from '@/lib/results'
+import { normalizeGallery } from '@/lib/gallery'
 import type { NewsPost, ResultRow } from '@/lib/database.types'
 import type { Metadata } from 'next'
 
@@ -46,6 +47,7 @@ export default async function NewsArticlePage({ params }: Props) {
 
   const article = post as NewsPost
   const results = normalizeResults(article.results as ResultRow[] | null)
+  const gallery = normalizeGallery(article.gallery_urls)
 
   return (
     <section className="section">
@@ -90,6 +92,14 @@ export default async function NewsArticlePage({ params }: Props) {
                 </tbody>
               </table>
             </details>
+          )}
+          {gallery.length > 0 && (
+            <div className="article-gallery">
+              {gallery.map((src, i) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img key={i} src={src} alt="" loading="lazy" />
+              ))}
+            </div>
           )}
         </article>
       </div>
