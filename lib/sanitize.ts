@@ -10,7 +10,7 @@ const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'i
 // som allerede er kodet HTML, så ubetinget &→&amp; ville dobbelt-escape ved
 // hver gem og ophobe sig (&amp;amp;amp;nbsp;). Dette gør saniteringen idempotent.
 function escapeAmpersands(value: string): string {
-  return value.replace(/&(?!(?:[a-zA-Z][a-zA-Z0-9]*|#\d+|#x[0-9a-fA-F]+);)/g, '&amp;')
+  return value.replace(/&(?!(?:[a-zA-Z][a-zA-Z0-9]*|#\d+|#[xX][0-9a-fA-F]+);)/g, '&amp;')
 }
 
 function escapeHtml(value: string): string {

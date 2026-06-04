@@ -45,8 +45,8 @@ describe('sanitizeBody', () => {
   })
 
   it('preserves existing entities without double-escaping', () => {
-    expect(sanitizeBody('<p>a&nbsp;b &amp; c &#160; &#xA0;</p>')).toBe(
-      '<p>a&nbsp;b &amp; c &#160; &#xA0;</p>'
+    expect(sanitizeBody('<p>a&nbsp;b &amp; c &#160; &#xA0; &#XA0;</p>')).toBe(
+      '<p>a&nbsp;b &amp; c &#160; &#xA0; &#XA0;</p>'
     )
   })
 
