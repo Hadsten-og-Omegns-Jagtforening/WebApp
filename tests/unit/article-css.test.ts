@@ -11,6 +11,13 @@ describe('article title CSS', () => {
     expect(articleTitleRule).toContain('text-wrap: wrap')
   })
 
+  it('breaks long tokens in the article body to avoid horizontal scroll on mobile', () => {
+    const css = readFileSync(join(process.cwd(), 'app/globals.css'), 'utf8')
+    const articleRule = css.match(/\.article\s*\{[^}]+\}/)?.[0] ?? ''
+
+    expect(articleRule).toContain('overflow-wrap: break-word')
+  })
+
   it('renders the article gallery as a responsive grid', () => {
     const css = readFileSync(join(process.cwd(), 'app/globals.css'), 'utf8')
     const galleryRule = css.match(/\.article-gallery\s*\{[^}]+\}/)?.[0] ?? ''
