@@ -112,6 +112,17 @@ export default async function KalenderPage() {
                   referrerPolicy="strict-origin-when-cross-origin"
                 />
               </div>
+              <p style={{ margin: '12px 4px 0', fontSize: 13, color: 'var(--fg3)' }}>
+                Vises kalenderen ikke? Nogle browser-udvidelser (fx annonce- eller sporingsblokering) kan blokere den.{' '}
+                <a
+                  href={calendarEmbedUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: 'var(--accent)', textDecoration: 'underline', textUnderlineOffset: 3 }}
+                >
+                  Åbn kalenderen i Google →
+                </a>
+              </p>
             </div>
           </div>
 
