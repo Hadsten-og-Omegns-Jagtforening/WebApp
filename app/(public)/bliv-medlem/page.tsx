@@ -8,11 +8,11 @@ export default function BlivMedlemPage() {
           <p className="lede">
             Hos Hadsten og Omegns Jagtforening er medlemskabet mere end en tilmelding.
           </p>
-          <p>
+          <p className="lede">
             Det er adgang til foreningens jagter - bukkejagt, hjortejagt og efterårsjagt - og til et fællesskab,
             der har holdt sammen om jagt og flugtskydning i Østjylland siden 1933.
           </p>
-          <p>Skydebanen, kurserne og arrangementerne er åbne for alle. Men vil du med på jagt, skal du være medlem.</p>
+          <p className="lede">Skydebanen, kurserne og arrangementerne er åbne for alle. Men vil du med på jagt, skal du være medlem.</p>
         </div>
 
         <section className="info-panel">

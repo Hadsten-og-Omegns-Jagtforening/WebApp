@@ -26,16 +26,13 @@ export default function JagtPage() {
             Hadsten og Omegns Jagtforening råder over mange hektar jagt i området omkring skydebanen.
             Her tilbyder vi efterårsjagter, bukkejagt og hjortejagt for medlemmer.
           </p>
+          <p className="lede">
+            Vi har altid pladser reserveret til nyjægere, der vil prøve kræfter med jagten for første gang.
+            Alle jagter findes i kalenderen, og tilmelding og praktiske detaljer fremgår i vores nyheder.
+          </p>
         </div>
 
         <div className="copy-stack">
-          <section>
-            <p>
-              Vi har altid pladser reserveret til nyjægere, der vil prøve kræfter med jagten for første gang.
-              Alle jagter findes i kalenderen, og tilmelding og praktiske detaljer fremgår i vores nyheder.
-            </p>
-          </section>
-
           <section className="info-panel">
             <h2>Efterårsjagt</h2>
             <p>

@@ -8,11 +8,11 @@ export default function OmHojPage() {
           <p className="lede">
             Hadsten og Omegns Jagtforening blev stiftet den 7. november 1933 i Galten Forsamlingshus.
           </p>
-          <p>
+          <p className="lede">
             Foreningen startede med 15 medlemmer og et kontingent på 4 kroner om året - og holdt allerede deres første
             generalforsamling fire dage senere, hjemme hos formanden.
           </p>
-          <p>Det siger noget om energien dengang. Og den er ikke forsvundet siden.</p>
+          <p className="lede">Det siger noget om energien dengang. Og den er ikke forsvundet siden.</p>
         </div>
 
         <div className="copy-stack cards-stack">
