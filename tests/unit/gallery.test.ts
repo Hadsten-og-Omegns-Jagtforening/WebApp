@@ -22,6 +22,19 @@ describe('normalizeGallery', () => {
     ])
   })
 
+  it('only accepts absolute https URLs', () => {
+    expect(
+      normalizeGallery([
+        'https://a.dk/ok.jpg',
+        'http://a.dk/insecure.jpg',
+        'javascript:alert(1)',
+        'data:image/svg+xml,<svg></svg>',
+        '/relative/path.jpg',
+        'not a url',
+      ]),
+    ).toEqual(['https://a.dk/ok.jpg'])
+  })
+
   it('caps the list at GALLERY_MAX', () => {
     const many = Array.from({ length: GALLERY_MAX + 4 }, (_, i) => `https://a.dk/${i}.jpg`)
     const result = normalizeGallery(many)
