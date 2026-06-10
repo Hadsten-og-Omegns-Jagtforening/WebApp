@@ -77,7 +77,7 @@ export default async function KalenderPage() {
           </p>
         </div>
 
-        <div className="grid-2" style={{ gap: 32, alignItems: 'start' }}>
+        <div className="kalender-grid">
           <div style={{ background: 'var(--surface-raised)', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden' }}>
             <div
               style={{
@@ -95,7 +95,7 @@ export default async function KalenderPage() {
             </div>
 
             <div style={{ padding: 16 }}>
-              <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 11' }}>
+              <div className="kalender-embed" style={{ position: 'relative', width: '100%' }}>
                 <iframe
                   src={calendarEmbedUrl}
                   title="Hadsten og Omegns Jagtforening kalender"

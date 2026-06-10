@@ -1239,3 +1239,26 @@
     min-height: 44px;
   }
 }
+
+/* Kalender-side: giv kalenderen mere bredde end sidebaren og gør den
+   indlejrede Google-kalender større/højere — både desktop og mobil. */
+.kalender-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.kalender-embed {
+  aspect-ratio: 16 / 13;
+}
+
+@media (max-width: 860px) {
+  .kalender-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kalender-embed {
+    aspect-ratio: 3 / 4;
+  }
+}
