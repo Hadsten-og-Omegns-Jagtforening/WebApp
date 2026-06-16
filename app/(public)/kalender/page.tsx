@@ -1,5 +1,6 @@
-import { getCalendarEmbedUrl } from '@/lib/calendar-embed'
+import { getCalendarModeUrl, type CalendarMode } from '@/lib/calendar-embed'
 import { fetchUpcomingEvents, type CalendarEvent } from '@/lib/calendar-events'
+import CalendarEmbed from './CalendarEmbed'
 
 const TIME_ZONE = 'Europe/Copenhagen'
 
@@ -52,7 +53,12 @@ function categoryTag(title: string) {
 export const revalidate = 3600
 
 export default async function KalenderPage() {
-  const calendarEmbedUrl = getCalendarEmbedUrl(process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL)
+  const rawEmbed = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_EMBED_URL
+  const urls: Record<CalendarMode, string> = {
+    AGENDA: getCalendarModeUrl(rawEmbed, 'AGENDA'),
+    WEEK: getCalendarModeUrl(rawEmbed, 'WEEK'),
+    MONTH: getCalendarModeUrl(rawEmbed, 'MONTH'),
+  }
   const events = await fetchUpcomingEvents(6)
 
   return (
@@ -94,25 +100,7 @@ export default async function KalenderPage() {
               <span className="badge">Google Kalender</span>
             </div>
 
-            <div style={{ padding: 16 }}>
-              <div className="kalender-embed" style={{ position: 'relative', width: '100%' }}>
-                <iframe
-                  src={calendarEmbedUrl}
-                  title="Hadsten og Omegns Jagtforening kalender"
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    width: '100%',
-                    height: '100%',
-                    border: 0,
-                    borderRadius: 6,
-                    background: 'var(--surface)',
-                  }}
-                  loading="lazy"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
-              </div>
-            </div>
+            <CalendarEmbed urls={urls} />
           </div>
 
           <aside>
