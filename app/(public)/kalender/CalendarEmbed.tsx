@@ -9,11 +9,12 @@ const VIEWS: { mode: CalendarMode; label: string }[] = [
   { mode: 'MONTH', label: 'Måned' },
 ]
 
-// Agenda reads like an event feed and needs less height; the grid views need more.
-const HEIGHTS: Record<CalendarMode, number> = {
-  AGENDA: 520,
-  WEEK: 640,
-  MONTH: 640,
+// Viewport-relative so the calendar fills the page (it's the only content) while
+// staying sensible on laptops. Grid views need more height than the agenda feed.
+const HEIGHTS: Record<CalendarMode, string> = {
+  AGENDA: 'clamp(520px, 70vh, 760px)',
+  WEEK: 'clamp(620px, 80vh, 920px)',
+  MONTH: 'clamp(620px, 80vh, 920px)',
 }
 
 export default function CalendarEmbed({ urls }: { urls: Record<CalendarMode, string> }) {

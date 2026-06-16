@@ -11,7 +11,7 @@ export default function KalenderPage() {
 
   return (
     <section className="section">
-      <div className="container" style={{ maxWidth: 860 }}>
+      <div className="container" style={{ maxWidth: 1080 }}>
         <div style={{ marginBottom: 32 }}>
           <span className="eyebrow" style={{ color: 'var(--accent)' }}>Praktisk info</span>
           <h1
