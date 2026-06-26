@@ -79,7 +79,7 @@ export default async function KalenderPage() {
             Kalender
           </h1>
           <p style={{ fontSize: 18, color: 'var(--fg2)', maxWidth: '56ch', margin: 0 }}>
-            Skydetider, jagtdatoer og klubaftener. Kalenderen foelger foreningens offentlige program.
+            Skydetider, jagtdatoer og kommende arrangementer – opdateres løbende.
           </p>
         </div>
 
