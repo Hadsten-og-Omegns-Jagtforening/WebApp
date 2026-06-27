@@ -70,29 +70,34 @@ export default async function NewsArticlePage({ params }: Props) {
           )}
           {/* Body is sanitised HTML — safe to render */}
           <div dangerouslySetInnerHTML={{ __html: sanitizeBody(article.body) }} />
-          {article.has_results && results.length > 0 && (
-            <details className="results" open>
-              <summary>Resultater</summary>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Placering</th>
-                    <th>Navn</th>
-                    <th style={{ textAlign: 'right' }}>Score</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {results.map((r, i) => (
-                    <tr key={i}>
-                      <td>{r.rank}</td>
-                      <td>{r.name}</td>
-                      <td style={{ textAlign: 'right' }}>{r.score}</td>
+          {article.has_results && results.length > 0 && (() => {
+            const showRaekke = results.some((r) => (r.raekke ?? '').trim() !== '')
+            return (
+              <details className="results" open>
+                <summary>Resultater</summary>
+                <table>
+                  <thead>
+                    <tr>
+                      {showRaekke && <th>Række</th>}
+                      <th>Placering</th>
+                      <th>Navn</th>
+                      <th style={{ textAlign: 'right' }}>Score</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </details>
-          )}
+                  </thead>
+                  <tbody>
+                    {results.map((r, i) => (
+                      <tr key={i}>
+                        {showRaekke && <td>{r.raekke}</td>}
+                        <td>{r.rank}</td>
+                        <td>{r.name}</td>
+                        <td style={{ textAlign: 'right' }}>{r.score}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </details>
+            )
+          })()}
           {gallery.length > 0 && (
             <div className="article-gallery">
               {gallery.map((src, i) => (

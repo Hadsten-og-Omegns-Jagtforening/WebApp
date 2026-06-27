@@ -3,6 +3,7 @@ export type NewsStatus = 'draft' | 'published'
 export type NewsCategory = string
 
 export type ResultRow = {
+  raekke?: string
   rank: string
   name: string
   score: string

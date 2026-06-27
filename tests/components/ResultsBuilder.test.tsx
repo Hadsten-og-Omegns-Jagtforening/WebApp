@@ -11,20 +11,27 @@ describe('ResultsBuilder', () => {
     fireEvent.click(screen.getByRole('button', { name: /\+ Tilf/i }))
     expect(onChange).toHaveBeenLastCalledWith([
       { rank: '1', name: 'Jens', score: '23' },
-      { rank: '', name: '', score: '' },
+      { raekke: '', rank: '', name: '', score: '' },
     ])
 
     const nameInputs = screen.getAllByPlaceholderText('Navn')
     fireEvent.change(nameInputs[1], { target: { value: 'Poul' } })
     expect(onChange).toHaveBeenLastCalledWith([
       { rank: '1', name: 'Jens', score: '23' },
-      { rank: '', name: 'Poul', score: '' },
+      { raekke: '', rank: '', name: 'Poul', score: '' },
+    ])
+
+    const raekkeInputs = screen.getAllByPlaceholderText('A')
+    fireEvent.change(raekkeInputs[1], { target: { value: 'A' } })
+    expect(onChange).toHaveBeenLastCalledWith([
+      { rank: '1', name: 'Jens', score: '23' },
+      { raekke: 'A', rank: '', name: 'Poul', score: '' },
     ])
 
     const removeButtons = screen.getAllByTitle('Fjern')
     fireEvent.click(removeButtons[0])
     expect(onChange).toHaveBeenLastCalledWith([
-      { rank: '', name: 'Poul', score: '' },
+      { raekke: 'A', rank: '', name: 'Poul', score: '' },
     ])
   })
 })

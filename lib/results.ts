@@ -1,41 +1,16 @@
 import type { ResultRow } from './database.types'
 
-function parseScore(score: string) {
-  const trimmed = score.trim()
-  const ratio = trimmed.match(/^(\d+(?:[.,]\d+)?)\s*\/\s*(\d+(?:[.,]\d+)?)$/)
-  if (ratio) {
-    const value = Number(ratio[1].replace(',', '.'))
-    const max = Number(ratio[2].replace(',', '.'))
-    return {
-      value,
-      ratio: max > 0 ? value / max : value,
-    }
-  }
-
-  const numeric = Number(trimmed.replace(',', '.'))
-  return {
-    value: Number.isFinite(numeric) ? numeric : Number.NEGATIVE_INFINITY,
-    ratio: Number.isFinite(numeric) ? numeric : Number.NEGATIVE_INFINITY,
-  }
-}
-
+// Cleans up result rows for storage/display without reordering: the admin's
+// entered order and manual numbering (`rank`) are kept as-is. `raekke` is a free
+// per-row column (e.g. M/A/B/C) that may repeat across blocks, so we never group
+// or sort by it. Blank rows are dropped; legacy rows without `raekke` are tolerated.
 export function normalizeResults(rows: ResultRow[] | null | undefined): ResultRow[] {
   return (rows ?? [])
     .map((row) => ({
-      rank: '',
-      name: row.name.trim(),
-      score: row.score.trim(),
-      parsed: parseScore(row.score),
+      raekke: (row.raekke ?? '').trim(),
+      rank: (row.rank ?? '').trim(),
+      name: (row.name ?? '').trim(),
+      score: (row.score ?? '').trim(),
     }))
     .filter((row) => row.name || row.score)
-    .sort((a, b) => {
-      if (b.parsed.ratio !== a.parsed.ratio) return b.parsed.ratio - a.parsed.ratio
-      if (b.parsed.value !== a.parsed.value) return b.parsed.value - a.parsed.value
-      return a.name.localeCompare(b.name, 'da')
-    })
-    .map((row, index) => ({
-      rank: String(index + 1),
-      name: row.name,
-      score: row.score,
-    }))
 }

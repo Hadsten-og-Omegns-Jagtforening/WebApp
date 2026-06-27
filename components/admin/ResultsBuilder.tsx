@@ -8,7 +8,7 @@ type Props = {
   onChange: (results: ResultRow[]) => void
 }
 
-const emptyRow = (): ResultRow => ({ rank: '', name: '', score: '' })
+const emptyRow = (): ResultRow => ({ raekke: '', rank: '', name: '', score: '' })
 
 export default function ResultsBuilder({ initialResults, onChange }: Props) {
   const [rows, setRows] = useState<ResultRow[]>(initialResults ?? [emptyRow()])
@@ -36,6 +36,7 @@ export default function ResultsBuilder({ initialResults, onChange }: Props) {
       <table style={{ width: '100%', fontSize: 13 }}>
         <thead>
           <tr>
+            <th style={{ width: 56 }}>Række</th>
             <th style={{ width: 40 }}>#</th>
             <th>Skytte</th>
             <th style={{ width: 90 }}>Duer</th>
@@ -45,9 +46,10 @@ export default function ResultsBuilder({ initialResults, onChange }: Props) {
         <tbody>
           {rows.map((row, i) => (
             <tr key={i}>
+              <td><input className="fld-inline" value={row.raekke ?? ''} onChange={(e) => update(i, 'raekke', e.target.value)} placeholder="A" style={{ width: 44 }} /></td>
               <td><input className="fld-inline" value={row.rank} onChange={(e) => update(i, 'rank', e.target.value)} placeholder={String(i + 1)} style={{ width: 32 }} /></td>
               <td><input className="fld-inline" value={row.name} onChange={(e) => update(i, 'name', e.target.value)} placeholder="Navn" style={{ width: '100%' }} /></td>
-              <td><input className="fld-inline" value={row.score} onChange={(e) => update(i, 'score', e.target.value)} placeholder="23/25" style={{ width: 80 }} /></td>
+              <td><input className="fld-inline" value={row.score} onChange={(e) => update(i, 'score', e.target.value)} placeholder="38/40" style={{ width: 80 }} /></td>
               <td>
                 <button type="button" onClick={() => removeRow(i)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--danger)' }} title="Fjern">×</button>
               </td>
