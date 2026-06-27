@@ -54,14 +54,19 @@ describe('auth actions', () => {
     mocks.getRequestSiteUrl.mockResolvedValue('http://localhost:3000')
   })
 
-  it('uses the callback route for password reset emails', async () => {
+  it('builds the reset link from the request origin, not the configured fallback', async () => {
+    // Distinct values prove the action uses the live request origin, so the
+    // email link follows the domain the admin is actually on.
+    mocks.getRequestSiteUrl.mockResolvedValue('https://www.hadstenjagtforening.dk')
+    mocks.getConfiguredSiteUrl.mockReturnValue('https://wrong.example')
+
     const formData = new FormData()
     formData.set('email', 'admin@example.com')
 
     const result = await requestPasswordReset(formData)
 
     expect(mocks.resetPasswordForEmail).toHaveBeenCalledWith('admin@example.com', {
-      redirectTo: 'http://localhost:3000/auth/callback?next=/auth/update-password',
+      redirectTo: 'https://www.hadstenjagtforening.dk/auth/callback?next=/auth/update-password',
     })
     expect(result).toEqual({
       success: 'Hvis e-mailadressen findes som admin-bruger, er der sendt et nulstillingslink.',

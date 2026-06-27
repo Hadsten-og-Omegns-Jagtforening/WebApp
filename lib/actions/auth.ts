@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { getConfiguredSiteUrl } from '@/lib/site-url'
+import { getConfiguredSiteUrl, getRequestSiteUrl } from '@/lib/site-url'
 
 export async function signIn(formData: FormData) {
   const email = formData.get('email') as string
@@ -22,13 +22,17 @@ export async function signIn(formData: FormData) {
 export async function requestPasswordReset(formData: FormData) {
   const email = formData.get('email') as string
   const supabase = await createClient()
-  const redirectTo = `${getConfiguredSiteUrl()}/auth/callback?next=/auth/update-password`
+  // Build the link from the actual request origin so the reset email always
+  // points at the domain the admin is on — robust to env misconfig and to the
+  // production domain switch. getRequestSiteUrl falls back to the configured URL.
+  const siteUrl = await getRequestSiteUrl()
+  const redirectTo = `${siteUrl}/auth/callback?next=/auth/update-password`
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo })
 
   if (error) {
     console.error('[auth] resetPasswordForEmail error:', error.message)
-    return { error: diagnosAuthError(error.message) }
+    return { error: diagnosAuthError(error.message, siteUrl) }
   }
 
   return { success: 'Hvis e-mailadressen findes som admin-bruger, er der sendt et nulstillingslink.' }
@@ -72,7 +76,8 @@ export async function inviteUser(formData: FormData) {
     return { error: 'E-mailadressen mangler.' }
   }
 
-  const redirectTo = `${getConfiguredSiteUrl()}/auth/callback?next=/auth/update-password`
+  const siteUrl = await getRequestSiteUrl()
+  const redirectTo = `${siteUrl}/auth/callback?next=/auth/update-password`
 
   const supabase = createAdminClient()
   const { error } = await supabase.auth.admin.inviteUserByEmail(email, { redirectTo })
@@ -83,7 +88,7 @@ export async function inviteUser(formData: FormData) {
     if (msg.includes('already') || msg.includes('registered')) {
       return { error: 'Denne e-mailadresse er allerede registreret.' }
     }
-    return { error: diagnosAuthError(error.message) }
+    return { error: diagnosAuthError(error.message, siteUrl) }
   }
 
   return { success: `Invitation sendt til ${email}.` }
@@ -95,13 +100,13 @@ export async function signOut() {
   redirect('/')
 }
 
-function diagnosAuthError(message: string): string {
+function diagnosAuthError(message: string, siteUrl: string = getConfiguredSiteUrl()): string {
   const m = message.toLowerCase()
   if (m.includes('rate limit') || m.includes('too many')) {
     return 'E-mail rate limit overskredet. Supabase tillader kun 2 e-mails/time på gratis projekter. Konfigurer custom SMTP under Authentication → Settings i Supabase-dashboardet.'
   }
   if (m.includes('redirect') && (m.includes('not allowed') || m.includes('invalid'))) {
-    return `Redirect-URL er ikke tilladt. Tilføj "${getConfiguredSiteUrl()}/**" under Authentication → URL Configuration → Redirect URLs i Supabase-dashboardet.`
+    return `Redirect-URL er ikke tilladt. Tilføj "${siteUrl}/**" under Authentication → URL Configuration → Redirect URLs i Supabase-dashboardet.`
   }
   if (m.includes('smtp') || m.includes('email') || m.includes('send')) {
     return 'E-mail kunne ikke sendes. Kontroller SMTP-konfigurationen i Supabase-dashboardet.'
